@@ -40,6 +40,9 @@
     <Reference Include="FluentNHibernate">
       <HintPath>..\packages\FluentNHibernate.1.2.0.712\lib\FluentNHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\packages\Iesi.Collections.3.1.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
+    </Reference>
     <Reference Include="inflector_extension">
       <HintPath>..\packages\inflector_extension.0.0.7\lib\Net40\inflector_extension.dll</HintPath>
     </Reference>

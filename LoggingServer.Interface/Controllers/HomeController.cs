@@ -1,19 +1,22 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
+using NLog;
 
 namespace LoggingServer.Interface.Controllers
 {
     public class HomeController : Controller
     {
+        private Logger logger = LogManager.GetCurrentClassLogger();
+
         public ActionResult Index()
         {
-            ViewBag.Message = "Welcome to ASP.NET MVC!";
-
             return View();
         }
 
         public ActionResult About()
         {
-            return View();
+            logger.Debug("testing debug log");
+            throw new Exception("Testing logging");
         }
     }
 }

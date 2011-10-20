@@ -1,6 +1,8 @@
-﻿using System.Web;
+﻿using System.Reflection;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using LoggingServer.Server;
 
 namespace LoggingServer.Interface
 {
@@ -26,9 +28,9 @@ namespace LoggingServer.Interface
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+            BootStrapper.Start(Assembly.GetExecutingAssembly());
         }
     }
 }
