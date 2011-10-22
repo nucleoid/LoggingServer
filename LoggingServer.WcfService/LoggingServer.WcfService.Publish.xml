@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<publishData>
+  <publishProfile publishUrl="C:\gosquids\wcfservice" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Profile1" publishMethod="FileSystem" replaceMatchingFiles="False" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
+    <file relUrl="Web.config" publishTime="10/21/2011 15:58:55" />
+    <file relUrl="bin/NHibernate.ByteCode.Castle.dll" publishTime="10/17/2011 14:12:55" />
+    <file relUrl="bin/NLog.xml" publishTime="10/17/2011 15:59:43" />
+    <file relUrl="bin/LoggingServer.WcfService.pdb" publishTime="10/21/2011 17:31:19" />
+    <file relUrl="bin/LoggingServer.Server.dll" publishTime="10/21/2011 17:31:16" />
+    <file relUrl="bin/Autofac.dll" publishTime="10/17/2011 14:11:51" />
+    <file relUrl="bin/LoggingServer.WcfService.dll" publishTime="10/21/2011 17:31:20" />
+    <file relUrl="bin/inflector_extension.dll" publishTime="10/18/2011 10:40:35" />
+    <file relUrl="bin/Autofac.Integration.Mvc.dll" publishTime="10/17/2011 14:11:57" />
+    <file relUrl="bin/Autofac.xml" publishTime="10/17/2011 14:11:51" />
+    <file relUrl="bin/Castle.Core.xml" publishTime="10/17/2011 14:12:55" />
+    <file relUrl="bin/Castle.Core.dll" publishTime="10/17/2011 14:12:55" />
+    <file relUrl="bin/LoggingServer.Server.pdb" publishTime="10/21/2011 17:31:16" />
+    <file relUrl="bin/Iesi.Collections.dll" publishTime="10/17/2011 14:12:53" />
+    <file relUrl="bin/NHibernate.dll" publishTime="10/17/2011 14:12:54" />
+    <file relUrl="bin/NLog.dll" publishTime="10/17/2011 15:59:43" />
+    <file relUrl="bin/FluentNHibernate.dll" publishTime="10/17/2011 14:12:55" />
+    <file relUrl="Global.asax" publishTime="10/21/2011 11:57:56" />
+    <file relUrl="LoggingServer.svc" publishTime="10/21/2011 11:57:13" />
+    <file relUrl="bin/Iesi.Collections.pdb" publishTime="10/17/2011 14:12:53" />
+    <file relUrl="bin/FluentNHibernate.pdb" publishTime="10/17/2011 14:12:55" />
+    <file relUrl="bin/NHibernate.ByteCode.Castle.xml" publishTime="10/17/2011 14:12:55" />
+  </publishProfile>
+</publishData>

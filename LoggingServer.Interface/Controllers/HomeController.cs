@@ -16,7 +16,7 @@ namespace LoggingServer.Interface.Controllers
         public ActionResult About()
         {
             logger.Debug("testing debug log");
-            throw new Exception("Testing logging");
+            return new ContentResult {Content = "Blah!"};
         }
     }
 }

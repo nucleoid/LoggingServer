@@ -5,6 +5,7 @@ using FluentNHibernate.Cfg.Db;
 using LoggingServer.Server.Repository;
 using NHibernate;
 using NHibernate.ByteCode.Castle;
+using NHibernate.Tool.hbm2ddl;
 using Configuration = NHibernate.Cfg.Configuration;
 
 namespace LoggingServer.Server.Autofac
@@ -17,6 +18,7 @@ namespace LoggingServer.Server.Autofac
                 .ProxyFactoryFactory<ProxyFactoryFactory>()
                 .Database(MsSqlConfiguration.MsSql2005.ConnectionString(ConfigurationManager.ConnectionStrings["Default"].ConnectionString))
                 .Mappings(m => m.AutoMappings.Add(AutoPersistenceModelGenerator.Generate()))
+//                .ExposeConfiguration(x => new SchemaUpdate(x).Execute(false, true))
                 .BuildConfiguration();
 
             var sessionFactory = config.BuildSessionFactory();

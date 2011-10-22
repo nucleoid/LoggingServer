@@ -1,18 +1,13 @@
 ﻿using System;
+using System.Reflection;
 using NLog.Layouts;
 using NLog.Targets;
 
 namespace LoggingServer.Common.Targets
 {
-    [Target("LoggingServerTarget")]
+    [Target("LoggingServer")]
     public class LoggingServerTarget : LogReceiverWebServiceTarget
     {
-        public LoggingServerTarget()
-        {
-            UseBinaryEncoding = false;
-            EnvironmentKey = string.Empty;
-        }
-
         public string EnvironmentKey { get; set; }
 
         private Guid _applicationID = Guid.Empty;
@@ -24,8 +19,6 @@ namespace LoggingServer.Common.Targets
 
         protected override void InitializeTarget()
         {
-            Parameters.Clear();
-
             Parameters.Add(new MethodCallParameter("BaseDirectory", Layout.FromString("${basedir}")));
             Parameters.Add(new MethodCallParameter("CallSite", Layout.FromString("${callsite:fileName=true}")));
             Parameters.Add(new MethodCallParameter("Counter", Layout.FromString("${counter}")));
@@ -49,16 +42,19 @@ namespace LoggingServer.Common.Targets
             Parameters.Add(new MethodCallParameter("ThreadID", Layout.FromString("${threadid}")));
             Parameters.Add(new MethodCallParameter("ThreadName", Layout.FromString("${threadname}")));
             Parameters.Add(new MethodCallParameter("WindowsIdentity", Layout.FromString("${windows-identity}")));
-            Parameters.Add(new MethodCallParameter("EntryAssemblyCompany", Layout.FromString("${entryassemblycompany}")));
-            Parameters.Add(new MethodCallParameter("EntryAssemblyDescription", Layout.FromString("${entryassemblydescription}")));
-            Parameters.Add(new MethodCallParameter("EntryAssemblyGuid", Layout.FromString("${entryassemblyguid}")));
-            Parameters.Add(new MethodCallParameter("EntryAssemblyProduct", Layout.FromString("${entryassemblyproduct}")));
-            Parameters.Add(new MethodCallParameter("EntryAssemblyTitle", Layout.FromString("${entryassemblytitle}")));
-            Parameters.Add(new MethodCallParameter("EntryAssemblyVersion", Layout.FromString("${entryassemblyversion}")));
             Parameters.Add(new MethodCallParameter("EnvironmentKey", EnvironmentKey));
             Parameters.Add(new MethodCallParameter("ApplicationID", ApplicationID));
-
             base.InitializeTarget();
+        }
+
+        public void AddAssemblyParameters(Assembly assembly)
+        {
+            Parameters.Add(new MethodCallParameter("EntryAssemblyCompany", AssemblyInfoUtil.Company(assembly)));
+            Parameters.Add(new MethodCallParameter("EntryAssemblyDescription", AssemblyInfoUtil.Description(assembly)));
+            Parameters.Add(new MethodCallParameter("EntryAssemblyGuid", AssemblyInfoUtil.Guid(assembly)));
+            Parameters.Add(new MethodCallParameter("EntryAssemblyProduct", AssemblyInfoUtil.Product(assembly)));
+            Parameters.Add(new MethodCallParameter("EntryAssemblyTitle", AssemblyInfoUtil.Title(assembly)));
+            Parameters.Add(new MethodCallParameter("EntryAssemblyVersion", AssemblyInfoUtil.Version(assembly)));
         }
     }
 }

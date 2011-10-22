@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.ServiceModel;
+using LoggingServer.Server.Autofac;
 using LoggingServer.Server.Domain;
 using LoggingServer.Server.Repository;
 using NLog;
@@ -11,11 +13,18 @@ using LogLevel = LoggingServer.Server.Domain.LogLevel;
 
 namespace LoggingServer.Server
 {
+    [ServiceBehavior(IncludeExceptionDetailInFaults = true)]
     public class LogReceiverServer : ILogReceiverServer
     {
         private readonly static List<PropertyInfo> PropertyInfos = (typeof(LogEntry)).GetProperties().ToList();
         private readonly IWritableRepository<Component> _componentRepository;
         private readonly IWritableRepository<LogEntry> _logEntryRepository;
+
+        public LogReceiverServer()
+        {
+            _componentRepository = DependencyContainer.Resolve<IWritableRepository<Component>>();
+            _logEntryRepository = DependencyContainer.Resolve<IWritableRepository<LogEntry>>();
+        }
 
         public LogReceiverServer(IWritableRepository<LogEntry> logEntryRepository, IWritableRepository<Component> componentRepository)
         {
@@ -41,6 +50,7 @@ namespace LoggingServer.Server
 
                     SetLogValue(value, ev, pi, log);
                 }
+                log.DateAdded = DateTime.Now;
                 data.Add(log);
             }
             _logEntryRepository.Save(data);

@@ -3,6 +3,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using LoggingServer.Server;
+using NLog;
 
 namespace LoggingServer.Interface
 {
@@ -31,6 +32,7 @@ namespace LoggingServer.Interface
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
             BootStrapper.Start(Assembly.GetExecutingAssembly());
+            LogManager.Configuration = NLogConfiguration.CreateConfig();
         }
     }
 }

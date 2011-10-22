@@ -41,12 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LayoutRenderers\EntryAssemblyCompanyLayoutRenderer.cs" />
-    <Compile Include="LayoutRenderers\EntryAssemblyDescriptionLayoutRenderer.cs" />
-    <Compile Include="LayoutRenderers\EntryAssemblyGuidLayoutRenderer.cs" />
-    <Compile Include="LayoutRenderers\EntryAssemblyProductLayoutRenderer.cs" />
-    <Compile Include="LayoutRenderers\EntryAssemblyTitleLayoutRenderer.cs" />
-    <Compile Include="LayoutRenderers\EntryAssemblyVersionLayoutRenderer.cs" />
+    <Compile Include="AssemblyInfoUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Targets\LoggingServerTarget.cs" />
   </ItemGroup>

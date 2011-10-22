@@ -10,6 +10,7 @@ namespace LoggingServer.Server.Domain
         public virtual string Description { get; set; }
         public virtual DateTime DateAdded { get; set; }
         public virtual int Version { get; set; }
+        //TODO Mitch add Project property
 
         public virtual bool Equals(Component other)
         {
