@@ -9,9 +9,12 @@ namespace LoggingServer.Server
     {
         public static void Start()
         {
-            DependencyContainer.Register(new DBModule(), new RepositoryModule());
-            DependencyContainer.Register<LogReceiverServer>();
-            DependencyContainer.BuildContainer();
+            if(DependencyContainer.Container == null)
+            {
+                DependencyContainer.Register(new DBModule(), new RepositoryModule());
+                DependencyContainer.Register<LogReceiverServer>();
+                DependencyContainer.BuildContainer();
+            }
         }
 
         public static void Start(Assembly mvcAssembly)

@@ -1,4 +1,5 @@
-﻿using FluentNHibernate.Automapping;
+﻿
+using FluentNHibernate.Automapping;
 using FluentNHibernate.Automapping.Alterations;
 using LoggingServer.Server.Domain;
 
@@ -8,7 +9,10 @@ namespace LoggingServer.Server.Repository.Overrides
     {
         public void Override(AutoMapping<Component> mapping)
         {
-            mapping.Id().GeneratedBy.Assigned();
+            mapping.HasMany(x => x.LogEntries).KeyColumn("EntryAssemblyGuid")
+            .Cascade.AllDeleteOrphan()
+            .LazyLoad()
+            .Inverse();
         }
     }
 }

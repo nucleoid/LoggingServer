@@ -61,6 +61,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\NLogConfigurationTest.cs" />
+    <Compile Include="Common\Targets\LoggingServerTargetTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server\Autofac\DBModuleTest.cs" />
     <Compile Include="Server\Autofac\MVCModuleTest.cs" />
@@ -69,6 +71,10 @@
     <Compile Include="Server\LogReceiverServerTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LoggingServer.Common\LoggingServer.Common.csproj">
+      <Project>{DD46A86C-4461-44D1-8C2E-6EA5F5C7B348}</Project>
+      <Name>LoggingServer.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LoggingServer.Interface\LoggingServer.Interface.csproj">
       <Project>{14DA78AD-B69E-4968-B5C3-2381063C9F26}</Project>
       <Name>LoggingServer.Interface</Name>

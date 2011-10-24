@@ -1,16 +1,21 @@
 ﻿
 using System;
+using System.Collections.Generic;
 
 namespace LoggingServer.Server.Domain
 {
     public class Component
     {
         public virtual Guid ID { get; set; }
+        public virtual Guid AssemblyID { get; set; }
         public virtual string Name { get; set; }
         public virtual string Description { get; set; }
         public virtual DateTime DateAdded { get; set; }
         public virtual int Version { get; set; }
-        //TODO Mitch add Project property
+
+        public virtual Project Project { get; set; }
+
+        public virtual IList<LogEntry> LogEntries { get; set; }
 
         public virtual bool Equals(Component other)
         {

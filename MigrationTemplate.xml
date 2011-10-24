@@ -1,0 +1,18 @@
+<TemplatesExport family="File Templates">
+  <Template uid="d40015c3-087c-4e47-8f9b-4ca044b7eae1" shortcut="" description="Migration Template" text="using FluentMigrator;&#xD;&#xA; &#xD;&#xA;namespace $NAMESPACE$&#xD;&#xA;{&#xD;&#xA;    [Migration($MIGRATIONNUMBER$)]&#xD;&#xA;    public class $CLASS$ : MigrationSafe&#xD;&#xA;    {&#xD;&#xA;        public override void Up()&#xD;&#xA;        {&#xD;&#xA;            $END$&#xD;&#xA;        } &#xD;&#xA;    }&#xD;&#xA;}" reformat="True" shortenQualifiedReferences="True">
+    <Scopes>
+      <Scope type="Everywhere" />
+    </Scopes>
+    <Categories />
+    <Variables>
+      <Variable name="NAMESPACE" expression="fileDefaultNamespace()" initialRange="-1" />
+      <Variable name="MIGRATIONNUMBER" expression="" initialRange="0" />
+      <Variable name="CLASS" expression="getFileNameWithoutExtension()" initialRange="-1" />
+    </Variables>
+    <CustomProperties>
+      <Property key="FileName" value="Migration_xxx" />
+      <Property key="Extension" value="cs" />
+      <Property key="ValidateFileName" value="False" />
+    </CustomProperties>
+  </Template>
+</TemplatesExport>

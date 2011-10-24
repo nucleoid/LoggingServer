@@ -30,7 +30,7 @@ namespace LoggingServer.Tests.Server
         }
 
         [Test]
-        public void Start_Registers_All_Modules_And_Builds_Container()
+        public void Start_Assembly_Registers_All_Modules_And_Builds_Container()
         {
             //Act
             BootStrapper.Start(typeof(HomeController).Assembly);

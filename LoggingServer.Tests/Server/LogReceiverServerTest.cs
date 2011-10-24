@@ -5,6 +5,7 @@ using LoggingServer.Server;
 using LoggingServer.Server.Domain;
 using LoggingServer.Server.Repository;
 using MbUnit.Framework;
+using NHibernate.Linq;
 using NLog.LogReceiverService;
 using Rhino.Mocks;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace LoggingServer.Tests.Server
     {
         private IWritableRepository<LogEntry> _logEntryRepository;
         private IWritableRepository<Component> _componentRepository;
+        private IWritableRepository<Project> _projectRepository;
         private LogReceiverServer _server;
 
         [SetUp]
@@ -23,7 +25,8 @@ namespace LoggingServer.Tests.Server
         {
             _logEntryRepository = MockRepository.GenerateMock<IWritableRepository<LogEntry>>();
             _componentRepository = MockRepository.GenerateMock<IWritableRepository<Component>>();
-            _server = new LogReceiverServer(_logEntryRepository, _componentRepository);
+            _projectRepository = MockRepository.GenerateMock<IWritableRepository<Project>>();
+            _server = new LogReceiverServer(_logEntryRepository, _componentRepository, _projectRepository);
         }
 
         [Test]
@@ -31,9 +34,9 @@ namespace LoggingServer.Tests.Server
         {
             //Arrange
             var now = DateTime.Parse("10/18/2011");
-            var component = new Component {ID = Guid.NewGuid()};
+            var component = new Component { AssemblyID = Guid.NewGuid(), Name = "Sorrow", Description = "Foghorns"};
             var entry = new LogEntry { ApplicationID = Guid.NewGuid(), BaseDirectory = "sploosh", CallSite = "rest", ClientID = "forthe", Counter = 3,
-                DateAdded = now, EntryAssemblyCompany = "Longhorn", EntryAssemblyDescription = "Foghorns", EntryAssemblyGuid = component.ID,
+                DateAdded = now, EntryAssemblyCompany = "Longhorn", EntryAssemblyDescription = "Foghorns", EntryAssemblyGuid = component.AssemblyID,
                 EntryAssemblyProduct = "Constant", EntryAssemblyTitle = "Sorrow", EntryAssemblyVersion = "1.4", EnvironmentKey = "Yellow, not Green",
                 ExceptionMessage = "These are NOT the droids you are looking for", ExceptionMethod = "BackFlip", ExceptionStackTrace = "from railing",
                 ExceptionString = "excepted", ExceptionType = "UnAuthorizedBackflipping", ID = Guid.NewGuid(), LogID = Guid.NewGuid(), LogIdentity = "Sky",
@@ -56,7 +59,7 @@ namespace LoggingServer.Tests.Server
                 entry.NotificationsQueued.ToString(), entry.ProcessID, entry.ProcessInfo, entry.ProcessName, entry.ProcessTime.ToString(), entry.StackTrace,
                 entry.ThreadID, entry.ThreadName, entry.Version.ToString(), entry.WindowsIdentity};
 
-            _componentRepository.Expect(x => x.Get(Arg<Guid>.Matches(y => y == component.ID))).Return(component);
+            _componentRepository.Expect(x => x.All()).Return(new List<Component>{component}.AsQueryable());
             _logEntryRepository.Expect(x => x.Save(Arg<List<LogEntry>>.Matches(y => y.Count == 1 &&
                 y.First().Equals(entry))));
 
@@ -88,13 +91,14 @@ namespace LoggingServer.Tests.Server
             events.LayoutNames = new StringCollection { "ClientID", "EntryAssemblyGuid", "EntryAssemblyTitle", "EntryAssemblyDescription" };
             events.Strings = new StringCollection { entry.ClientID, entry.EntryAssemblyGuid.ToString(), entry.EntryAssemblyTitle, entry.EntryAssemblyDescription };
 
-            _componentRepository.Expect(x => x.Get(Arg<Guid>.Matches(y => y.ToString() == assemblyGuid))).Return(null);
-            _componentRepository.Expect(x => x.Save(Arg<Component>.Matches(y => y.ID.ToString() == assemblyGuid && y.Name == assemblyTitle &&
+            _componentRepository.Expect(x => x.All()).Return(new List<Component>().AsQueryable());
+            var projectTitle = assemblyTitle.Split('.')[0];
+            _projectRepository.Expect(x => x.All()).Return(new List<Project>{new Project {Name = projectTitle}}.AsQueryable());
+            _componentRepository.Expect(x => x.Save(Arg<Component>.Matches(y => y.AssemblyID.ToString() == assemblyGuid && y.Name == assemblyTitle &&
                 y.Description == assemblyDescription)));
             _logEntryRepository.Expect(x => x.Save(Arg<List<LogEntry>>.Matches(y => y.Count == 1 &&
-                y.First().Component.ID.ToString() == assemblyGuid)));
+                y.First().Component.AssemblyID.ToString() == assemblyGuid)));
             
-
             //Act
             _server.ProcessLogMessages(events);
 
@@ -122,13 +126,15 @@ namespace LoggingServer.Tests.Server
             var events = new NLogEvents { ClientName = "forthe", Events = new[] { logEvent } };
             events.LayoutNames = new StringCollection { "ClientID", "EntryAssemblyGuid", "EntryAssemblyTitle", "EntryAssemblyDescription" };
             events.Strings = new StringCollection { entry.ClientID, entry.EntryAssemblyGuid.ToString(), entry.EntryAssemblyTitle, entry.EntryAssemblyDescription };
-            var component = new Component {ID = new Guid(assemblyGuid)};
+            var component = new Component {AssemblyID = new Guid(assemblyGuid)};
 
-            _componentRepository.Expect(x => x.Get(Arg<Guid>.Matches(y => y.ToString() == assemblyGuid))).Return(component);
-            _componentRepository.Expect(x => x.Save(Arg<Component>.Matches(y => y.ID.ToString() == assemblyGuid && y.Name == assemblyTitle &&
+            _componentRepository.Expect(x => x.All()).Return(new List<Component>{component}.AsQueryable());
+            _componentRepository.Expect(x => x.Save(Arg<Component>.Matches(y => y.AssemblyID.ToString() == assemblyGuid && y.Name == assemblyTitle &&
                 y.Description == assemblyDescription)));
+            var projectTitle = assemblyTitle.Split('.')[0];
+            _projectRepository.Expect(x => x.All()).Return(new List<Project> { new Project { Name = projectTitle } }.AsQueryable());
             _logEntryRepository.Expect(x => x.Save(Arg<List<LogEntry>>.Matches(y => y.Count == 1 &&
-                y.First().Component.ID.ToString() == assemblyGuid)));
+                y.First().Component.AssemblyID.ToString() == assemblyGuid)));
 
 
             //Act
@@ -137,6 +143,83 @@ namespace LoggingServer.Tests.Server
             //Assert
             _logEntryRepository.VerifyAllExpectations();
             _componentRepository.VerifyAllExpectations();
+        }
+
+        [Test]
+        public void ProcessLogMessages_Sets_Component_Project()
+        {
+            //Arrange
+            object[] guidObjects = typeof(LogReceiverServerTest).Assembly.GetCustomAttributes(typeof(System.Runtime.InteropServices.GuidAttribute), false);
+            string assemblyTitle = (typeof(LogReceiverServerTest).Assembly.GetCustomAttributes(typeof(AssemblyTitleAttribute), false)[0] as AssemblyTitleAttribute).Title;
+            string assemblyDescription = (typeof(LogReceiverServerTest).Assembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false)[0] as AssemblyDescriptionAttribute).Description;
+            string assemblyGuid = ((System.Runtime.InteropServices.GuidAttribute)guidObjects[0]).Value;
+            var entry = new LogEntry
+            {
+                ClientID = "forthe",
+                EntryAssemblyGuid = new Guid(assemblyGuid),
+                EntryAssemblyTitle = assemblyTitle,
+                EntryAssemblyDescription = assemblyDescription
+            };
+            var logEvent = new NLogEvent { Values = "0|1|2|3" };
+            var events = new NLogEvents { ClientName = "forthe", Events = new[] { logEvent } };
+            events.LayoutNames = new StringCollection { "ClientID", "EntryAssemblyGuid", "EntryAssemblyTitle", "EntryAssemblyDescription" };
+            events.Strings = new StringCollection { entry.ClientID, entry.EntryAssemblyGuid.ToString(), entry.EntryAssemblyTitle, entry.EntryAssemblyDescription };
+
+            var projectTitle = assemblyTitle.Split('.')[0];
+
+            _componentRepository.Expect(x => x.All()).Return(new List<Component>().AsQueryable());
+            _projectRepository.Expect(x => x.All()).Return(new List<Project>().AsQueryable());
+            _projectRepository.Expect(x => x.Save(Arg<Project>.Matches(y => y.Name == projectTitle)));
+            _componentRepository.Expect(x => x.Save(Arg<Component>.Matches(y => y.Project.Name == projectTitle)));
+            _logEntryRepository.Expect(x => x.Save(Arg<List<LogEntry>>.Matches(y => y.Count == 1 &&
+                y.First().Component.AssemblyID.ToString() == assemblyGuid)));
+
+            //Act
+            _server.ProcessLogMessages(events);
+
+            //Assert
+            _logEntryRepository.VerifyAllExpectations();
+            _componentRepository.VerifyAllExpectations();
+            _projectRepository.VerifyAllExpectations();
+        }
+
+        [Test]
+        public void ProcessLogMessages_Updates_LogEntry_Component_Project()
+        {
+            //Arrange
+            object[] guidObjects = typeof(LogReceiverServerTest).Assembly.GetCustomAttributes(typeof(System.Runtime.InteropServices.GuidAttribute), false);
+            string assemblyTitle = (typeof(LogReceiverServerTest).Assembly.GetCustomAttributes(typeof(AssemblyTitleAttribute), false)[0] as AssemblyTitleAttribute).Title;
+            string assemblyDescription = (typeof(LogReceiverServerTest).Assembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false)[0] as AssemblyDescriptionAttribute).Description;
+            string assemblyGuid = ((System.Runtime.InteropServices.GuidAttribute)guidObjects[0]).Value;
+            var entry = new LogEntry
+            {
+                ClientID = "forthe",
+                EntryAssemblyGuid = new Guid(assemblyGuid),
+                EntryAssemblyTitle = assemblyTitle,
+                EntryAssemblyDescription = assemblyDescription
+            };
+            var logEvent = new NLogEvent { Values = "0|1|2|3" };
+            var events = new NLogEvents { ClientName = "forthe", Events = new[] { logEvent } };
+            events.LayoutNames = new StringCollection { "ClientID", "EntryAssemblyGuid", "EntryAssemblyTitle", "EntryAssemblyDescription" };
+            events.Strings = new StringCollection { entry.ClientID, entry.EntryAssemblyGuid.ToString(), entry.EntryAssemblyTitle, entry.EntryAssemblyDescription };
+            var component = new Component { AssemblyID = new Guid(assemblyGuid), Project = new Project {Name = "otherProject"}};
+
+            _componentRepository.Expect(x => x.All()).Return(new List<Component>{component}.AsQueryable());
+            _projectRepository.Expect(x => x.All()).Return(new List<Project>().AsQueryable());
+            var projectTitle = assemblyTitle.Split('.')[0];
+            _projectRepository.Expect(x => x.Save(Arg<Project>.Matches(y => y.Name == projectTitle)));
+            _componentRepository.Expect(x => x.Save(Arg<Component>.Matches(y => y.AssemblyID.ToString() == assemblyGuid && y.Name == assemblyTitle &&
+                y.Description == assemblyDescription && y.Project.Name == projectTitle)));
+            _logEntryRepository.Expect(x => x.Save(Arg<List<LogEntry>>.Matches(y => y.Count == 1 &&
+                y.First().Component.AssemblyID.ToString() == assemblyGuid)));
+
+            //Act
+            _server.ProcessLogMessages(events);
+
+            //Assert
+            _logEntryRepository.VerifyAllExpectations();
+            _componentRepository.VerifyAllExpectations();
+            _projectRepository.VerifyAllExpectations();
         }
     }
 }

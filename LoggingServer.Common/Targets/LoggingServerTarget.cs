@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using NLog.Layouts;
 using NLog.Targets;
@@ -8,6 +9,12 @@ namespace LoggingServer.Common.Targets
     [Target("LoggingServer")]
     public class LoggingServerTarget : LogReceiverWebServiceTarget
     {
+        public LoggingServerTarget()
+        {
+            EnvironmentKey = string.Empty;
+        }
+
+        public string AssemblyName { get; set; }
         public string EnvironmentKey { get; set; }
 
         private Guid _applicationID = Guid.Empty;
@@ -44,6 +51,11 @@ namespace LoggingServer.Common.Targets
             Parameters.Add(new MethodCallParameter("WindowsIdentity", Layout.FromString("${windows-identity}")));
             Parameters.Add(new MethodCallParameter("EnvironmentKey", EnvironmentKey));
             Parameters.Add(new MethodCallParameter("ApplicationID", ApplicationID));
+            if (!string.IsNullOrEmpty(AssemblyName) && !Parameters.Any(x => x.Name == "EntryAssemblyCompany"))
+            {
+                var assembly = Assembly.Load(AssemblyName);
+                AddAssemblyParameters(assembly);
+            }
             base.InitializeTarget();
         }
 

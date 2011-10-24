@@ -1,8 +1,10 @@
-﻿using System.Reflection;
+﻿using System.Configuration;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using LoggingServer.Server;
+using LoggingServer.Common;
+using LoggingServer.Common.Attributes;
 using NLog;
 
 namespace LoggingServer.Interface
@@ -12,6 +14,7 @@ namespace LoggingServer.Interface
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new HandleErrorLogAttribute());
         }
 
         public static void RegisterRoutes(RouteCollection routes)
@@ -23,7 +26,6 @@ namespace LoggingServer.Interface
                 "{controller}/{action}/{id}", // URL with parameters
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
-
         }
 
         protected void Application_Start()
@@ -31,8 +33,10 @@ namespace LoggingServer.Interface
             AreaRegistration.RegisterAllAreas();
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-            BootStrapper.Start(Assembly.GetExecutingAssembly());
-            LogManager.Configuration = NLogConfiguration.CreateConfig();
+            var environment = ConfigurationManager.AppSettings["environment"];
+            var loggingServerEndPoint = ConfigurationManager.AppSettings["loggingServerEndPoint"];
+            LogManager.Configuration = NLogConfiguration.ConfigureServerLogger(null, environment, loggingServerEndPoint, 
+                Assembly.GetExecutingAssembly(), LogLevel.Trace);
         }
     }
 }

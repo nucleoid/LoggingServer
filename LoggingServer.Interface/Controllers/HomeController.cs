@@ -6,7 +6,7 @@ namespace LoggingServer.Interface.Controllers
 {
     public class HomeController : Controller
     {
-        private Logger logger = LogManager.GetCurrentClassLogger();
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public ActionResult Index()
         {
@@ -15,8 +15,13 @@ namespace LoggingServer.Interface.Controllers
 
         public ActionResult About()
         {
-            logger.Debug("testing debug log");
+            _logger.Debug("testing debug log");
             return new ContentResult {Content = "Blah!"};
+        }
+
+        public ActionResult ThrowException()
+        {
+            throw new Exception("just testing exception logging");
         }
     }
 }

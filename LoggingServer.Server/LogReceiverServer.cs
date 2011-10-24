@@ -17,19 +17,24 @@ namespace LoggingServer.Server
     public class LogReceiverServer : ILogReceiverServer
     {
         private readonly static List<PropertyInfo> PropertyInfos = (typeof(LogEntry)).GetProperties().ToList();
+        private readonly IWritableRepository<Project> _projectRepository;
         private readonly IWritableRepository<Component> _componentRepository;
         private readonly IWritableRepository<LogEntry> _logEntryRepository;
 
         public LogReceiverServer()
         {
+            BootStrapper.Start();
+            _projectRepository = DependencyContainer.Resolve<IWritableRepository<Project>>();
             _componentRepository = DependencyContainer.Resolve<IWritableRepository<Component>>();
             _logEntryRepository = DependencyContainer.Resolve<IWritableRepository<LogEntry>>();
         }
 
-        public LogReceiverServer(IWritableRepository<LogEntry> logEntryRepository, IWritableRepository<Component> componentRepository)
+        public LogReceiverServer(IWritableRepository<LogEntry> logEntryRepository, IWritableRepository<Component> componentRepository, 
+            IWritableRepository<Project> projectRepository)
         {
             _logEntryRepository = logEntryRepository;
             _componentRepository = componentRepository;
+            _projectRepository = projectRepository;
         }
 
         public void ProcessLogMessages(NLogEvents events)
@@ -115,20 +120,39 @@ namespace LoggingServer.Server
 
         private void SetComponent(LogEntry log, object value, string title, string description)
         {
-            var component = _componentRepository.Get(new Guid(value.ToString()));
+            var component = _componentRepository.All().Where(x => x.AssemblyID == new Guid(value.ToString())).SingleOrDefault();
             if(component == null)
             {
-                component = new Component {ID = new Guid(value.ToString()), Name = title, Description = description, DateAdded = DateTime.Now};
+                component = new Component { AssemblyID = new Guid(value.ToString()), Name = title, Description = description, DateAdded = DateTime.Now };
+                SetProject(component);
                 _componentRepository.Save(component);
             } 
             else if(component.Name != title || component.Description != description)
             {
                 component.Name = title;
                 component.Description = description;
+                SetProject(component);
                 _componentRepository.Save(component);
             }
             
             log.Component = component;
+        }
+
+        private void SetProject(Component component)
+        {
+            var projectName = ExtractProjectName(component);
+            var project = _projectRepository.All().Where(x => x.Name == projectName).SingleOrDefault();
+            if(project == null)
+            {
+                project = new Project { DateAdded = DateTime.Now, Name = projectName, Description = projectName };
+                _projectRepository.Save(project);
+            }
+            component.Project = project;
+        }
+
+        private static string ExtractProjectName(Component component)
+        {
+            return component.Name.Split('.').FirstOrDefault();
         }
     }
 }

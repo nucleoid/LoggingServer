@@ -89,7 +89,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="NLogConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -169,10 +168,6 @@
     <ProjectReference Include="..\LoggingServer.Common\LoggingServer.Common.csproj">
       <Project>{DD46A86C-4461-44D1-8C2E-6EA5F5C7B348}</Project>
       <Name>LoggingServer.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LoggingServer.Server\LoggingServer.Server.csproj">
-      <Project>{E586133A-2E0D-4CCA-8FF9-1870BC611E14}</Project>
-      <Name>LoggingServer.Server</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
