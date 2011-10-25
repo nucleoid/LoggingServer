@@ -3,6 +3,7 @@ using LoggingServer.Server;
 using LoggingServer.Server.Autofac;
 using LoggingServer.Server.Domain;
 using LoggingServer.Server.Repository;
+using LoggingServer.Server.Tasks;
 using MbUnit.Framework;
 using NHibernate;
 
@@ -27,6 +28,7 @@ namespace LoggingServer.Tests.Server
             Assert.IsNotNull(DependencyContainer.Resolve<ISession>());
             Assert.IsNotNull(DependencyContainer.Resolve<IReadableRepository<LogEntry>>());
             Assert.IsNotNull(DependencyContainer.Resolve<LogReceiverServer>());
+            Assert.IsNotNull(DependencyContainer.Resolve<ILogEntryTasks>());
         }
 
         [Test]
@@ -39,6 +41,7 @@ namespace LoggingServer.Tests.Server
             Assert.IsNotNull(DependencyContainer.Resolve<ISession>());
             Assert.IsNotNull(DependencyContainer.Resolve<IReadableRepository<LogEntry>>());
             Assert.IsNotNull(DependencyContainer.Resolve<LogReceiverServer>());
+            Assert.IsNotNull(DependencyContainer.Resolve<ILogEntryTasks>());
             Assert.IsNotNull(DependencyContainer.Resolve<HomeController>());
         }
     }

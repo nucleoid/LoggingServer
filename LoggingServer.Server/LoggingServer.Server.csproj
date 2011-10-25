@@ -77,8 +77,10 @@
     <Compile Include="Autofac\DependencyContainer.cs" />
     <Compile Include="Autofac\MVCModule.cs" />
     <Compile Include="Autofac\RepositoryModule.cs" />
+    <Compile Include="Autofac\TaskModule.cs" />
     <Compile Include="BootStrapper.cs" />
     <Compile Include="Domain\Component.cs" />
+    <Compile Include="Domain\SearchFilter.cs" />
     <Compile Include="Domain\LogEntry.cs" />
     <Compile Include="Domain\LogLevel.cs" />
     <Compile Include="Domain\Project.cs" />
@@ -101,12 +103,17 @@
     <Compile Include="Repository\Overrides\ProjectOverride.cs" />
     <Compile Include="Repository\ReadableRepository.cs" />
     <Compile Include="Repository\WriteableRepository.cs" />
+    <Compile Include="Tasks\ILogEntryTasks.cs" />
+    <Compile Include="Tasks\LogEntryTasks.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Tasks\" />
+    <ProjectReference Include="..\LoggingServer.Common\LoggingServer.Common.csproj">
+      <Project>{DD46A86C-4461-44D1-8C2E-6EA5F5C7B348}</Project>
+      <Name>LoggingServer.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -11,7 +11,7 @@ namespace LoggingServer.Server
         {
             if(DependencyContainer.Container == null)
             {
-                DependencyContainer.Register(new DBModule(), new RepositoryModule());
+                DependencyContainer.Register(new DBModule(), new RepositoryModule(), new TaskModule());
                 DependencyContainer.Register<LogReceiverServer>();
                 DependencyContainer.BuildContainer();
             }
@@ -19,7 +19,7 @@ namespace LoggingServer.Server
 
         public static void Start(Assembly mvcAssembly)
         {
-            DependencyContainer.Register(new DBModule(), new RepositoryModule(), new MVCModule(mvcAssembly));
+            DependencyContainer.Register(new DBModule(), new RepositoryModule(), new TaskModule(), new MVCModule(mvcAssembly));
             DependencyContainer.Register<LogReceiverServer>();
             DependencyContainer.BuildContainer();
 

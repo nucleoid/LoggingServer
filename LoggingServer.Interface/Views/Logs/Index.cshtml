@@ -1,0 +1,17 @@
+﻿@using MvcContrib.UI.Grid
+@model PagedModel<LogEntry, LogEntryModel>
+
+@{
+    ViewBag.Title = "Logs";
+}
+
+<h2>Logs</h2> 
+@using (Html.BeginForm("Index", "Logs", FormMethod.Get, new { id = "logSearch" })) 
+{    
+<label> 
+Project Name   @Html.TextBox("filter.ProjectName") 
+</label> 
+}
+@{Html.RenderPartial("_pager", Model.PagedList);} 
+@Html.Grid(Model.PagedList).AutoGenerateColumns();
+}).Sort(Model.GridSortOptions).Attributes(@@class => "grid-style")
