@@ -56,7 +56,7 @@ h1 {
 }
 
 h2 {
-    padding: 0 0 10px 0;
+    padding: 0 0 5px 0;
 }
 
 h3 {
@@ -91,21 +91,21 @@ header, #header {
 
 header h1, #header h1 {
     font-weight: bold;
-    padding: 5px 0;
+    padding: 1em 0 .1em 0;
     margin: 0;
     color: #fff;
     border: none;
-    line-height: 2em;
-    font-size: 32px !important;
+    font-size: 2.5em !important;
     text-shadow: 1px 1px 2px #111;
 }
 
 #main {
-    padding: 30px 30px 15px 30px;
+    padding: 10px 30px 15px 30px;
     background-color: #fff;
     border-radius: 4px 0 0 0;
     -webkit-border-radius: 4px 0 0 0;
     -moz-border-radius: 4px 0 0 0;
+    clear: both;
 }
 
 footer, 
@@ -177,8 +177,8 @@ ul#menu li.selected a {
 
 fieldset {
     border: 1px solid #ddd;
-    padding: 0 1.4em 1.4em 1.4em;
-    margin: 0 0 1.5em 0;
+    padding: 0;
+    margin: auto;
 }
 
 legend {
@@ -194,9 +194,10 @@ input[type="text"],
 input[type="password"] {
     border: 1px solid #ccc;
     padding: 2px;
-    font-size: 1.2em;
+    font-size: 1em;
     color: #444;
-    width: 200px;
+    width: 150px;
+    margin-right: 10px;
 }
 
 select {
@@ -207,10 +208,28 @@ select {
 }
 
 input[type="submit"] {
-    font-size: 1.2em;
-    padding: 5px;
+    font-size: 1em;
+    padding: 1px;
 }
 
+input[type="checkbox"] {
+    margin-left: 0;
+    margin-right: 10px;
+}
+
+.related-form-fields {
+    margin-bottom: 5px;
+}
+
+fieldset.related-form-fields {
+    padding: 3px;
+    margin-bottom: 10px;
+}
+
+div.checkboxes label {
+    margin: 0;
+    padding: 0;
+}
 /* TABLE
 ----------------------------------------------------------*/
 
@@ -222,6 +241,7 @@ table {
 table td {
     padding: 5px;
     border: solid 1px #e8eef4;
+    vertical-align: top;
 }
 
 table th {
@@ -231,6 +251,36 @@ table th {
     border: solid 1px #e8eef4;
 }
 
+table tr.loglevel-trace, table tr.loglevel-trace pre
+{
+    background-color: #F3F3F3;
+}
+
+table tr.loglevel-debug, table tr.loglevel-debug pre
+{
+    background-color: #CAE4FF;
+}
+
+table tr.loglevel-info, table tr.loglevel-info pre
+{
+    background-color: #BBFFBB;
+}
+
+table tr.loglevel-warn, table tr.loglevel-warn pre
+{
+    background-color: #FFFFA8;
+}
+
+table tr.loglevel-error, table tr.loglevel-error pre
+{
+    background-color: #FF8080;
+}
+
+table tr.loglevel-fatal, table tr.loglevel-fatal pre
+{
+    color: White;
+    background-color: #FF0000;
+}
 /* MISC  
 ----------------------------------------------------------*/
 .clear {
@@ -244,6 +294,7 @@ table th {
 nav, 
 #menucontainer {
     margin-top: 40px;
+    float: right;
 }
 
 div#title {
@@ -275,6 +326,13 @@ div#title {
     text-decoration: none;
 }
 
+.maxheight {
+    height: 50px;
+}
+
+.add-margin-right {
+    margin-right: 10px;
+}
 /* Styles for validation helpers
 -----------------------------------------------------------*/
 .field-validation-error {

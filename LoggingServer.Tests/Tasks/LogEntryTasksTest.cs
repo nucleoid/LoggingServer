@@ -66,16 +66,11 @@ namespace LoggingServer.Tests.Tasks
 
             //Assert
             Assert.AreEqual(10, results.Count);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000001"), results[0].ID);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000002"), results[1].ID);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000003"), results[2].ID);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000004"), results[3].ID);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000005"), results[4].ID);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000006"), results[5].ID);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000007"), results[6].ID);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000008"), results[7].ID);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000009"), results[8].ID);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000010"), results[9].ID);
+            Assert.AreEqual(_now.AddDays(11), results[0].DateAdded);
+            Assert.AreEqual(_now.AddDays(10), results[1].DateAdded);
+            Assert.AreEqual(_now.AddDays(8), results[2].DateAdded);
+            Assert.AreEqual(_now.AddDays(5), results[3].DateAdded);
+            Assert.ForAll(results.Skip(4), x => x.DateAdded == _now);
         }
 
         [Test]
@@ -89,11 +84,11 @@ namespace LoggingServer.Tests.Tasks
 
             //Assert
             Assert.AreEqual(5, results.Count);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000001"), results[0].ID);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000002"), results[1].ID);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000003"), results[2].ID);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000004"), results[3].ID);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000005"), results[4].ID);
+            Assert.AreEqual(_now.AddDays(11), results[0].DateAdded);
+            Assert.AreEqual(_now.AddDays(10), results[1].DateAdded);
+            Assert.AreEqual(_now.AddDays(8), results[2].DateAdded);
+            Assert.AreEqual(_now.AddDays(5), results[3].DateAdded);
+            Assert.AreEqual(_now, results[4].DateAdded);
         }
 
         [Test]
@@ -107,11 +102,7 @@ namespace LoggingServer.Tests.Tasks
 
             //Assert
             Assert.AreEqual(5, results.Count);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000006"), results[0].ID);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000007"), results[1].ID);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000008"), results[2].ID);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000009"), results[3].ID);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000010"), results[4].ID);
+            Assert.ForAll(results.Skip(5), x => x.DateAdded == _now);
         }
 
         [Test]
@@ -138,11 +129,11 @@ namespace LoggingServer.Tests.Tasks
 
             //Assert
             Assert.AreEqual(5, results.Count);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000001"), results[0].ID);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000002"), results[1].ID);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000003"), results[2].ID);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000004"), results[3].ID);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000005"), results[4].ID);
+            Assert.AreEqual(_now.AddDays(11), results[0].DateAdded);
+            Assert.AreEqual(_now.AddDays(10), results[1].DateAdded);
+            Assert.AreEqual(_now.AddDays(8), results[2].DateAdded);
+            Assert.AreEqual(_now.AddDays(5), results[3].DateAdded);
+            Assert.AreEqual(_now, results[4].DateAdded);
         }
 
         [Test]
@@ -156,11 +147,11 @@ namespace LoggingServer.Tests.Tasks
 
             //Assert
             Assert.AreEqual(5, results.Count);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000001"), results[0].ID);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000002"), results[1].ID);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000003"), results[2].ID);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000004"), results[3].ID);
-            Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000005"), results[4].ID);
+            Assert.AreEqual(_now.AddDays(11), results[0].DateAdded);
+            Assert.AreEqual(_now.AddDays(10), results[1].DateAdded);
+            Assert.AreEqual(_now.AddDays(8), results[2].DateAdded);
+            Assert.AreEqual(_now.AddDays(5), results[3].DateAdded);
+            Assert.AreEqual(_now, results[4].DateAdded);
         }
 
         [Test]
@@ -382,6 +373,42 @@ namespace LoggingServer.Tests.Tasks
             Assert.Contains(result.ExceptionMessage.ToLowerInvariant(), "didn't do that one thing");
             Assert.Contains(result.MachineName.ToLowerInvariant(), "scrappyjoe");
             Assert.Contains(result.LogMessage.ToLowerInvariant(), "something went wrong!");
+        }
+
+        [Test]
+        public void Count_Without_Filter()
+        {
+            //Arrange
+            _logEntryRepository.Expect(x => x.All()).Return(GenerateLogEntries());
+
+            //Act
+            var count = _tasks.Count(null);
+
+            //Assert
+            Assert.AreEqual(16, count);
+        }
+
+        [Test]
+        public void Count_With_Filter()
+        {
+            //Arrange
+            _logEntryRepository.Expect(x => x.All()).Return(GenerateLogEntries());
+
+            //Act
+            var count = _tasks.Count(new SearchFilter
+            {
+                ProjectName = "Shattered",
+                ComponentName = "Dreams",
+                StartDate = _now,
+                EndDate = _now,
+                LogLevel = LogLevel.Error,
+                ExceptionPartial = "didn't do that one thing",
+                MachineNamePartial = "scrappyJoe",
+                MessagePartial = "something went wrong!"
+            });
+
+            //Assert
+            Assert.AreEqual(1, count);
         }
 
         /// <summary>

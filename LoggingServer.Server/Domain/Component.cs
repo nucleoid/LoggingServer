@@ -7,7 +7,6 @@ namespace LoggingServer.Server.Domain
     public class Component
     {
         public virtual Guid ID { get; set; }
-        public virtual Guid AssemblyID { get; set; }
         public virtual string Name { get; set; }
         public virtual string Description { get; set; }
         public virtual DateTime DateAdded { get; set; }

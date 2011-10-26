@@ -9,6 +9,7 @@ namespace LoggingServer.Server.Repository.Overrides
         public void Override(AutoMapping<Project> mapping)
         {
             mapping.Map(x => x.Name).Unique();
+            mapping.Cache.ReadWrite();
         }
     }
 }

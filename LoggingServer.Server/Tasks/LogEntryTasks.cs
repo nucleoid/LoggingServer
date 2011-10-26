@@ -1,7 +1,7 @@
 ﻿
 using System;
 using System.Linq;
-using System.Collections.Generic;
+using System.Linq.Expressions;
 using LoggingServer.Common.Extensions;
 using LoggingServer.Server.Domain;
 using LoggingServer.Server.Repository;
@@ -28,11 +28,19 @@ namespace LoggingServer.Server.Tasks
         {
             var page = !pageIndex.HasValue | (pageIndex < 1) ? 1 : pageIndex.Value;
             var size = !pageSize.HasValue | pageSize < 0 ? DefaultPageSize : pageSize.Value;
-            IQueryable<LogEntry> queryable = _logEntryRepository.All();
+            IQueryable<LogEntry> queryable = _logEntryRepository.All().OrderByDescending(x => x.DateAdded);
             if (filter != null)
                 queryable = AddFilterToQuery(filter, queryable);
             queryable = queryable.Skip((page - 1) * size).Take(size);
             return queryable;
+        }
+
+        public int Count(SearchFilter filter)
+        {
+            IQueryable<LogEntry> queryable = _logEntryRepository.All();
+            if (filter != null)
+                return AddFilterToQuery(filter, queryable).Count();
+            return queryable.Count();
         }
 
         private IQueryable<LogEntry> AddFilterToQuery(SearchFilter filter, IQueryable<LogEntry> queryable)
@@ -48,12 +56,27 @@ namespace LoggingServer.Server.Tasks
             if (!string.IsNullOrEmpty(filter.MessagePartial))
                 queryable = queryable.Where(x => x.LogMessage.ToLowerInvariant().Contains(filter.MessagePartial.ToLowerInvariant()));
             if (filter.LogLevel.HasValue)
-                queryable = queryable.Where(x => filter.LogLevel.Value.TestFor(x.LogLevel));
+                queryable = queryable.Where(GenerateLogLevelLambda(filter));
             if (filter.StartDate.HasValue)
                 queryable = queryable.Where(x => x.DateAdded >= filter.StartDate.Value);
             if (filter.EndDate.HasValue)
                 queryable = queryable.Where(x => x.DateAdded <= filter.EndDate.Value);
             return queryable;
+        }
+
+        private static Expression<Func<LogEntry, bool>> GenerateLogLevelLambda(SearchFilter filter)
+        {
+            var param = Expression.Parameter(typeof (LogEntry), "l");
+            Expression body = null;
+            foreach (var field in EnumExtensions.BitFieldAsEnumerable(filter.LogLevel.Value))
+            {
+                if (body == null)
+                    body = Expression.Equal(Expression.Property(param, "LogLevel"), Expression.Constant(field));
+                else
+                    body = Expression.OrElse(body, Expression.Equal(Expression.Property(param, "LogLevel"), Expression.Constant(field)));
+            }
+            var lambda = Expression.Lambda<Func<LogEntry, bool>>(body, param);
+            return lambda;
         }
     }
 }

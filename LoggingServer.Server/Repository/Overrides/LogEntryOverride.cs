@@ -10,7 +10,7 @@ namespace LoggingServer.Server.Repository.Overrides
 
         public void Override(AutoMapping<LogEntry> mapping)
         {
-            mapping.References(x => x.Component, "EntryAssemblyGuid").PropertyRef(x => x.AssemblyID).NotFound.Ignore().LazyLoad().Not.Insert().Not.Update();
+            mapping.References(x => x.Component, "EntryAssemblyGuid").NotFound.Ignore().LazyLoad().Not.Insert().Not.Update();
             mapping.Map(x => x.ExceptionStackTrace).Length(NVarCharMax);
             mapping.Map(x => x.ExceptionString).Length(NVarCharMax);
             mapping.Map(x => x.StackTrace).Length(NVarCharMax);

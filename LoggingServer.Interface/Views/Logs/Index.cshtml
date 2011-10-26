@@ -1,17 +1,79 @@
-﻿@using MvcContrib.UI.Grid
-@model PagedModel<LogEntry, LogEntryModel>
+﻿@using LoggingServer.Interface.Controllers
+@using MvcContrib.UI.Grid
+@model PagedModel<LogEntry, LogEntrySummaryModel>
 
 @{
     ViewBag.Title = "Logs";
 }
 
 <h2>Logs</h2> 
-@using (Html.BeginForm("Index", "Logs", FormMethod.Get, new { id = "logSearch" })) 
+@using (Html.BeginForm("Index", "Logs", FormMethod.Post, new { id = "logSearch" }))
 {    
-<label> 
-Project Name   @Html.TextBox("filter.ProjectName") 
-</label> 
+    @Html.ValidationSummary()
+    <fieldset class="related-form-fields">
+        <legend>Filters</legend>
+        <div class="related-form-fields">
+            <label for="filter_ProjectName">Project Name</label>
+            @Html.TextBox("filter.ProjectName")
+
+            <label for="filter_ComponentName">Component Name</label>
+            @Html.TextBox("filter.ComponentName")
+        </div>
+        <div class="related-form-fields">
+            <label for="filter_StartDate">Start Date</label>
+            @Html.TextBox("filter.StartDate")
+
+            <label for="filter_EndDate">End Date</label>
+            @Html.TextBox("filter.EndDate")
+        </div>
+        <div class="related-form-fields checkboxes">
+            <span class="add-margin-right">Log Levels:</span>
+            @(Html.CheckBoxesForFlagsEnum<LogLevel>("filter.LogLevel", ViewData["filter.LogLevel"], null))
+        </div>
+        <div>
+            <label for="filter_MachineNamePartial">Machine Name</label>
+            @Html.TextBox("filter.MachineNamePartial")
+
+            <label for="filter_ExceptionPartial">Exception</label>
+            @Html.TextBox("filter.ExceptionPartial")
+
+            <label for="filter_MessagePartial">Log Message</label>
+            @Html.TextBox("filter.MessagePartial")
+
+            <input type="submit" value="Filter" />
+            <input type="button" id="clear" value="Clear Filter"/>
+        </div>
+    </fieldset>
 }
-@{Html.RenderPartial("_pager", Model.PagedList);} 
-@Html.Grid(Model.PagedList).AutoGenerateColumns();
-}).Sort(Model.GridSortOptions).Attributes(@@class => "grid-style")
+@{Html.RenderPartial("_pager", Model.PagedList);}
+@Html.Grid(Model.PagedList).AutoGenerateColumns().RowAttributes(row => new Hash(url => Url.Action<LogsController>(c => c.Details(row.Item.ID)),
+    @class => string.Format("loglevel-{0}", row.Item.LogLevel.ToString().ToLowerInvariant()))).Attributes(@class => "grid-style")
+
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+        $("tr").click(function () {
+            window.location = $(this).attr("url");
+        });
+        $("tr").not(':first').hover(
+          function () {
+              $(this).css("background", "yellow");
+              $(this).css("cursor", "pointer");
+          },
+          function () {
+              $(this).css("background", "");
+          }
+        );
+        $(function () {
+            $("#filter_StartDate").datepicker();
+            $("#filter_EndDate").datepicker();
+        });
+
+        $('#clear').click(function() {
+            $(':input', '#logSearch')
+                .not(':button, :submit, :reset, :hidden')
+                .val('')
+                .removeAttr('checked')
+                .removeAttr('selected');
+        });
+    });
+</script>

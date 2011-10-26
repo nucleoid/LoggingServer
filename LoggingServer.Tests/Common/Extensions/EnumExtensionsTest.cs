@@ -80,6 +80,76 @@ namespace LoggingServer.Tests.Common.Extensions
             Assert.Contains(enums, TestEnumeration.TestValueseveN);
         }
 
+        [Test]
+        public void ToSelectList_Generates_SelectList()
+        {
+            //Act
+            var selectList = BitField.One.ToSelectList(false);
+
+            //Assert
+            Assert.AreEqual(6, selectList.Count());
+            Assert.AreEqual("One", selectList.SingleOrDefault(x => x.Text == "One").Value);
+            Assert.AreEqual("Two", selectList.SingleOrDefault(x => x.Text == "Two").Value);
+            Assert.AreEqual("Four", selectList.SingleOrDefault(x => x.Text == "Four").Value);
+            Assert.AreEqual("Eight", selectList.SingleOrDefault(x => x.Text == "Eight").Value);
+            Assert.AreEqual("Sixteen", selectList.SingleOrDefault(x => x.Text == "Sixteen").Value);
+            Assert.AreEqual("ThrityTwo", selectList.SingleOrDefault(x => x.Text == "ThrityTwo").Value);
+        }
+
+        [Test]
+        public void ToSelectList_Without_Selected()
+        {
+            //Act
+            var selectList = BitField.One.ToSelectList(false);
+
+            //Assert
+            Assert.IsFalse(selectList.SingleOrDefault(x => x.Text == "One").Selected);
+            Assert.IsFalse(selectList.SingleOrDefault(x => x.Text == "Two").Selected);
+            Assert.IsFalse(selectList.SingleOrDefault(x => x.Text == "Four").Selected);
+            Assert.IsFalse(selectList.SingleOrDefault(x => x.Text == "Eight").Selected);
+            Assert.IsFalse(selectList.SingleOrDefault(x => x.Text == "Sixteen").Selected);
+            Assert.IsFalse(selectList.SingleOrDefault(x => x.Text == "ThrityTwo").Selected);
+        }
+
+        [Test]
+        public void ToSelectList_With_Selected()
+        {
+            //Act
+            var selectList = BitField.One.ToSelectList(true);
+
+            //Assert
+            Assert.IsTrue(selectList.SingleOrDefault(x => x.Text == "One").Selected);
+            Assert.IsFalse(selectList.SingleOrDefault(x => x.Text == "Two").Selected);
+            Assert.IsFalse(selectList.SingleOrDefault(x => x.Text == "Four").Selected);
+            Assert.IsFalse(selectList.SingleOrDefault(x => x.Text == "Eight").Selected);
+            Assert.IsFalse(selectList.SingleOrDefault(x => x.Text == "Sixteen").Selected);
+            Assert.IsFalse(selectList.SingleOrDefault(x => x.Text == "ThrityTwo").Selected);
+        }
+
+        [Test]
+        public void BitFieldAsEnumerable_With_One_Value_Returned()
+        {
+            var flags = BitField.One;
+            IList<BitField> fields = EnumExtensions.BitFieldAsEnumerable(flags);
+
+            Assert.IsNotNull(fields);
+            Assert.AreEqual(1, fields.Count);
+            Assert.AreEqual(BitField.One, fields[0]);
+        }
+
+        [Test]
+        public void BitFieldAsEnumerable_With_Multiple_Values_Returned()
+        {
+            var flags = BitField.One | BitField.Two | BitField.Four;
+            IList<BitField> fields = EnumExtensions.BitFieldAsEnumerable(flags);
+
+            Assert.IsNotNull(fields);
+            Assert.AreEqual(3, fields.Count);
+            Assert.IsTrue(fields.Contains(BitField.One));
+            Assert.IsTrue(fields.Contains(BitField.Two));
+            Assert.IsTrue(fields.Contains(BitField.Four));
+        }
+
         public enum TestEnumeration
         {
             TestValueOne,

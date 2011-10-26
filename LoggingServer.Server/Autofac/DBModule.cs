@@ -6,6 +6,7 @@ using LoggingServer.Server.Repository;
 using LoggingServer.Server.Repository.FluentMigrations;
 using NHibernate;
 using NHibernate.ByteCode.Castle;
+using NHibernate.Caches.SysCache;
 using Configuration = NHibernate.Cfg.Configuration;
 
 namespace LoggingServer.Server.Autofac
@@ -16,11 +17,11 @@ namespace LoggingServer.Server.Autofac
         {
             var runner = new Runner(ConfigurationManager.ConnectionStrings["Default"].ConnectionString, typeof(Runner).Assembly);
             runner.Run();
-
             var config = Fluently.Configure()
                 .ProxyFactoryFactory<ProxyFactoryFactory>()
                 .Database(MsSqlConfiguration.MsSql2005.ConnectionString(ConfigurationManager.ConnectionStrings["Default"].ConnectionString))
                 .Mappings(m => m.AutoMappings.Add(AutoPersistenceModelGenerator.Generate()))
+                .Cache(x => x.UseSecondLevelCache().UseQueryCache().ProviderClass<SysCacheProvider>())
                 .BuildConfiguration();
 
             var sessionFactory = config.BuildSessionFactory();

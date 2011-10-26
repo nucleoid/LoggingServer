@@ -8,5 +8,6 @@ namespace LoggingServer.Server.Tasks
     {
         LogEntry Get(Guid id);
         IQueryable<LogEntry> Paged(int? pageIndex, int? pageSize, SearchFilter filter);
+        int Count(SearchFilter filter);
     }
 }

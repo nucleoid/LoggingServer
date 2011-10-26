@@ -44,7 +44,7 @@ namespace LoggingServer.Server
 
             foreach (var ev in eventInfos)
             {
-                var log = new LogEntry { ClientID = events.ClientName };
+                var log = new LogEntry();
 
                 foreach (var pi in PropertyInfos)
                 {
@@ -120,10 +120,10 @@ namespace LoggingServer.Server
 
         private void SetComponent(LogEntry log, object value, string title, string description)
         {
-            var component = _componentRepository.All().Where(x => x.AssemblyID == new Guid(value.ToString())).SingleOrDefault();
+            var component = _componentRepository.Get(new Guid(value.ToString()));
             if(component == null)
             {
-                component = new Component { AssemblyID = new Guid(value.ToString()), Name = title, Description = description, DateAdded = DateTime.Now };
+                component = new Component { ID = new Guid(value.ToString()), Name = title, Description = description, DateAdded = DateTime.Now };
                 SetProject(component);
                 _componentRepository.Save(component);
             } 

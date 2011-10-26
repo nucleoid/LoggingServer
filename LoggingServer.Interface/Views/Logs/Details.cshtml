@@ -1,0 +1,21 @@
+﻿@using MvcContrib.UI.Grid
+@model LogEntryModel
+
+@{
+    ViewBag.Title = "Details";
+    ViewBag.Style = "#main {overflow:auto;}";
+}
+
+<h2>Log Details</h2>
+
+@(Html.Grid(new List<LogEntryModel> {Model})
+    .AutoGenerateColumns()
+    .Columns(col =>
+                 {
+                     col.For(x => string.Format("<div class='maxheight'><pre>{0}</pre></div>", x.ExceptionString)).Encode(false).Named("Exception String").InsertAt(8);
+                     col.For(x => string.Format("<div class='maxheight'><pre>{0}</pre></div>", x.ExceptionStackTrace)).Encode(false).Named("Exception Stack Trace").InsertAt(10);
+                     col.For(x => string.Format("<div class='maxheight'><pre>{0}</pre></div>", x.StackTrace)).Encode(false).Named("Stack Trace").InsertAt(22);
+                 })
+    .RowAttributes(row => new Hash(@class => string.Format("loglevel-{0}", row.Item.LogLevel.ToString().ToLowerInvariant())))
+    .Attributes(@class => "grid-style"))
+ 
