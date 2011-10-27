@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using NHibernate;
+using NLog;
 
 namespace LoggingServer.Server.Repository
 {
     public class WriteableRepository<T> : ReadableRepository<T>, IWritableRepository<T> where T : class
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         public WriteableRepository(ISession session) : base(session)
         {
         }

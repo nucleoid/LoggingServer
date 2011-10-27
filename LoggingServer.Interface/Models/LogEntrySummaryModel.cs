@@ -12,7 +12,6 @@ namespace LoggingServer.Interface.Models
         public string Component { get; set; }
         public LogLevel LogLevel { get; set; }
         public string LogMessage { get; set; }
-        public string ExceptionMessage { get; set; }
         public string MachineName { get; set; }
         public DateTime DateAdded { get; set; }
     }

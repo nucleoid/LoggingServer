@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using NLog;
 
 namespace LoggingServer.Interface.Controllers
@@ -10,18 +9,13 @@ namespace LoggingServer.Interface.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Logs");
         }
 
         public ActionResult About()
         {
             _logger.Debug("testing debug log");
-            return new ContentResult {Content = "Blah!"};
-        }
-
-        public ActionResult ThrowException()
-        {
-            throw new Exception("just testing exception logging");
+            return new ContentResult {Content = "Logged a test debug log message"};
         }
     }
 }

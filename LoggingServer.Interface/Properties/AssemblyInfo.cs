@@ -1,35 +1,17 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
-[assembly: AssemblyTitle("LoggingServer.Interface")]
-[assembly: AssemblyDescription("Logging Server UI")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("gosquids")]
-[assembly: AssemblyProduct("LoggingServer.Interface")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2011")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
+[assembly: CLSCompliantAttribute(true )]
+[assembly: ComVisibleAttribute(false)]
+[assembly: AssemblyTitleAttribute("LoggingServer Interface 1.0.0.0")]
+[assembly: AssemblyDescriptionAttribute("LoggingServer user interface")]
+[assembly: AssemblyCompanyAttribute("Mitchell Statz")]
+[assembly: AssemblyProductAttribute("LoggingServer 1.0.0.0")]
+[assembly: AssemblyCopyrightAttribute("")]
+[assembly: AssemblyVersionAttribute("1.0.0.0")]
+[assembly: AssemblyInformationalVersionAttribute("1.0.0.0 / 27b2014")]
+[assembly: AssemblyFileVersionAttribute("1.0.0.0")]
+[assembly: AssemblyDelaySignAttribute(false)]
 
-// Setting ComVisible to false makes the types in this assembly not visible 
-// to COM components.  If you need to access a type in this assembly from 
-// COM, set the ComVisible attribute to true on that type.
-[assembly: ComVisible(false)]
-
-// The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("96562976-6b23-40f5-a44f-f01c3d157461")]
-
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Revision and Build Numbers 
-// by using the '*' as shown below:
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]

@@ -19,3 +19,15 @@
     .RowAttributes(row => new Hash(@class => string.Format("loglevel-{0}", row.Item.LogLevel.ToString().ToLowerInvariant())))
     .Attributes(@class => "grid-style"))
  
+ <script type="text/javascript" charset="utf-8">
+     $(document).ready(function () {
+         var height = $('#main').height();
+         var maxHeight = $('#main').height();
+         $('div.maxheight pre').each(function () {
+             if ($(this).height() > maxHeight)
+                 maxHeight = $(this).height();
+         });
+         if (maxHeight > height)
+             $('#main').height($(window).height() - $('#title').outerHeight(true) - $('#logindisplay').outerHeight(true) - $('#footer').outerHeight(true));
+     });
+ </script>

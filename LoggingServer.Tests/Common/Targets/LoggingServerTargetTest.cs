@@ -25,20 +25,6 @@ namespace LoggingServer.Tests.Common.Targets
         }
 
         [Test]
-        public void ApplicationID_Defaults_To_Empty()
-        {
-            //Assert
-            Assert.AreEqual(Guid.Empty.ToString(), _target.ApplicationID);
-        }
-
-        [Test, ExpectedException(typeof(FormatException), "Guid should contain 32 digits with 4 dashes (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx).")]
-        public void ApplicationID_Set_Fails_Without_Guid_Value()
-        {
-            //Act
-            _target.ApplicationID = "blah";
-        }
-
-        [Test]
         public void AddAssemblyParameters_Adds_Assembly_Parameters()
         {
             //Arrange
@@ -87,7 +73,6 @@ namespace LoggingServer.Tests.Common.Targets
             Assert.AreEqual("'${threadname}'", _target.Parameters.SingleOrDefault(x => x.Name == "ThreadName").Layout.ToString());
             Assert.AreEqual("'${windows-identity}'", _target.Parameters.SingleOrDefault(x => x.Name == "WindowsIdentity").Layout.ToString());
             Assert.AreEqual(string.Format("'{0}'", string.Empty), _target.Parameters.SingleOrDefault(x => x.Name == "EnvironmentKey").Layout.ToString());
-            Assert.AreEqual(string.Format("'{0}'", Guid.Empty), _target.Parameters.SingleOrDefault(x => x.Name == "ApplicationID").Layout.ToString());
 
             Assert.IsNull(_target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyCompany"));
             Assert.IsNull(_target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyDescription"));
@@ -131,7 +116,6 @@ namespace LoggingServer.Tests.Common.Targets
             Assert.AreEqual("'${threadname}'", _target.Parameters.SingleOrDefault(x => x.Name == "ThreadName").Layout.ToString());
             Assert.AreEqual("'${windows-identity}'", _target.Parameters.SingleOrDefault(x => x.Name == "WindowsIdentity").Layout.ToString());
             Assert.AreEqual(string.Format("'{0}'", string.Empty), _target.Parameters.SingleOrDefault(x => x.Name == "EnvironmentKey").Layout.ToString());
-            Assert.AreEqual(string.Format("'{0}'", Guid.Empty), _target.Parameters.SingleOrDefault(x => x.Name == "ApplicationID").Layout.ToString());
 
             Assert.AreEqual("'Mitch Statz'", _target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyCompany").Layout.ToString());
             Assert.AreEqual("'Tests for LoggingServer.Tests'", _target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyDescription").Layout.ToString());

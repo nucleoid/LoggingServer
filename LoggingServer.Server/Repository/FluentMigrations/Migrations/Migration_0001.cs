@@ -15,6 +15,7 @@ namespace LoggingServer.Server.Repository.FluentMigrations.Migrations
             CreateProjectsTable();
             CreateComponentsTable();
             CreateLogEntriesTable();
+            CreateSearchFiltersTable();
         }
 
         private void CreateProjectsTable()
@@ -77,6 +78,22 @@ namespace LoggingServer.Server.Repository.FluentMigrations.Migrations
                 .WithColumn("EnvironmentKey").AsString(255).Nullable()
                 .WithColumn("DateAdded").AsDateTime().Nullable()
                 .WithColumn("NotificationsQueued").AsBoolean().Nullable();
+        }
+
+        private void CreateSearchFiltersTable()
+        {
+            Create.Table("SearchFilters")
+                .WithColumn("ID").AsGuid().PrimaryKey()
+                .WithColumn("UserName").AsString(255).Nullable()
+                .WithColumn("ProjectName").AsString(255).Nullable()
+                .WithColumn("ComponentName").AsString(255).Nullable()
+                .WithColumn("StartDate").AsDateTime().Nullable()
+                .WithColumn("EndDate").AsDateTime().Nullable()
+                .WithColumn("LogLevel").AsString(255).Nullable()
+                .WithColumn("MachineNamePartial").AsString(255).Nullable()
+                .WithColumn("ExceptionPartial").AsString(255).Nullable()
+                .WithColumn("MessagePartial").AsString(255).Nullable()
+                .WithColumn("IsGlobal").AsBoolean().NotNullable();
         }
     }
 }

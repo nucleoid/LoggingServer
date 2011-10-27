@@ -1,0 +1,34 @@
+﻿@using LoggingServer.Interface.Controllers
+@using MvcContrib.UI.Grid
+@model IList<SearchFilterModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Saved Searches</h2>
+@(Html.ActionLink<LogsController>(c => c.Index(null, null, null), "Create a new saved search"))
+@(Html.Grid(Model).AutoGenerateColumns().Columns(col => col.For(x => Html.ActionLink<FilterController>(c => c.Edit(x.ID), "edit")).Named(string.Empty))
+            .RowAttributes(row => new Hash(url => Url.Action("Search", "Logs", new RouteValueDictionary { {"filter.ProjectName", row.Item.ProjectName},
+            {"filter.ComponentName", row.Item.ComponentName}, {"filter.StartDate", row.Item.StartDate}, {"filter.EndDate", row.Item.EndDate},
+            {"filter.LogLevel", row.Item.LogLevel}, {"filter.MachineNamePartial", row.Item.MachineNamePartial}, {"filter.ExceptionPartial", row.Item.ExceptionPartial},
+            {"filter.MessagePartial", row.Item.MessagePartial}})))
+        .Attributes(@class => "grid-style"))
+
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+        $("tr").click(function () {
+            window.location = $(this).attr("url");
+        });
+        $("tr").not(':first').hover(
+          function () {
+              $(this).css("background", "yellow");
+              $(this).css("cursor", "pointer");
+          },
+          function () {
+              $(this).css("background", "");
+          }
+        );
+    });
+</script>

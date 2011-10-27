@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
 using NLog.Layouts;
 using NLog.Targets;
@@ -16,13 +15,6 @@ namespace LoggingServer.Common.Targets
 
         public string AssemblyName { get; set; }
         public string EnvironmentKey { get; set; }
-
-        private Guid _applicationID = Guid.Empty;
-        public string ApplicationID
-        {
-            get { return _applicationID.ToString(); }
-            set { _applicationID = new Guid(value); }
-        }
 
         protected override void InitializeTarget()
         {
@@ -50,7 +42,6 @@ namespace LoggingServer.Common.Targets
             Parameters.Add(new MethodCallParameter("ThreadName", Layout.FromString("${threadname}")));
             Parameters.Add(new MethodCallParameter("WindowsIdentity", Layout.FromString("${windows-identity}")));
             Parameters.Add(new MethodCallParameter("EnvironmentKey", EnvironmentKey));
-            Parameters.Add(new MethodCallParameter("ApplicationID", ApplicationID));
             if (!string.IsNullOrEmpty(AssemblyName) && !Parameters.Any(x => x.Name == "EntryAssemblyCompany"))
             {
                 var assembly = Assembly.Load(AssemblyName);

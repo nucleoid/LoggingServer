@@ -1,0 +1,64 @@
+﻿@using LoggingServer.Interface.Controllers
+@model SearchFilterModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit Saved Search</h2>
+
+@using (Html.BeginForm("Edit", "Filter", FormMethod.Post, new { id = "edit" }))
+{    
+    @Html.ValidationSummary()
+    @Html.Hidden("UserName", User.Identity.Name)
+    @Html.HiddenFor(c => c.ID)
+    <fieldset class="related-form-fields">
+        <legend>Search Logs</legend>
+        <div class="related-form-fields">
+            @Html.LabelFor(x => x.ProjectName)
+            @Html.TextBoxFor(x => x.ProjectName)
+
+            @Html.LabelFor(x => x.ComponentName)
+            @Html.TextBoxFor(x => x.ComponentName)
+        </div>
+        <div class="related-form-fields">
+            @Html.LabelFor(x => x.StartDate)
+            @Html.TextBoxFor(x => x.StartDate)
+
+            @Html.LabelFor(x => x.EndDate)
+            @Html.TextBoxFor(x => x.EndDate)
+        </div>
+        <div class="related-form-fields checkboxes">
+            <span class="add-margin-right">Log Levels:</span>
+            @(Html.CheckBoxesForFlagsEnum<LogLevel>("LogLevel", Model.LogLevel, null))
+        </div>
+        <div class="related-form-fields">
+            @Html.LabelFor(x => x.MachineNamePartial)
+            @Html.TextBoxFor(x => x.MachineNamePartial)
+
+            @Html.LabelFor(x => x.ExceptionPartial)
+            @Html.TextBoxFor(x => x.ExceptionPartial)
+
+            @Html.LabelFor(x => x.MessagePartial)
+            @Html.TextBoxFor(x => x.MessagePartial)
+        </div>
+        <div class="related-form-fields">
+            @Html.LabelFor(x => x.IsGlobal)
+            @Html.CheckBoxFor(x => x.IsGlobal) (meaning any logged in user can see/edit this search)
+        </div>
+        <div>
+            <input type="submit" value="Save" /> 
+            @if(Model.ID != Guid.Empty){<text>or @(Html.ActionLink<FilterController>(c => c.Delete(Model.ID), "delete this search"))</text>}
+        </div>
+    </fieldset>
+}
+
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+        $(function () {
+            $("#StartDate").datetimepicker({ showSecond: true, ampm: true, timeFormat: 'h:m:s TT' });
+            $("#EndDate").datetimepicker({ showSecond: true, ampm: true, timeFormat: 'h:m:s TT' });
+        });
+    });
+</script>

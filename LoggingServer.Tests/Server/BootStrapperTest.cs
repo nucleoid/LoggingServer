@@ -1,4 +1,5 @@
-﻿using LoggingServer.Interface.Controllers;
+﻿using LoggingServer.Interface.Autofac;
+using LoggingServer.Interface.Controllers;
 using LoggingServer.Server;
 using LoggingServer.Server.Autofac;
 using LoggingServer.Server.Domain;
@@ -22,7 +23,7 @@ namespace LoggingServer.Tests.Server
         public void Start_Registers_Modules_And_Builds_Container()
         {
             //Act
-            BootStrapper.Start();
+            BootStrapper.Start(false);
 
             //Assert
             Assert.IsNotNull(DependencyContainer.Resolve<ISession>());
@@ -35,7 +36,7 @@ namespace LoggingServer.Tests.Server
         public void Start_Assembly_Registers_All_Modules_And_Builds_Container()
         {
             //Act
-            BootStrapper.Start(typeof(HomeController).Assembly);
+            BootStrapper.Start(typeof(HomeController).Assembly, false);
 
             //Assert
             Assert.IsNotNull(DependencyContainer.Resolve<ISession>());
@@ -43,6 +44,16 @@ namespace LoggingServer.Tests.Server
             Assert.IsNotNull(DependencyContainer.Resolve<LogReceiverServer>());
             Assert.IsNotNull(DependencyContainer.Resolve<ILogEntryTasks>());
             Assert.IsNotNull(DependencyContainer.Resolve<HomeController>());
+        }
+
+        [Test]
+        public void Start_Assembly_Registers_Extras()
+        {
+            //Act
+            BootStrapper.Start(typeof(HomeController).Assembly, false, new CustomTasksModule());
+
+            //Assert
+            Assert.IsNotNull(DependencyContainer.Resolve<IAuthenticationTasks>());
         }
     }
 }

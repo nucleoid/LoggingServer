@@ -1,0 +1,30 @@
+﻿@using LoggingServer.Interface.Controllers
+@using MvcContrib.UI.Grid
+@model PagedModel<LogEntry, LogEntrySummaryModel>
+
+@{
+    ViewBag.Title = "Logs";
+}
+
+<h2>Logs</h2> 
+@Html.Partial("_searchFilter")
+@Html.Partial("_pager", Model.PagedList)
+@Html.Grid(Model.PagedList).AutoGenerateColumns().RowAttributes(row => new Hash(url => Url.Action<LogsController>(c => c.Details(row.Item.ID)),
+    @class => string.Format("loglevel-{0}", row.Item.LogLevel.ToString().ToLowerInvariant()))).Attributes(@class => "grid-style")
+
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+        $("tr").click(function () {
+            window.location = $(this).attr("url");
+        });
+        $("tr").not(':first').hover(
+          function () {
+              $(this).css("background", "yellow");
+              $(this).css("cursor", "pointer");
+          },
+          function () {
+              $(this).css("background", "");
+          }
+        );
+    });
+</script>

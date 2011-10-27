@@ -13,10 +13,21 @@ namespace LoggingServer.Server.Autofac
 {
     public class DBModule : Module
     {
+        private readonly bool _runMigrations;
+
+        public DBModule(bool runMigrations)
+        {
+            _runMigrations = runMigrations;
+        }
+
         protected override void Load(ContainerBuilder builder)
         {
-            var runner = new Runner(ConfigurationManager.ConnectionStrings["Default"].ConnectionString, typeof(Runner).Assembly);
-            runner.Run();
+            if(_runMigrations)
+            {
+                var runner = new Runner(ConfigurationManager.ConnectionStrings["Default"].ConnectionString, typeof(Runner).Assembly);
+                runner.Run();
+            }
+            
             var config = Fluently.Configure()
                 .ProxyFactoryFactory<ProxyFactoryFactory>()
                 .Database(MsSqlConfiguration.MsSql2005.ConnectionString(ConfigurationManager.ConnectionStrings["Default"].ConnectionString))

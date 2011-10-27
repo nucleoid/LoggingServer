@@ -23,7 +23,7 @@ namespace LoggingServer.Server
 
         public LogReceiverServer()
         {
-            BootStrapper.Start();
+            BootStrapper.Start(true);
             _projectRepository = DependencyContainer.Resolve<IWritableRepository<Project>>();
             _componentRepository = DependencyContainer.Resolve<IWritableRepository<Component>>();
             _logEntryRepository = DependencyContainer.Resolve<IWritableRepository<LogEntry>>();

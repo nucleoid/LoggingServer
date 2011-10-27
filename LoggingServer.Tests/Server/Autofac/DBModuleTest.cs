@@ -12,8 +12,11 @@ namespace LoggingServer.Tests.Server.Autofac
         [Test]
         public void Load_Configures_DB_And_Registers_Instances()
         {
+            //Arrange
+            DependencyContainer.Reset();
+
             //Act
-            DependencyContainer.Register(new DBModule());
+            DependencyContainer.Register(new DBModule(false));
             DependencyContainer.BuildContainer();
 
             //Assert

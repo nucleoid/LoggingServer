@@ -5,6 +5,7 @@ namespace LoggingServer.Server.Domain
     public class SearchFilter
     {
         public virtual Guid ID { get; set; }
+        public virtual string UserName { get; set; }
         public virtual string ProjectName { get; set; }
         public virtual string ComponentName { get; set; }
         public virtual DateTime? StartDate { get; set; }
@@ -13,5 +14,6 @@ namespace LoggingServer.Server.Domain
         public virtual string MachineNamePartial { get; set; }
         public virtual string ExceptionPartial { get; set; }
         public virtual string MessagePartial { get; set; }
+        public virtual bool IsGlobal { get; set; }
     }
 }

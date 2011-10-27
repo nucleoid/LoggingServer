@@ -1,0 +1,71 @@
+﻿@using LoggingServer.Interface.Controllers
+@using (Html.BeginForm("Search", "Logs", FormMethod.Get, new { id = "logSearch" }))
+{    
+    @Html.ValidationSummary()
+    @Html.Hidden("filter.UserName", User.Identity.Name)
+    <fieldset class="related-form-fields">
+        <legend>Search Logs</legend>
+        <div class="related-form-fields">
+            <label for="filter_ProjectName">Project Name</label>
+            @Html.TextBox("filter.ProjectName")
+
+            <label for="filter_ComponentName">Component Name</label>
+            @Html.TextBox("filter.ComponentName")
+        </div>
+        <div class="related-form-fields">
+            <label for="filter_StartDate">Start Date</label>
+            @Html.TextBox("filter.StartDate")
+
+            <label for="filter_EndDate">End Date</label>
+            @Html.TextBox("filter.EndDate")
+        </div>
+        <div class="related-form-fields checkboxes">
+            <span class="add-margin-right">Log Levels:</span>
+            @(Html.CheckBoxesForFlagsEnum<LogLevel>("filter.LogLevel", ViewData["filter.LogLevel"], null))
+        </div>
+        <div class="related-form-fields checkboxes">
+            <label for="filter_MachineNamePartial">Machine Name</label>
+            @Html.TextBox("filter.MachineNamePartial")
+
+            <label for="filter_ExceptionPartial">Exception</label>
+            @Html.TextBox("filter.ExceptionPartial")
+
+            <label for="filter_MessagePartial">Log Message</label>
+            @Html.TextBox("filter.MessagePartial")
+        </div>
+        <div>
+            <input type="submit" value="Search" />
+            <input type="button" id="clear" value="Clear Search"/>
+            <input type="button" id="save" value="Save Search"/>
+            <input type="button" id="save-global" value="Save as Global Search"/><span id="save-result"></span>
+        </div>
+    </fieldset>
+}
+
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+        $(function () {
+            $("#filter_StartDate").datetimepicker({showSecond: true, ampm: true, timeFormat: 'h:m:s TT'});
+            $("#filter_EndDate").datetimepicker({ showSecond: true, ampm: true, timeFormat: 'h:m:s TT' });
+        });
+        $('#clear').click(function () {
+            $(':input', '#logSearch')
+                .not(':button, :submit, :reset, :hidden')
+                .val('')
+                .removeAttr('checked')
+                .removeAttr('selected');
+        });
+        $('#save').click(function () {
+            $.post('@(Url.Action<FilterController>(c => c.Create(null)))', $('#logSearch').serialize(),
+                function (data) {
+                    $('#save-result').html(data).effect("highlight", {}, 3000);;
+            });
+        });
+        $('#save-global').click(function () {
+            $.post('@(Url.Action<FilterController>(c => c.Create(null)))', $('#logSearch').serialize() + "&filter.IsGlobal=true",
+                function (data) {
+                    $('#save-result').html(data).effect("highlight", {}, 3000);;
+            });
+        });
+    });
+</script>

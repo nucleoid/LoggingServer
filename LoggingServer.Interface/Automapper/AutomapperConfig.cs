@@ -18,6 +18,9 @@ namespace LoggingServer.Interface.Automapper
             Mapper.CreateMap<LogEntry, LogEntrySummaryModel>()
                 .ForMember(d => d.Project, o => o.MapFrom(s => s.Component != null ? s.Component.Project != null ? s.Component.Project.Name : "N/A" : "N/A"))
                 .ForMember(d => d.Component, o => o.MapFrom(s => s.Component != null ? s.Component.Name : "N/A"));
+
+            Mapper.CreateMap<SearchFilter, SearchFilterModel>();
+            Mapper.CreateMap<SearchFilterModel, SearchFilter>();
         }
     }
 }

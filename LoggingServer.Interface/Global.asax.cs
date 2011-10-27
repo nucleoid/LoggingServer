@@ -5,6 +5,8 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using LoggingServer.Common;
 using LoggingServer.Common.Attributes;
+using LoggingServer.Interface.Attributes;
+using LoggingServer.Interface.Autofac;
 using LoggingServer.Interface.Automapper;
 using LoggingServer.Server;
 using NLog;
@@ -15,6 +17,7 @@ namespace LoggingServer.Interface
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
+            filters.Add(new LogonAuthorizeAttribute());
             filters.Add(new HandleErrorAttribute());
             filters.Add(new HandleErrorLogAttribute());
         }
@@ -46,7 +49,7 @@ namespace LoggingServer.Interface
             LogManager.Configuration = NLogConfiguration.ConfigureServerLogger(null, environment, loggingServerEndPoint, 
                 Assembly.GetExecutingAssembly(), LogLevel.Trace);
             AutomapperConfig.Setup();
-            BootStrapper.Start(Assembly.GetExecutingAssembly());
+            BootStrapper.Start(Assembly.GetExecutingAssembly(), true, new CustomTasksModule());
         }
     }
 }
