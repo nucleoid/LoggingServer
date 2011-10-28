@@ -45,7 +45,7 @@ namespace LoggingServer.Server.Domain
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return other.ID.Equals(ID) && Equals(other.BaseDirectory, BaseDirectory) && Equals(other.CallSite, CallSite) && other.Counter == Counter && Equals(other.ExceptionMessage, ExceptionMessage) && Equals(other.ExceptionType, ExceptionType) && Equals(other.ExceptionString, ExceptionString) && Equals(other.ExceptionMethod, ExceptionMethod) && Equals(other.ExceptionStackTrace, ExceptionStackTrace) && other.LogID.Equals(LogID) && Equals(other.LogIdentity, LogIdentity) && Equals(other.LogLevel, LogLevel) && Equals(other.Logger, Logger) && other.LongDate.Equals(LongDate) && Equals(other.MachineName, MachineName) && Equals(other.LogMessage, LogMessage) && Equals(other.ProcessID, ProcessID) && Equals(other.ProcessInfo, ProcessInfo) && Equals(other.ProcessName, ProcessName) && other.ProcessTime.Equals(ProcessTime) && Equals(other.StackTrace, StackTrace) && Equals(other.ThreadID, ThreadID) && Equals(other.ThreadName, ThreadName) && Equals(other.WindowsIdentity, WindowsIdentity) && Equals(other.EntryAssemblyCompany, EntryAssemblyCompany) && Equals(other.EntryAssemblyDescription, EntryAssemblyDescription) && other.EntryAssemblyGuid.Equals(EntryAssemblyGuid) && Equals(other.EntryAssemblyProduct, EntryAssemblyProduct) && Equals(other.EntryAssemblyTitle, EntryAssemblyTitle) && Equals(other.EntryAssemblyVersion, EntryAssemblyVersion) && Equals(other.EnvironmentKey, EnvironmentKey) && other.NotificationsQueued.Equals(NotificationsQueued) && other.Version == Version && Equals(other.Component, Component);
+            return other.ID.Equals(ID);
         }
 
         public override bool Equals(object obj)
@@ -54,6 +54,11 @@ namespace LoggingServer.Server.Domain
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != typeof (LogEntry)) return false;
             return Equals((LogEntry) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return ID.GetHashCode();
         }
     }
 }

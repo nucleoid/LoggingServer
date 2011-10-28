@@ -1,1 +1,5 @@
-A logging server using NLog and an asp.net MVC3 stack for viewing the logs
+A WCF logging server using NLog and an asp.net MVC3 stack for viewing the logs
+
+To build the project run psake.cmd from a windows command line 
+or just double click it if you don't need to look at the results.
+You need powershell installed in order for it to build.

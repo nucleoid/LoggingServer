@@ -21,6 +21,8 @@ Thumbs.db
 _ReSharper.*/
 bin/
 obj/
+build/
+Release/
 
 LoggingServer.vsmdi
 LoggingServer.5.9.TeamCity.user

@@ -10,8 +10,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompanyAttribute("Mitchell Statz")]
 [assembly: AssemblyProductAttribute("LoggingServer 1.0.0.0")]
 [assembly: AssemblyCopyrightAttribute("")]
+[assembly: Guid("1e10018f-05ab-466d-b17d-43ab5c0ae7ca")]
 [assembly: AssemblyVersionAttribute("1.0.0.0")]
-[assembly: AssemblyInformationalVersionAttribute("1.0.0.0 / 27b2014")]
+[assembly: AssemblyInformationalVersionAttribute("1.0.0.0 / 2b8a1e9")]
 [assembly: AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: AssemblyDelaySignAttribute(false)]
 

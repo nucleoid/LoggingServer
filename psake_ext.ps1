@@ -13,6 +13,7 @@ param(
 	[string]$company, 
 	[string]$product, 
 	[string]$copyright, 
+	[string]$guid,
 	[string]$version,
 	[string]$file = $(throw "file is a required parameter.")
 )
@@ -29,6 +30,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompanyAttribute(""$company"")]
 [assembly: AssemblyProductAttribute(""$product"")]
 [assembly: AssemblyCopyrightAttribute(""$copyright"")]
+[assembly: Guid(""$guid"")]
 [assembly: AssemblyVersionAttribute(""$version"")]
 [assembly: AssemblyInformationalVersionAttribute(""$version / $commit"")]
 [assembly: AssemblyFileVersionAttribute(""$version"")]

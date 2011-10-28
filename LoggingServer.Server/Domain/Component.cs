@@ -30,5 +30,10 @@ namespace LoggingServer.Server.Domain
             if (obj.GetType() != typeof (Component)) return false;
             return Equals((Component) obj);
         }
+
+        public override int GetHashCode()
+        {
+            return ID.GetHashCode();
+        }
     }
 }

@@ -9,9 +9,10 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescriptionAttribute("Unit tests for LoggingServer")]
 [assembly: AssemblyCompanyAttribute("Mitchell Statz")]
 [assembly: AssemblyProductAttribute("LoggingServer 1.0.0.0")]
-[assembly: AssemblyCopyrightAttribute(" ")]
+[assembly: AssemblyCopyrightAttribute("")]
+[assembly: Guid("bd01c085-3a2c-432b-8ada-d876da6ef4f1")]
 [assembly: AssemblyVersionAttribute("1.0.0.0")]
-[assembly: AssemblyInformationalVersionAttribute("1.0.0.0 / 27b2014")]
+[assembly: AssemblyInformationalVersionAttribute("1.0.0.0 / 2b8a1e9")]
 [assembly: AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: AssemblyDelaySignAttribute(false)]
 
