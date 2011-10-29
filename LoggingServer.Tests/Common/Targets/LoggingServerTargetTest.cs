@@ -3,6 +3,10 @@ using System.Linq;
 using System.Reflection;
 using LoggingServer.Common.Targets;
 using MbUnit.Framework;
+using NLog;
+using NLog.Common;
+using NLog.Targets;
+using Rhino.Mocks;
 
 namespace LoggingServer.Tests.Common.Targets
 {
@@ -46,7 +50,7 @@ namespace LoggingServer.Tests.Common.Targets
         public void InitializeTarget_Without_AssemblyName()
         {
             //Act
-            InvokeMethod<LoggingServerTarget>(_target, "InitializeTarget", null);
+            InvokeMethod(_target, "InitializeTarget", null);
 
             //Assert
             Assert.AreEqual("'${basedir}'", _target.Parameters.SingleOrDefault(x => x.Name == "BaseDirectory").Layout.ToString());
@@ -89,7 +93,7 @@ namespace LoggingServer.Tests.Common.Targets
             _target.AssemblyName = GetType().Assembly.FullName;
 
             //Act
-            InvokeMethod<LoggingServerTarget>(_target, "InitializeTarget", null);
+            InvokeMethod(_target, "InitializeTarget", null);
 
             //Assert
             Assert.AreEqual("'${basedir}'", _target.Parameters.SingleOrDefault(x => x.Name == "BaseDirectory").Layout.ToString());
@@ -125,14 +129,43 @@ namespace LoggingServer.Tests.Common.Targets
             Assert.AreEqual("'1.0.0.0'", _target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyVersion").Layout.ToString());
         }
 
-        public static T InvokeMethod<T>(object obj, string methodName, object[] parameters)
+        /// <summary>
+        /// Fixing a constant IndexOutOfRangeException that was being thrown because of an apparent AsyncTargetWrapper bug
+        /// </summary>
+        [Test]
+        public void Write_Calls_BaseWrite_Only_If_Param_Has_Events()
+        {
+            //Arrange
+            var logEvents = new AsyncLogEventInfo[1];
+            logEvents[0] = new AsyncLogEventInfo(new LogEventInfo {Exception = new Exception()}, x => x.GetType());
+            SetProperty<Target>(_target, "IsInitialized", true);
+
+            //Act
+            _target.WriteAsyncLogEvents(logEvents);
+
+            //Assert
+            Assert.IsTrue(_target.BaseWriteCalled);
+        }
+
+        public static void InvokeMethod(object obj, string methodName, object[] parameters)
         {
             Type type = obj.GetType();
+
             MethodInfo info = type.GetMethod(methodName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
             if (info == null)
                 throw new Exception("Method not found");
 
-            return (T)info.Invoke(obj, parameters);
+            info.Invoke(obj, parameters);
+        }
+
+        public static void SetProperty<T>(object obj, string propertyName, object value)
+        {
+            PropertyInfo info = typeof(T).GetProperty(propertyName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+
+            if (info == null)
+                throw new Exception("Property not found");
+
+            info.SetValue(obj, value, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public, null, null, null);
         }
     }
 }

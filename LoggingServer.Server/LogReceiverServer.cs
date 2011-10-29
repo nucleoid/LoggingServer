@@ -17,16 +17,25 @@ namespace LoggingServer.Server
     public class LogReceiverServer : ILogReceiverServer
     {
         private readonly static List<PropertyInfo> PropertyInfos = (typeof(LogEntry)).GetProperties().ToList();
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly IWritableRepository<Project> _projectRepository;
         private readonly IWritableRepository<Component> _componentRepository;
         private readonly IWritableRepository<LogEntry> _logEntryRepository;
 
         public LogReceiverServer()
         {
-            BootStrapper.Start(true);
-            _projectRepository = DependencyContainer.Resolve<IWritableRepository<Project>>();
-            _componentRepository = DependencyContainer.Resolve<IWritableRepository<Component>>();
-            _logEntryRepository = DependencyContainer.Resolve<IWritableRepository<LogEntry>>();
+            try
+            {
+                BootStrapper.Start(true);
+                _projectRepository = DependencyContainer.Resolve<IWritableRepository<Project>>();
+                _componentRepository = DependencyContainer.Resolve<IWritableRepository<Component>>();
+                _logEntryRepository = DependencyContainer.Resolve<IWritableRepository<LogEntry>>();
+            }
+            catch (Exception e)
+            {
+                _logger.ErrorException("Failed to construct LogReceiverServer", e);
+                throw;
+            }
         }
 
         public LogReceiverServer(IWritableRepository<LogEntry> logEntryRepository, IWritableRepository<Component> componentRepository, 
@@ -39,26 +48,34 @@ namespace LoggingServer.Server
 
         public void ProcessLogMessages(NLogEvents events)
         {
-            var data = new List<LogEntry>();
-            var eventInfos = events.ToEventInfo();
-
-            foreach (var ev in eventInfos)
+            try
             {
-                var log = new LogEntry();
+                var data = new List<LogEntry>();
+                var eventInfos = events.ToEventInfo();
 
-                foreach (var pi in PropertyInfos)
+                foreach (var ev in eventInfos)
                 {
-                    var value = ev.Properties.FirstOrDefault(x => (string)x.Key == pi.Name).Value;
+                    var log = new LogEntry();
 
-                    if (value == null)
-                        continue;
+                    foreach (var pi in PropertyInfos)
+                    {
+                        var value = ev.Properties.FirstOrDefault(x => (string)x.Key == pi.Name).Value;
 
-                    SetLogValue(value, ev, pi, log);
+                        if (value == null)
+                            continue;
+
+                        SetLogValue(value, ev, pi, log);
+                    }
+                    log.DateAdded = DateTime.Now;
+                    data.Add(log);
                 }
-                log.DateAdded = DateTime.Now;
-                data.Add(log);
+                _logEntryRepository.Save(data);
             }
-            _logEntryRepository.Save(data);
+            catch(Exception e)
+            {
+                _logger.ErrorException("ProcessLogMessages failed to process log entry", e);
+                throw;
+            }
         }
 
         private void SetLogValue(object value, LogEventInfo ev, PropertyInfo pi, LogEntry log)

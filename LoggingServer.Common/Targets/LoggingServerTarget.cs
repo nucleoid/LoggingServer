@@ -1,10 +1,32 @@
 ﻿using System.Linq;
 using System.Reflection;
+using NLog.Common;
 using NLog.Layouts;
 using NLog.Targets;
 
 namespace LoggingServer.Common.Targets
 {
+    /// <summary>
+    /// Either NLogConfiguration.ConfigureServerLogger can be used for programmatic NLog configuration
+    /// or an app config can be configured.  You will need to reference the LoggingServer.Common assembly.
+    /// 
+    /// Example app config snippet:
+    /// 
+    ///&lt;configSections&gt;
+    ///    &lt;section name="nlog" type="NLog.Config.ConfigSectionHandler, NLog" /&gt;
+    ///&lt;/configSections&gt;
+    ///&lt;nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+    ///    &lt;extensions&gt;
+    ///        &lt;add assembly="LoggingServer.Common"/&gt;
+    ///    &lt;/extensions&gt;
+    ///    &lt;targets async="true"&gt;
+    ///        &lt;target name="logserver" type="LoggingServer" endpointAddress="http://localhost:60925/LoggingServer.svc" assemblyName="LoggingServer.Interface"/&gt;
+    ///    &lt;/targets&gt;
+    ///    &lt;rules&gt;
+    ///        &lt;logger name="*" minLevel="Trace" appendTo="logserver"/&gt;
+    ///    &lt;/rules&gt;
+    ///&lt;/nlog&gt;
+    /// </summary>
     [Target("LoggingServer")]
     public class LoggingServerTarget : LogReceiverWebServiceTarget
     {
@@ -15,6 +37,7 @@ namespace LoggingServer.Common.Targets
 
         public string AssemblyName { get; set; }
         public string EnvironmentKey { get; set; }
+        public bool BaseWriteCalled { get; set; }
 
         protected override void InitializeTarget()
         {
@@ -58,6 +81,19 @@ namespace LoggingServer.Common.Targets
             Parameters.Add(new MethodCallParameter("EntryAssemblyProduct", AssemblyInfoUtil.Product(assembly)));
             Parameters.Add(new MethodCallParameter("EntryAssemblyTitle", AssemblyInfoUtil.Title(assembly)));
             Parameters.Add(new MethodCallParameter("EntryAssemblyVersion", AssemblyInfoUtil.Version(assembly)));
+        }
+
+        /// <summary>
+        /// Fixing a bug in LogReceiverWebServiceTarget.Write(AsyncLogEventInfo[] logEvents) when logEvents has no elements
+        /// </summary>
+        /// <param name="logEvents"></param>
+        protected override void Write(AsyncLogEventInfo[] logEvents)
+        {
+            if (logEvents != null && logEvents.Length > 0)
+            {
+                BaseWriteCalled = true;
+                base.Write(logEvents);
+            }
         }
     }
 }

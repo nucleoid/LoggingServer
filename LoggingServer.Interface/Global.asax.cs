@@ -47,7 +47,7 @@ namespace LoggingServer.Interface
             var environment = ConfigurationManager.AppSettings["environment"];
             var loggingServerEndPoint = ConfigurationManager.AppSettings["loggingServerEndPoint"];
             LogManager.Configuration = NLogConfiguration.ConfigureServerLogger(null, environment, loggingServerEndPoint, 
-                Assembly.GetExecutingAssembly(), LogLevel.Trace);
+                Assembly.GetExecutingAssembly(), LogLevel.Debug);
             AutomapperConfig.Setup();
             BootStrapper.Start(Assembly.GetExecutingAssembly(), true, new CustomTasksModule());
         }
