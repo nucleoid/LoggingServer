@@ -1,1 +1,0 @@
-2011-10-24 13:56:53.1084|DEBUG|LoggingServer.Interface.Controllers.HomeController|testing debug log
