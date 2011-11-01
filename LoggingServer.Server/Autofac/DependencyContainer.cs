@@ -31,6 +31,13 @@ namespace LoggingServer.Server.Autofac
             _builder.RegisterType<T>();
         }
 
+        public static void RegisterInstance<T>(T instance) where T : class
+        {
+            if(_isBuilt)
+                Reset();
+            _builder.RegisterInstance(instance);
+        }
+
         public static void BuildContainer()
         {
             _container = _builder.Build();

@@ -70,6 +70,16 @@ task Init -depends Clean {
         -version $version `
         -guid "1e10018f-05ab-466d-b17d-43ab5c0ae7ca"
         
+    Generate-Assembly-Info `
+    	-file "$base_dir\LoggingServer.LogTruncator\Properties\AssemblyInfo.cs" `
+    	-title "LoggingServer LogTruncator $version" `
+    	-description "LoggingServer log truncation windows service" `
+    	-company "Mitchell Statz" `
+    	-product "LoggingServer $version" `
+        -version $version `
+        -clsCompliant "false" `
+        -guid "27875b7d-a0aa-46e3-99d5-22e489954bb7"
+        
     new-item $release_dir -itemType directory 
     new-item $build_dir -itemType directory 
     new-item $build_dir\Resources -itemType directory

@@ -3,14 +3,14 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: CLSCompliantAttribute(true )]
+[assembly: CLSCompliantAttribute(false )]
 [assembly: ComVisibleAttribute(false)]
-[assembly: AssemblyTitleAttribute("LoggingServer WcfService 1.0.0.0")]
-[assembly: AssemblyDescriptionAttribute("LoggingServer nlog wcf service")]
+[assembly: AssemblyTitleAttribute("LoggingServer LogTruncator 1.0.0.0")]
+[assembly: AssemblyDescriptionAttribute("LoggingServer log truncation windows service")]
 [assembly: AssemblyCompanyAttribute("Mitchell Statz")]
 [assembly: AssemblyProductAttribute("LoggingServer 1.0.0.0")]
 [assembly: AssemblyCopyrightAttribute("")]
-[assembly: Guid("1e10018f-05ab-466d-b17d-43ab5c0ae7ca")]
+[assembly: Guid("27875b7d-a0aa-46e3-99d5-22e489954bb7")]
 [assembly: AssemblyVersionAttribute("1.0.0.0")]
 [assembly: AssemblyInformationalVersionAttribute("1.0.0.0 / d4519d7")]
 [assembly: AssemblyFileVersionAttribute("1.0.0.0")]

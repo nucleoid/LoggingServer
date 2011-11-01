@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyrightAttribute("")]
 [assembly: Guid("a7b47a02-3d1b-41b6-b8a9-3fc9c40c5984")]
 [assembly: AssemblyVersionAttribute("1.0.0.0")]
-[assembly: AssemblyInformationalVersionAttribute("1.0.0.0 / 4125b4f")]
+[assembly: AssemblyInformationalVersionAttribute("1.0.0.0 / d4519d7")]
 [assembly: AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: AssemblyDelaySignAttribute(false)]
 
