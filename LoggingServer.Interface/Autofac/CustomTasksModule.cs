@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using LoggingServer.Interface.Wrappers;
+using LoggingServer.Mvc.Wrappers;
 using LoggingServer.Server.Tasks;
 
 namespace LoggingServer.Interface.Autofac

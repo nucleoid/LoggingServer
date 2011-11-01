@@ -1,9 +1,7 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Web.Mvc;
 using Autofac.Integration.Mvc;
 using LoggingServer.Server.Autofac;
-using NLog;
 using Module = Autofac.Module;
 
 namespace LoggingServer.Server

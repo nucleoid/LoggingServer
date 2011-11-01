@@ -1,0 +1,45 @@
+﻿@using LoggingServer.Interface.Controllers
+@model SubscriptionModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit Subscription</h2>
+
+@using (Html.BeginForm("Edit", "Subscriptions", FormMethod.Post, new { id = "edit" }))
+{    
+    @Html.ValidationSummary()
+    @Html.HiddenFor(c => c.ID)
+    <fieldset class="related-form-fields">
+        <legend>Search Logs</legend>
+        <div class="related-form-fields">
+            @Html.LabelFor(x => x.Emails)<br />
+            @for (int i = 0; i < Model.Emails.Count; i++)
+            {
+                <div class="related-form-fields">
+                    @Html.Label(string.Format("Emails_{0}", i), string.Format("{0}. ", i + 1))
+                    @Html.TextBoxFor(m => m.Emails[i])
+                </div>
+            }
+            <div class="related-form-fields">
+                @Html.Label(string.Format("Emails_{0}", Model.Emails.Count), string.Format("{0}. ", Model.Emails.Count + 1))
+                <input id="Emails_@(Model.Emails.Count)" name="Emails[@Model.Emails.Count]" type="text" value="" />
+            </div>
+        </div>
+        <div class="related-form-fields">
+            @Html.Label("FilterId", "Saved Search")
+            @Html.DropDownList("FilterId", "- Select a saved search -")
+        </div>
+        <div class="related-form-fields">
+            @Html.LabelFor(x => x.IsDailyOverview)
+            @Html.CheckBoxFor(x => x.IsDailyOverview)
+        </div>
+        <div>
+            <input type="submit" value="Save" /> 
+            @if(Model.ID != Guid.Empty){@:or @(Html.ActionLink<SubscriptionsController>(c => c.Delete(Model.ID), "delete this subscription"))
+}
+        </div>
+    </fieldset>
+}

@@ -15,6 +15,7 @@ param(
 	[string]$copyright, 
 	[string]$guid,
 	[string]$version,
+	[string]$internals,
 	[string]$file = $(throw "file is a required parameter.")
 )
   $commit = Get-Git-Commit
@@ -33,9 +34,15 @@ using System.Runtime.InteropServices;
 [assembly: Guid(""$guid"")]
 [assembly: AssemblyVersionAttribute(""$version"")]
 [assembly: AssemblyInformationalVersionAttribute(""$version / $commit"")]
-[assembly: AssemblyFileVersionAttribute(""$version"")]
 [assembly: AssemblyDelaySignAttribute(false)]
 "
+if($internals)
+{
+	$asmInfo = $asmInfo + "
+[assembly: InternalsVisibleTo(""$internals"")]
+";
+}
+
 
 	$dir = [System.IO.Path]::GetDirectoryName($file)
 	if ([System.IO.Directory]::Exists($dir) -eq $false)

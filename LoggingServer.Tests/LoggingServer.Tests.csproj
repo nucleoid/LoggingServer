@@ -81,6 +81,7 @@
     <Compile Include="Common\Targets\LoggingServerTargetTest.cs" />
     <Compile Include="Interface\Automapper\AutomapperConfigTest.cs" />
     <Compile Include="Interface\Extensions\HtmlHelperExtensionsTest.cs" />
+    <Compile Include="Interface\Extensions\IQueryableExtensionsTest.cs" />
     <Compile Include="Interface\MvcHelper.cs" />
     <Compile Include="LogTruncator\BootStrapperTest.cs" />
     <Compile Include="LogTruncator\Quartz\AutofacJobFactoryTest.cs" />
@@ -91,6 +92,8 @@
     <Compile Include="Server\Autofac\RepositoryModuleTest.cs" />
     <Compile Include="Server\Autofac\TaskModuleTest.cs" />
     <Compile Include="Server\BootStrapperTest.cs" />
+    <Compile Include="Server\Domain\SearchFilterTest.cs" />
+    <Compile Include="Server\Domain\SubscriptionTest.cs" />
     <Compile Include="Server\LogReceiverServerTest.cs" />
     <Compile Include="Tasks\LogEntryTasksTest.cs" />
   </ItemGroup>

@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using LoggingServer.Interface.Controllers;
 using LoggingServer.Server.Autofac;
+using LoggingServer.Server.Automapper;
 using MbUnit.Framework;
 using Autofac;
 
@@ -25,6 +26,7 @@ namespace LoggingServer.Tests.Server.Autofac
             Assert.IsTrue(DependencyContainer.Container.IsRegistered<IModelBinderProvider>());
             Assert.IsTrue(DependencyContainer.Container.IsRegistered<HomeController>());
             Assert.IsTrue(DependencyContainer.Container.IsRegistered<VirtualPathProvider>());
+            Assert.IsTrue(DependencyContainer.Container.IsRegistered<FilterResolver>());
         }
     }
 }

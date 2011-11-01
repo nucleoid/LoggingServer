@@ -1,5 +1,5 @@
-﻿//Partner js for HtmlHelperExtensions.CheckBoxesForFlagsEnum 
-$(document).ready(function () {
+﻿$(document).ready(function () {
+    //Partner js for HtmlHelperExtensions.CheckBoxesForFlagsEnum 
     $('form').one('submit', function (e) {
         e.preventDefault();
         //Grab all flag enum checkbox names
@@ -17,4 +17,18 @@ $(document).ready(function () {
         //Continue submitting form
         $(this).submit();
     });
+
+    //Grid row highlighter
+    $("tr").click(function () {
+        window.location = $(this).attr("url");
+    });
+    $("tr").not(':first').hover(
+          function () {
+              $(this).css("background", "yellow");
+              $(this).css("cursor", "pointer");
+          },
+          function () {
+              $(this).css("background", "");
+          }
+        );
 });

@@ -1,6 +1,8 @@
 ﻿using System.Reflection;
+using AutoMapper;
 using Autofac;
 using Autofac.Integration.Mvc;
+using LoggingServer.Server.Automapper;
 using Module = Autofac.Module;
 
 
@@ -21,6 +23,7 @@ namespace LoggingServer.Server.Autofac
             builder.RegisterModelBinderProvider();
             builder.RegisterControllers(_mvcModule);
             builder.RegisterModule(new AutofacWebTypesModule());
+            builder.RegisterAssemblyTypes(typeof(FilterResolver).Assembly).InNamespaceOf<FilterResolver>().AsSelf();
         }
     }
 }

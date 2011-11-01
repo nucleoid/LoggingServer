@@ -1,0 +1,12 @@
+﻿@using LoggingServer.Interface.Controllers
+@using MvcContrib.UI.Grid
+@model IList<SubscriptionModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Email Subscriptions</h2>
+@(Html.ActionLink<SubscriptionsController>(c => c.Edit(Guid.Empty), "Create a new subscription"))
+@(Html.Grid(Model).AutoGenerateColumns().RowAttributes(row => new Hash(url => Url.Action<SubscriptionsController>(c => c.Edit(row.Item.ID))))
+    .Attributes(@class => "grid-style"))

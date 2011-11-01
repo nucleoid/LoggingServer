@@ -49,7 +49,7 @@ task Init -depends Clean {
     	-product "LoggingServer $version" `
         -version $version `
         -clsCompliant "false" `
-        -guid "1957af42-fada-4fea-80b2-a0681d0d02b7"
+        -guid "1957af42-fada-4fea-80b2-a0681d0d02b7" `
         
     Generate-Assembly-Info `
         -file "$base_dir\LoggingServer.Tests\Properties\AssemblyInfo.cs" `

@@ -1,7 +1,7 @@
 ﻿using System.Web.Security;
 using LoggingServer.Server.Tasks;
 
-namespace LoggingServer.Interface.Wrappers
+namespace LoggingServer.Mvc.Wrappers
 {
     public class MembershipWrapper : IMembershipTasks
     {

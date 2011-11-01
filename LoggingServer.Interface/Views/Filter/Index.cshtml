@@ -16,19 +16,3 @@
             {"filter.MessagePartial", row.Item.MessagePartial}})))
         .Attributes(@class => "grid-style"))
 
-<script type="text/javascript" charset="utf-8">
-    $(document).ready(function () {
-        $("tr").click(function () {
-            window.location = $(this).attr("url");
-        });
-        $("tr").not(':first').hover(
-          function () {
-              $(this).css("background", "yellow");
-              $(this).css("cursor", "pointer");
-          },
-          function () {
-              $(this).css("background", "");
-          }
-        );
-    });
-</script>
