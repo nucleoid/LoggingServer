@@ -46,7 +46,7 @@ namespace LoggingServer.Tests.LogTruncator
             var repository = MockRepository.GenerateMock<IWritableRepository<LogEntry>>();
             DependencyContainer.RegisterInstance(repository);
             DependencyContainer.BuildContainer();
-            var now = DateTime.Parse("10/31/2011");
+            var now = DateTime.Now;
 
             //Act
             var scheduler = BootStrapper.Start(false, new [] {"Error", "5"}, now);

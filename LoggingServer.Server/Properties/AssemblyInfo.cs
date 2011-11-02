@@ -12,8 +12,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyrightAttribute("")]
 [assembly: Guid("1957af42-fada-4fea-80b2-a0681d0d02b7")]
 [assembly: AssemblyVersionAttribute("1.0.0.0")]
-[assembly: AssemblyInformationalVersionAttribute("1.0.0.0 / 098c1b4")]
+[assembly: AssemblyInformationalVersionAttribute("1.0.0.0 / ee82d60")]
 [assembly: AssemblyDelaySignAttribute(false)]
-
-[assembly: InternalsVisibleTo("LoggingServer.Tests")]
 

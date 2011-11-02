@@ -30,8 +30,8 @@ namespace LoggingServer.Interface.Automapper
                 map.CreateMap<SearchFilter, SearchFilterModel>();
                 map.CreateMap<SearchFilterModel, SearchFilter>();
 
-                map.CreateMap<Subscription, SubscriptionModel>();
-                map.CreateMap<SubscriptionModel, Subscription>().ForMember(dest => dest.Filter, o => o.ResolveUsing<FilterResolver>());
+                map.CreateMap<Subscription, SubscriptionModel>().ForMember(d => d.EmailEntries, o => o.Ignore());
+                map.CreateMap<SubscriptionModel, Subscription>().ForMember(d => d.Filter, o => o.ResolveUsing<FilterResolver>());
             });
         }
     }

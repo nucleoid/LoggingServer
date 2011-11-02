@@ -4,6 +4,7 @@ using System.Reflection;
 using LoggingServer.Server;
 using LoggingServer.Server.Domain;
 using LoggingServer.Server.Repository;
+using LoggingServer.Server.Tasks;
 using MbUnit.Framework;
 using NLog.LogReceiverService;
 using Rhino.Mocks;
@@ -17,6 +18,7 @@ namespace LoggingServer.Tests.Server
         private IWritableRepository<LogEntry> _logEntryRepository;
         private IWritableRepository<Component> _componentRepository;
         private IWritableRepository<Project> _projectRepository;
+        private ISubscriptionTasks _subscriptionTasks;
         private LogReceiverServer _server;
 
         [SetUp]
@@ -25,7 +27,8 @@ namespace LoggingServer.Tests.Server
             _logEntryRepository = MockRepository.GenerateMock<IWritableRepository<LogEntry>>();
             _componentRepository = MockRepository.GenerateMock<IWritableRepository<Component>>();
             _projectRepository = MockRepository.GenerateMock<IWritableRepository<Project>>();
-            _server = new LogReceiverServer(_logEntryRepository, _componentRepository, _projectRepository);
+            _subscriptionTasks = MockRepository.GenerateMock<ISubscriptionTasks>();
+            _server = new LogReceiverServer(_logEntryRepository, _componentRepository, _projectRepository, _subscriptionTasks);
         }
 
         [Test]
@@ -61,6 +64,8 @@ namespace LoggingServer.Tests.Server
             _componentRepository.Expect(x => x.Get(Arg<Guid>.Is.Equal(component.ID))).Return(component);
             _logEntryRepository.Expect(x => x.Save(Arg<List<LogEntry>>.Matches(y => y.Count == 1 &&
                 y.First().Equals(entry))));
+            _subscriptionTasks.Expect(x => x.AsyncNotify(Arg<List<LogEntry>>.Matches(y => y.Count == 1 &&
+                y.First().Equals(entry))));
 
             //Act
             _server.ProcessLogMessages(events);
@@ -68,6 +73,7 @@ namespace LoggingServer.Tests.Server
             //Assert
             _logEntryRepository.VerifyAllExpectations();
             _componentRepository.VerifyAllExpectations();
+            _subscriptionTasks.VerifyAllExpectations();
         }
 
         [Test]

@@ -50,7 +50,7 @@ namespace LoggingServer.Tests.Common.Targets
         public void InitializeTarget_Without_AssemblyName()
         {
             //Act
-            InvokeMethod(_target, "InitializeTarget", null);
+            _target.InvokeMethod("InitializeTarget", null);
 
             //Assert
             Assert.AreEqual("'${basedir}'", _target.Parameters.SingleOrDefault(x => x.Name == "BaseDirectory").Layout.ToString());
@@ -93,7 +93,7 @@ namespace LoggingServer.Tests.Common.Targets
             _target.AssemblyName = GetType().Assembly.FullName;
 
             //Act
-            InvokeMethod(_target, "InitializeTarget", null);
+            _target.InvokeMethod("InitializeTarget", null);
 
             //Assert
             Assert.AreEqual("'${basedir}'", _target.Parameters.SingleOrDefault(x => x.Name == "BaseDirectory").Layout.ToString());
@@ -138,7 +138,7 @@ namespace LoggingServer.Tests.Common.Targets
             //Arrange
             var logEvents = new AsyncLogEventInfo[1];
             logEvents[0] = new AsyncLogEventInfo(new LogEventInfo {Exception = new Exception()}, x => x.GetType());
-            SetProperty<Target>(_target, "IsInitialized", true);
+            _target.SetProperty<Target>("IsInitialized", true);
 
             //Act
             _target.WriteAsyncLogEvents(logEvents);
@@ -147,25 +147,6 @@ namespace LoggingServer.Tests.Common.Targets
             Assert.IsTrue(_target.BaseWriteCalled);
         }
 
-        public static void InvokeMethod(object obj, string methodName, object[] parameters)
-        {
-            Type type = obj.GetType();
-
-            MethodInfo info = type.GetMethod(methodName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            if (info == null)
-                throw new Exception("Method not found");
-
-            info.Invoke(obj, parameters);
-        }
-
-        public static void SetProperty<T>(object obj, string propertyName, object value)
-        {
-            PropertyInfo info = typeof(T).GetProperty(propertyName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-
-            if (info == null)
-                throw new Exception("Property not found");
-
-            info.SetValue(obj, value, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public, null, null, null);
-        }
+        
     }
 }

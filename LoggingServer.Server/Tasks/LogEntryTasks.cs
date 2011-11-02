@@ -43,7 +43,7 @@ namespace LoggingServer.Server.Tasks
             return queryable.Count();
         }
 
-        private IQueryable<LogEntry> AddFilterToQuery(SearchFilter filter, IQueryable<LogEntry> queryable)
+        public IQueryable<LogEntry> AddFilterToQuery(SearchFilter filter, IQueryable<LogEntry> queryable)
         {
             if (!string.IsNullOrEmpty(filter.ProjectName))
                 queryable = queryable.Where(x => x.Component.Project.Name.ToLowerInvariant().Contains(filter.ProjectName.ToLowerInvariant()));

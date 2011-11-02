@@ -6,6 +6,7 @@ using System.Reflection;
 using LoggingServer.Common;
 using LoggingServer.LogTruncator.Quartz;
 using LoggingServer.Server.Autofac;
+using LoggingServer.Server.Quartz;
 using NLog;
 using Quartz;
 using Quartz.Impl;

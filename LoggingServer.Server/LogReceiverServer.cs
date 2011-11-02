@@ -7,6 +7,7 @@ using System.ServiceModel;
 using LoggingServer.Server.Autofac;
 using LoggingServer.Server.Domain;
 using LoggingServer.Server.Repository;
+using LoggingServer.Server.Tasks;
 using NLog;
 using NLog.LogReceiverService;
 using LogLevel = LoggingServer.Server.Domain.LogLevel;
@@ -21,6 +22,7 @@ namespace LoggingServer.Server
         private readonly IWritableRepository<Project> _projectRepository;
         private readonly IWritableRepository<Component> _componentRepository;
         private readonly IWritableRepository<LogEntry> _logEntryRepository;
+        private readonly ISubscriptionTasks _subscriptionTasks;
 
         public LogReceiverServer()
         {
@@ -30,6 +32,7 @@ namespace LoggingServer.Server
                 _projectRepository = DependencyContainer.Resolve<IWritableRepository<Project>>();
                 _componentRepository = DependencyContainer.Resolve<IWritableRepository<Component>>();
                 _logEntryRepository = DependencyContainer.Resolve<IWritableRepository<LogEntry>>();
+                _subscriptionTasks = DependencyContainer.Resolve<ISubscriptionTasks>();
             }
             catch (Exception e)
             {
@@ -39,11 +42,12 @@ namespace LoggingServer.Server
         }
 
         public LogReceiverServer(IWritableRepository<LogEntry> logEntryRepository, IWritableRepository<Component> componentRepository, 
-            IWritableRepository<Project> projectRepository)
+            IWritableRepository<Project> projectRepository, ISubscriptionTasks subscriptionTasks)
         {
             _logEntryRepository = logEntryRepository;
             _componentRepository = componentRepository;
             _projectRepository = projectRepository;
+            _subscriptionTasks = subscriptionTasks;
         }
 
         public void ProcessLogMessages(NLogEvents events)
@@ -70,6 +74,7 @@ namespace LoggingServer.Server
                     data.Add(log);
                 }
                 _logEntryRepository.Save(data);
+                _subscriptionTasks.AsyncNotify(data);
             }
             catch(Exception e)
             {

@@ -19,6 +19,7 @@ namespace LoggingServer.Tests.Server.Autofac
             DependencyContainer.BuildContainer();
 
             Assert.IsTrue(DependencyContainer.Container.IsRegistered<ILogEntryTasks>());
+            Assert.IsTrue(DependencyContainer.Container.IsRegistered<ISubscriptionTasks>());
         }
     }
 }

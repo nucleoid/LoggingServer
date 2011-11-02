@@ -61,7 +61,7 @@ namespace LoggingServer.Server.Repository.FluentMigrations.Migrations
                 .WithColumn("Logger").AsString(255).Nullable()
                 .WithColumn("LongDate").AsDateTime().Nullable()
                 .WithColumn("MachineName").AsString(255).Nullable()
-                .WithColumn("LogMessage").AsString(255).Nullable()
+                .WithColumn("LogMessage").AsString(int.MaxValue).Nullable()
                 .WithColumn("ProcessID").AsString(255).Nullable()
                 .WithColumn("ProcessInfo").AsString(255).Nullable()
                 .WithColumn("ProcessName").AsString(255).Nullable()

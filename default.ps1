@@ -68,6 +68,7 @@ task Init -depends Clean {
 	-company "Mitchell Statz" `
 	-product "LoggingServer $version" `
         -version $version `
+        -clsCompliant "false" `
         -guid "1e10018f-05ab-466d-b17d-43ab5c0ae7ca"
         
     Generate-Assembly-Info `

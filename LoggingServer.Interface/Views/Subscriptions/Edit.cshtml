@@ -10,27 +10,26 @@
 
 @using (Html.BeginForm("Edit", "Subscriptions", FormMethod.Post, new { id = "edit" }))
 {    
-    @Html.ValidationSummary()
     @Html.HiddenFor(c => c.ID)
     <fieldset class="related-form-fields">
         <legend>Search Logs</legend>
         <div class="related-form-fields">
-            @Html.LabelFor(x => x.Emails)<br />
+            @Html.LabelFor(x => x.EmailEntries)<br />
             @for (int i = 0; i < Model.Emails.Count; i++)
             {
                 <div class="related-form-fields">
-                    @Html.Label(string.Format("Emails_{0}", i), string.Format("{0}. ", i + 1))
-                    @Html.TextBoxFor(m => m.Emails[i])
+                    @Html.Label(string.Format("EmailEntries_{0}_Email", i), string.Format("{0}. ", i + 1))
+                    @Html.TextBoxFor(m => m.EmailEntries[i].Email, new { @class = "email-entry" })
+                    <a href="#" class="remove-email">remove</a>
+                    @Html.ValidationMessageFor(m => m.EmailEntries[i].Email)
                 </div>
             }
-            <div class="related-form-fields">
-                @Html.Label(string.Format("Emails_{0}", Model.Emails.Count), string.Format("{0}. ", Model.Emails.Count + 1))
-                <input id="Emails_@(Model.Emails.Count)" name="Emails[@Model.Emails.Count]" type="text" value="" />
-            </div>
+            <a href="#" id="add-new-email">add another email</a>
         </div>
         <div class="related-form-fields">
             @Html.Label("FilterId", "Saved Search")
             @Html.DropDownList("FilterId", "- Select a saved search -")
+            @Html.ValidationMessageFor(m => m.FilterId)
         </div>
         <div class="related-form-fields">
             @Html.LabelFor(x => x.IsDailyOverview)
@@ -38,8 +37,33 @@
         </div>
         <div>
             <input type="submit" value="Save" /> 
-            @if(Model.ID != Guid.Empty){@:or @(Html.ActionLink<SubscriptionsController>(c => c.Delete(Model.ID), "delete this subscription"))
+            @if (Model.ID != Guid.Empty)
+            {@:or @(Html.ActionLink<SubscriptionsController>(c => c.Delete(Model.ID), "delete this subscription"))
 }
         </div>
     </fieldset>
 }
+
+ <script type="text/javascript" charset="utf-8">
+     $(document).ready(function () {
+         $("#add-new-email").click(function () {
+             $(this).before(newEmailDiv());
+             $(".remove-email").last().click(function () {
+                 $(this).parent(".related-form-fields").remove();
+             });
+         });
+         $(".remove-email").click(function () {
+             $(this).parent(".related-form-fields").remove();
+         });
+     });
+    
+    function newEmailDiv() {
+        var entryCount = $(".email-entry").length;
+        return '<div class="related-form-fields"><label for="EmailEntries_'
+            + entryCount + '_Email">' + (entryCount + 1) + '. </label><input class="email-entry" '
+            +'data-val="true" data-val-email="The Email field is not a valid e-mail address." data-val-required="The Email field is required." '
+            +'id="EmailEntries_' + entryCount +'_Email" name="EmailEntries[' + entryCount +'].Email" type="text" value="" />'
+            + '<a href="#" class="remove-email">remove</a></div>';
+    }
+ </script>
+

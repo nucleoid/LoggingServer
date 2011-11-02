@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ServiceProcess;
-using System.Threading;
 using Quartz;
 
 namespace LoggingServer.LogTruncator

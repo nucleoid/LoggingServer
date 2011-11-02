@@ -10,9 +10,6 @@
 <h2>Saved Searches</h2>
 @(Html.ActionLink<LogsController>(c => c.Index(null, null, null), "Create a new saved search"))
 @(Html.Grid(Model).AutoGenerateColumns().Columns(col => col.For(x => Html.ActionLink<FilterController>(c => c.Edit(x.ID), "edit")).Named(string.Empty))
-            .RowAttributes(row => new Hash(url => Url.Action("Search", "Logs", new RouteValueDictionary { {"filter.ProjectName", row.Item.ProjectName},
-            {"filter.ComponentName", row.Item.ComponentName}, {"filter.StartDate", row.Item.StartDate}, {"filter.EndDate", row.Item.EndDate},
-            {"filter.LogLevel", row.Item.LogLevel}, {"filter.MachineNamePartial", row.Item.MachineNamePartial}, {"filter.ExceptionPartial", row.Item.ExceptionPartial},
-            {"filter.MessagePartial", row.Item.MessagePartial}})))
+            .RowAttributes(row => new Hash(url => Url.Action<LogsController>(x => x.SavedSearch(row.Item.ID, null))))
         .Attributes(@class => "grid-style"))
 

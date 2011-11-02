@@ -84,7 +84,9 @@
     <Compile Include="Interface\Extensions\IQueryableExtensionsTest.cs" />
     <Compile Include="Interface\MvcHelper.cs" />
     <Compile Include="LogTruncator\BootStrapperTest.cs" />
-    <Compile Include="LogTruncator\Quartz\AutofacJobFactoryTest.cs" />
+    <Compile Include="ReflectionExtensions.cs" />
+    <Compile Include="Server\DomainTestHelper.cs" />
+    <Compile Include="Server\Quartz\AutofacJobFactoryTest.cs" />
     <Compile Include="LogTruncator\Quartz\TruncationJobTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server\Autofac\DBModuleTest.cs" />
@@ -95,7 +97,9 @@
     <Compile Include="Server\Domain\SearchFilterTest.cs" />
     <Compile Include="Server\Domain\SubscriptionTest.cs" />
     <Compile Include="Server\LogReceiverServerTest.cs" />
-    <Compile Include="Tasks\LogEntryTasksTest.cs" />
+    <Compile Include="Server\Tasks\EmailTasksTest.cs" />
+    <Compile Include="Server\Tasks\LogEntryTasksTest.cs" />
+    <Compile Include="Server\Tasks\SubscriptionTasksTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LoggingServer.Common\LoggingServer.Common.csproj">
