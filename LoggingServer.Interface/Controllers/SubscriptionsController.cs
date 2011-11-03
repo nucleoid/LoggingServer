@@ -35,7 +35,8 @@ namespace LoggingServer.Interface.Controllers
             if(Guid.Empty != id)
                 subscription = _subscriptionRepository.Get(id);
             var mapped = Mapper.Map<Subscription, SubscriptionModel>(subscription);
-            ViewBag.FilterId = _filterRepository.All().ToSelectList("ID", "Description", subscription.Filter != null ? subscription.Filter.ID : Guid.Empty);
+            ViewBag.FilterId = _filterRepository.All().Where(x => x.UserName == User.Identity.Name || x.IsGlobal)
+                .ToSelectList("ID", "Description", subscription.Filter != null ? subscription.Filter.ID : Guid.Empty);
             return View(mapped);
         }
 
@@ -48,7 +49,8 @@ namespace LoggingServer.Interface.Controllers
                 _subscriptionRepository.Save(mapped);
                 return this.RedirectToAction(x => x.Index());
             }
-            ViewBag.FilterId = _filterRepository.All().ToSelectList("ID", "Description", subscription.FilterId);
+            ViewBag.FilterId = _filterRepository.All().Where(x => x.UserName == User.Identity.Name || x.IsGlobal)
+                .ToSelectList("ID", "Description", subscription.FilterId);
             return View(subscription);
         }
 

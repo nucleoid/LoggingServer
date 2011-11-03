@@ -100,6 +100,8 @@
     <Compile Include="Server\Tasks\EmailTasksTest.cs" />
     <Compile Include="Server\Tasks\LogEntryTasksTest.cs" />
     <Compile Include="Server\Tasks\SubscriptionTasksTest.cs" />
+    <Compile Include="WcfService\BootStrapperTest.cs" />
+    <Compile Include="WcfService\Quartz\SubscriptionJobTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LoggingServer.Common\LoggingServer.Common.csproj">
@@ -117,6 +119,10 @@
     <ProjectReference Include="..\LoggingServer.Server\LoggingServer.Server.csproj">
       <Project>{E586133A-2E0D-4CCA-8FF9-1870BC611E14}</Project>
       <Name>LoggingServer.Server</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LoggingServer.WcfService\LoggingServer.WcfService.csproj">
+      <Project>{54E21B63-C4E6-460A-BED1-BE27152F054C}</Project>
+      <Name>LoggingServer.WcfService</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -51,6 +51,7 @@
              $(".remove-email").last().click(function () {
                  $(this).parent(".related-form-fields").remove();
              });
+             $(this).prev().children('input').focus();
          });
          $(".remove-email").click(function () {
              $(this).parent(".related-form-fields").remove();

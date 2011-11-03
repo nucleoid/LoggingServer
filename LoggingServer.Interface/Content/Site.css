@@ -1,38 +1,81 @@
-﻿/*----------------------------------------------------------
-The base color for this template is #5c87b2. If you'd like
-to use a different color start by replacing all instances of
-#5c87b2 with your new color.
+﻿/* General  
 ----------------------------------------------------------*/
-body {
-    background-color: #5c87b2;
-    font-size: .85em;
-    font-family: "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
+html {
     margin: 0;
     padding: 0;
+}
+
+body {
+    background: #fff url(/Content/img/bkg.png) repeat-x top left;
     color: #696969;
+    font-family: Tahoma, Verdana, Helvetica, Sans-Serif;
+    font-size: .75em;
+    margin: 0;
+    padding: 0;
 }
 
 a:link {
-    color: #034af3;
-    text-decoration: underline;
+    color: #3b3420;
+    text-decoration: none;
 }
 
 a:visited {
-    color: #505abc;
+    color: #3b3420;
+    text-decoration: none;
 }
 
 a:hover {
-    color: #1d60ff;
+    color: #a52f09;
     text-decoration: none;
 }
 
 a:active {
-    color: #12eb87;
+    color: #a52f09;
 }
 
-p, ul {
-    margin-bottom: 20px;
-    line-height: 1.6em;
+input[type=submit], input[type=button] {
+        background-color: #a52f09;
+        border: 1px solid #712107;
+        color: #fdfcf7;
+        cursor: pointer;
+    
+        /*CSS3 properties*/
+        border-radius: 4px; 
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+        box-shadow: 1px 2px 5px #b4b4b4;
+        -webkit-box-shadow: 1px 2px 4px rgba(136,136,136, 0.6);
+        -moz-box-shadow: 1px 2px 5px #b4b4b4;
+    }
+
+/* Basic Layout
+----------------------------------------------------------*/
+.page {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#header {
+    height: 80px;
+}
+
+#body, #footer {
+    border-top: 1px dotted #5d5a53;
+    clear: both;
+}
+
+#footer {
+    padding: 10px;
+    text-align: center;
+}
+
+#main {
+    padding: 10px 30px 15px 30px;
+    border-radius: 4px 0 0 0;
+    -webkit-border-radius: 4px 0 0 0;
+    -moz-border-radius: 4px 0 0 0;
+    clear: both;
 }
 
 header,
@@ -42,97 +85,18 @@ section {
     display: block;
 }
 
-/* HEADINGS   
+/* Menu
 ----------------------------------------------------------*/
-h1, h2, h3, h4, h5, h6 {
-    font-size: 1.5em;
-    color: #000;
-}
-
-h1 {
-    font-size: 2em;
-    padding-bottom: 0;
-    margin-bottom: 0;
-}
-
-h2 {
-    padding: 0 0 5px 0;
-}
-
-h3 {
-    font-size: 1.2em;
-}
-
-h4 {
-    font-size: 1.1em;
-}
-
-h5, h6 {
-    font-size: 1em;
-}
-
-/* PRIMARY LAYOUT ELEMENTS   
-----------------------------------------------------------*/
-
-/* you can specify a greater or lesser percentage for the 
-page width. Or, you can specify an exact pixel width. */
-.page {
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-header, #header {
-    position: relative;
-    margin-bottom: 0px;
-    color: #000;
-    padding: 0;
-}
-
-header h1, #header h1 {
-    font-weight: bold;
-    padding: 1em 0 .1em 0;
-    margin: 0;
-    color: #fff;
-    border: none;
-    font-size: 2.5em !important;
-    text-shadow: 1px 1px 2px #111;
-}
-
-#main {
-    padding: 10px 30px 15px 30px;
-    background-color: #fff;
-    border-radius: 4px 0 0 0;
-    -webkit-border-radius: 4px 0 0 0;
-    -moz-border-radius: 4px 0 0 0;
-    clear: both;
-}
-
-footer, 
-#footer {
-    background-color: #fff;
-    color: #999;
-    padding: 10px 0;
-    text-align: center;
-    line-height: normal;
-    margin: 0 0 30px 0;
-    font-size: .9em;
-    border-radius: 0 0 4px 4px;
-    -webkit-border-radius: 0 0 4px 4px;
-    -moz-border-radius: 0 0 4px 4px;
-}
-
-/* TAB MENU   
-----------------------------------------------------------*/
-ul#menu {
-    border-bottom: 1px #5C87B2 solid;
+#menu {
     padding: 0 0 2px;
     position: relative;
     margin: 0;
     text-align: right;
+    font-size: 1.4em;
+    list-style: none;
 }
 
-ul#menu li {
+#menu li {
     display: inline;
     list-style: none;
 }
@@ -150,20 +114,21 @@ ul#menu li a {
     font-weight: bold;
     text-decoration: none;
     line-height: 2.8em;
-    background-color: #e8eef4;
-    color: #034af3;
+    background-color: #bdb76b;
+    color: #3B3420;
     border-radius: 4px 4px 0 0;
     -webkit-border-radius: 4px 4px 0 0;
     -moz-border-radius: 4px 4px 0 0;
+    border-bottom: 1px dotted #5D5A53;
 }
 
 ul#menu li a:hover {
-    background-color: #fff;
+    background-color: #cd835f;
     text-decoration: none;
 }
 
 ul#menu li a:active {
-    background-color: #a6e2a6;
+    background-color: #A52F09;
     text-decoration: none;
 }
 
@@ -172,45 +137,60 @@ ul#menu li.selected a {
     color: #000;
 }
 
-/* FORM LAYOUT ELEMENTS   
-----------------------------------------------------------*/
+.site-title a {
+    background: transparent url(../Images/brand.png) no-repeat;
+    float: left;
+    height: 50px;
+    margin: 15px;
+    padding: 0;
+    text-indent: -9999px;
+    width: 340px;
+}
 
+/* Forms   
+----------------------------------------------------------*/
 fieldset {
-    border: 1px solid #ddd;
+    border: 1px solid #CCC;
     padding: 0;
     margin: auto;
+    width: 100%;
 }
 
-legend {
-    font-size: 1.2em;
-    font-weight: bold;
-}
+    fieldset legend {
+        font-size: 1.1em;
+        font-weight: bold;
+        padding: 2px 4px 8px 4px;
+    }
 
-textarea {
-    min-height: 75px;
-}
+    fieldset input[type="text"], input[type="password"] {
+        border: 1px solid #ccc;
+        color: #444;
+        font-size: 1.2em;
+        padding: 2px;
+        width: 300px;
+        margin-right: 5px;
+    }
+        fieldset input[type="text"].date-field {
+             width: 160px;
+        }
 
-input[type="text"], 
-input[type="password"] {
-    border: 1px solid #ccc;
-    padding: 2px;
-    font-size: 1em;
-    color: #444;
-    width: 150px;
-    margin-right: 10px;
-}
+    fieldset input[type="submit"], fieldset input[type="button"] {
+        padding: 5px;
+    }
 
-select {
-    border: 1px solid #ccc;
-    padding: 2px;
-    font-size: 1.2em;
-    color: #444;
-}
+    fieldset textarea {
+        color: #444;
+        width: 300px;
+    }
 
-input[type="submit"] {
-    font-size: 1em;
-    padding: 1px;
-}
+    .no-legend {
+        border: none;
+        padding: 0;
+    }
+
+        .no-legend legend {
+            display: none;
+        }
 
 input[type="checkbox"] {
     margin-left: 0;
@@ -230,6 +210,56 @@ div.checkboxes label {
     margin: 0;
     padding: 0;
 }
+
+/* Information and errors  
+----------------------------------------------------------*/  
+.message {
+    border: 1px solid;
+    clear: both;
+    margin: 10px 0px;
+    padding: 15px 15px;
+    
+    /*CSS3 properties*/
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    box-shadow: 2px 2px 5px #888;
+    -webkit-box-shadow: 2px 2px 5px #888;
+    -moz-box-shadow: 2px 2px 5px #888;
+}
+
+.info {
+    background: #bde5f8;
+    color: #00529b;
+}
+
+.error {
+    background: #ffccba;
+    color: #d63301;
+}
+        
+.field-validation-error {
+    color: #be3e16;
+    font-weight: bold;
+}
+
+    .field-validation-error:before {
+        content: "«";
+        margin:0 3px;
+    }
+    
+.validation-summary-errors {
+    color: #be3e16;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.validation-summary-errors ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
 /* TABLE
 ----------------------------------------------------------*/
 
@@ -281,7 +311,16 @@ table tr.loglevel-fatal, table tr.loglevel-fatal pre
     color: White;
     background-color: #FF0000;
 }
-/* MISC  
+
+/* css for timepicker
+----------------------------------------------------------*/
+.ui-timepicker-div .ui-widget-header{ margin-bottom: 8px; }
+.ui-timepicker-div dl{ text-align: left; }
+.ui-timepicker-div dl dt{ height: 25px; }
+.ui-timepicker-div dl dd{ margin: -25px 0 10px 65px; }
+.ui-timepicker-div td { font-size: 90%; }
+
+/* Misc
 ----------------------------------------------------------*/
 .clear {
     clear: both;
@@ -293,7 +332,7 @@ table tr.loglevel-fatal, table tr.loglevel-fatal pre
 
 nav, 
 #menucontainer {
-    margin-top: 40px;
+    margin-top: 30px;
     float: right;
 }
 
@@ -308,21 +347,21 @@ div#title {
     display: block;
     text-align: right;
     margin: 10px;
-    color: White;
+    color: black;
 }
 
 #logindisplay a:link {
-    color: white;
+    color: black;
     text-decoration: underline;
 }
 
 #logindisplay a:visited {
-    color: white;
+    color: #808000;
     text-decoration: underline;
 }
 
 #logindisplay a:hover {
-    color: white;
+    color: #cd835f;
     text-decoration: none;
 }
 
@@ -333,58 +372,3 @@ div#title {
 .add-margin-right {
     margin-right: 10px;
 }
-/* Styles for validation helpers
------------------------------------------------------------*/
-.field-validation-error {
-    color: #ff0000;
-}
-
-.field-validation-valid {
-    display: none;
-}
-
-.input-validation-error {
-    border: 1px solid #ff0000;
-    background-color: #ffeeee;
-}
-
-.validation-summary-errors {
-    font-weight: bold;
-    color: #ff0000;
-}
-
-.validation-summary-valid {
-    display: none;
-}
-
-/* Styles for editor and display helpers
-----------------------------------------------------------*/
-.display-label, 
-.editor-label {
-    margin: 1em 0 0 0;
-}
-
-.display-field, 
-.editor-field {
-    margin: 0.5em 0 0 0;
-}
-
-.text-box {
-    width: 30em;
-}
-
-.text-box.multi-line {
-    height: 6.5em;
-}
-
-.tri-state {
-    width: 6em;
-}
-
-/* css for timepicker
-----------------------------------------------------------*/
-.ui-timepicker-div .ui-widget-header{ margin-bottom: 8px; }
-.ui-timepicker-div dl{ text-align: left; }
-.ui-timepicker-div dl dt{ height: 25px; }
-.ui-timepicker-div dl dd{ margin: -25px 0 10px 65px; }
-.ui-timepicker-div td { font-size: 90%; }

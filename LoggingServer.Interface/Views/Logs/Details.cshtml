@@ -16,7 +16,7 @@
                      col.For(x => string.Format("<div class='maxheight'><pre>{0}</pre></div>", x.ExceptionStackTrace)).Encode(false).Named("Exception Stack Trace").InsertAt(10);
                      col.For(x => string.Format("<div class='maxheight'><pre>{0}</pre></div>", x.StackTrace)).Encode(false).Named("Stack Trace").InsertAt(22);
                  })
-    .RowAttributes(row => new Hash(@class => string.Format("loglevel-{0}", row.Item.LogLevel.ToString().ToLowerInvariant())))
+    .RowAttributes(row => new Hash(@class => string.Format("loglevel-{0} no-url", row.Item.LogLevel.ToString().ToLowerInvariant())))
     .Attributes(@class => "grid-style"))
  
  <script type="text/javascript" charset="utf-8">
@@ -28,6 +28,7 @@
                  maxHeight = $(this).height();
          });
          if (maxHeight > height)
-             $('#main').height($(window).height() - $('#title').outerHeight(true) - $('#logindisplay').outerHeight(true) - $('#footer').outerHeight(true));
+             $('#main').height($(window).height() - $('#menucontainer').outerHeight(true) - $('#logindisplay').outerHeight(true) - $('#footer').outerHeight(true) - 5);
      });
  </script>
+ 

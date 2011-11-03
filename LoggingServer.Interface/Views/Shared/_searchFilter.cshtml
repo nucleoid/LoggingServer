@@ -14,10 +14,10 @@
         </div>
         <div class="related-form-fields">
             <label for="filter_StartDate">Start Date</label>
-            @Html.TextBox("filter.StartDate")
+            @Html.TextBox("filter.StartDate", ViewData["filter.StartDate"], new { @class="date-field" })
 
             <label for="filter_EndDate">End Date</label>
-            @Html.TextBox("filter.EndDate")
+            @Html.TextBox("filter.EndDate", ViewData["filter.EndDate"], new { @class = "date-field" })
         </div>
         <div class="related-form-fields checkboxes">
             <span class="add-margin-right">Log Levels:</span>
@@ -29,7 +29,8 @@
 
             <label for="filter_ExceptionPartial">Exception</label>
             @Html.TextBox("filter.ExceptionPartial")
-
+        </div>
+        <div class="related-form-fields checkboxes">
             <label for="filter_MessagePartial">Log Message</label>
             @Html.TextBox("filter.MessagePartial")
         </div>

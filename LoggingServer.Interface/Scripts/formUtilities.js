@@ -19,10 +19,10 @@
     });
 
     //Grid row highlighter
-    $("tr").click(function () {
+    $("tr:not(.no-url)").click(function () {
         window.location = $(this).attr("url");
     });
-    $("tr").not(':first').hover(
+    $("tr:not(.no-url)").not(':first').hover(
           function () {
               $(this).css("background", "yellow");
               $(this).css("cursor", "pointer");

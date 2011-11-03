@@ -19,6 +19,8 @@ namespace LoggingServer.Server.Repository.FluentMigrations.Migrations
                 .WithColumn("IsDailyOverview").AsBoolean().NotNullable();
             Create.ForeignKey("fk_Subscriptions_FilterID_SearchFilters_ID").FromTable("Subscriptions")
                 .ForeignColumn("FilterID").ToTable("SearchFilters").PrimaryColumn("ID");
+
+            Create.Index("LogEntries_DateAdded_Index").OnTable("LogEntries").OnColumn("DateAdded").Descending().WithOptions().NonClustered();
         }
     }
 }

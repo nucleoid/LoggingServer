@@ -23,60 +23,60 @@ task Init -depends Clean {
     . .\psake_ext.ps1
     Generate-Assembly-Info `
         -file "$base_dir\LoggingServer.Common\Properties\AssemblyInfo.cs" `
-        -title "LoggingServer Common $version" `
+        -title "LoggingServer Common" `
         -description "Common LoggingServer classes" `
         -company "Mitchell Statz" `
-        -product "LoggingServer $version" `
+        -product "LoggingServer" `
         -version $version `
         -guid "a7b47a02-3d1b-41b6-b8a9-3fc9c40c5984"
         
         
     Generate-Assembly-Info `
 	-file "$base_dir\LoggingServer.Interface\Properties\AssemblyInfo.cs" `
-	-title "LoggingServer Interface $version" `
+	-title "LoggingServer Interface" `
 	-description "LoggingServer user interface" `
 	-company "Mitchell Statz" `
-	-product "LoggingServer $version" `
+	-product "LoggingServer" `
         -version $version `
         -clsCompliant "false" `
         -guid "96562976-6b23-40f5-a44f-f01c3d157461"
     
     Generate-Assembly-Info `
     	-file "$base_dir\LoggingServer.Server\Properties\AssemblyInfo.cs" `
-    	-title "LoggingServer Server $version" `
+    	-title "LoggingServer Server" `
     	-description "LoggingServer main logging classes" `
     	-company "Mitchell Statz" `
-    	-product "LoggingServer $version" `
+    	-product "LoggingServer" `
         -version $version `
         -clsCompliant "false" `
         -guid "1957af42-fada-4fea-80b2-a0681d0d02b7" `
         
     Generate-Assembly-Info `
         -file "$base_dir\LoggingServer.Tests\Properties\AssemblyInfo.cs" `
-        -title "LoggingServer Tests $version" `
+        -title "LoggingServer Tests" `
         -description "Unit tests for LoggingServer" `
         -company "Mitchell Statz" `
-        -product "LoggingServer $version" `
+        -product "LoggingServer" `
         -version $version `
         -clsCompliant "false" `
         -guid "bd01c085-3a2c-432b-8ada-d876da6ef4f1"
         
     Generate-Assembly-Info `
 	-file "$base_dir\LoggingServer.WcfService\Properties\AssemblyInfo.cs" `
-	-title "LoggingServer WcfService $version" `
+	-title "LoggingServer WcfService" `
 	-description "LoggingServer nlog wcf service" `
 	-company "Mitchell Statz" `
-	-product "LoggingServer $version" `
+	-product "LoggingServer" `
         -version $version `
         -clsCompliant "false" `
         -guid "1e10018f-05ab-466d-b17d-43ab5c0ae7ca"
         
     Generate-Assembly-Info `
     	-file "$base_dir\LoggingServer.LogTruncator\Properties\AssemblyInfo.cs" `
-    	-title "LoggingServer LogTruncator $version" `
+    	-title "LoggingServer LogTruncator" `
     	-description "LoggingServer log truncation windows service" `
     	-company "Mitchell Statz" `
-    	-product "LoggingServer $version" `
+    	-product "LoggingServer" `
         -version $version `
         -clsCompliant "false" `
         -guid "27875b7d-a0aa-46e3-99d5-22e489954bb7"

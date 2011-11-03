@@ -41,8 +41,8 @@ namespace LoggingServer.Tests.Common.Targets
             Assert.AreEqual("'Mitchell Statz'", _target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyCompany").Layout.ToString());
             Assert.AreEqual("'Unit tests for LoggingServer'", _target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyDescription").Layout.ToString());
             Assert.AreEqual("'bd01c085-3a2c-432b-8ada-d876da6ef4f1'", _target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyGuid").Layout.ToString());
-            Assert.AreEqual("'LoggingServer 1.0.0.0'", _target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyProduct").Layout.ToString());
-            Assert.AreEqual("'LoggingServer Tests 1.0.0.0'", _target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyTitle").Layout.ToString());
+            Assert.AreEqual("'LoggingServer'", _target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyProduct").Layout.ToString());
+            Assert.AreEqual("'LoggingServer Tests'", _target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyTitle").Layout.ToString());
             Assert.AreEqual("'1.0.0.0'", _target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyVersion").Layout.ToString());
         }
 
@@ -124,8 +124,8 @@ namespace LoggingServer.Tests.Common.Targets
             Assert.AreEqual("'Mitchell Statz'", _target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyCompany").Layout.ToString());
             Assert.AreEqual("'Unit tests for LoggingServer'", _target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyDescription").Layout.ToString());
             Assert.AreEqual("'bd01c085-3a2c-432b-8ada-d876da6ef4f1'", _target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyGuid").Layout.ToString());
-            Assert.AreEqual("'LoggingServer 1.0.0.0'", _target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyProduct").Layout.ToString());
-            Assert.AreEqual("'LoggingServer Tests 1.0.0.0'", _target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyTitle").Layout.ToString());
+            Assert.AreEqual("'LoggingServer'", _target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyProduct").Layout.ToString());
+            Assert.AreEqual("'LoggingServer Tests'", _target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyTitle").Layout.ToString());
             Assert.AreEqual("'1.0.0.0'", _target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyVersion").Layout.ToString());
         }
 

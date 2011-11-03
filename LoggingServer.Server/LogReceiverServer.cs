@@ -74,7 +74,7 @@ namespace LoggingServer.Server
                     data.Add(log);
                 }
                 _logEntryRepository.Save(data);
-                _subscriptionTasks.AsyncNotify(data);
+                _subscriptionTasks.AsyncNotify(data, false);
             }
             catch(Exception e)
             {
@@ -163,7 +163,7 @@ namespace LoggingServer.Server
         private void SetProject(Component component)
         {
             var projectName = ExtractProjectName(component);
-            var project = _projectRepository.All().Where(x => x.Name == projectName).SingleOrDefault();
+            var project = _projectRepository.All().FirstOrDefault(x => x.Name == projectName);
             if(project == null)
             {
                 project = new Project { DateAdded = DateTime.Now, Name = projectName, Description = projectName };
@@ -174,7 +174,11 @@ namespace LoggingServer.Server
 
         private static string ExtractProjectName(Component component)
         {
-            return component.Name.Split('.').FirstOrDefault();
+            var dotSplit = component.Name.Split('.');
+            var spaceSplit = component.Name.Split(' ');
+            if (dotSplit.Length > 1)
+                return dotSplit.FirstOrDefault();
+            return spaceSplit.FirstOrDefault();
         }
     }
 }

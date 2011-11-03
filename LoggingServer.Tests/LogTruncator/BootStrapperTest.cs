@@ -52,8 +52,7 @@ namespace LoggingServer.Tests.LogTruncator
             var scheduler = BootStrapper.Start(false, new [] {"Error", "5"}, now);
 
             //Assert
-            Assert.AreEqual(now.AddDays(1).Date.ToUniversalTime(), scheduler.GetTrigger("Truncation Job Trigger", null)
-                .GetNextFireTimeUtc());
+            Assert.AreEqual(now.AddDays(1).Date.ToUniversalTime(), scheduler.GetTrigger("Truncation Job Trigger", null).GetNextFireTimeUtc());
             var detail = scheduler.GetJobDetail("Truncation Job Detail", null);
             Assert.AreEqual(typeof(TruncationJob), detail.JobType);
             Assert.AreEqual(now, (DateTime)detail.JobDataMap[TruncationJob.NowKey]);

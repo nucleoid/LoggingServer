@@ -12,7 +12,7 @@ namespace LoggingServer.Server.Tasks
 {
     public class SubscriptionTasks : ISubscriptionTasks
     {
-        private delegate void NotifyDelegate(IList<LogEntry> data);
+        private delegate void NotifyDelegate(IList<LogEntry> data, bool isDaily);
 
         private readonly NotifyDelegate _worker;
         private readonly AsyncCallback _completedCallback;
@@ -31,40 +31,43 @@ namespace LoggingServer.Server.Tasks
 
         public event AsyncCompletedEventHandler TaskCompleted;
 
-        public void AsyncNotify(IList<LogEntry> data)
+        public void AsyncNotify(IList<LogEntry> data, bool isDaily)
         {
             AsyncOperation async = AsyncOperationManager.CreateOperation(null);
-            _worker.BeginInvoke(data, _completedCallback, async);
+            _worker.BeginInvoke(data, isDaily, _completedCallback, async);
         }
 
-        public void Notify(IList<LogEntry> data)
+        public void Notify(IList<LogEntry> data, bool isDaily)
         {
-            var subscriptions = _subscriptionRepository.All().Where(x => !x.IsDailyOverview).ToList();
+            var subscriptions = _subscriptionRepository.All().Where(x => x.IsDailyOverview == isDaily).ToList();
             foreach (var subscription in subscriptions)
             {
-                if (SubscriptionMatch(data, subscription))
+                var count = SubscriptionMatchCount(data, subscription);
+                if (count > 0)
                 {
                     var client = _emailTasks.GenerateClient();
-                    var message = GenerateMessage(subscription);
+                    var message = GenerateMessage(subscription, count);
                     _emailTasks.SendEmail(client, message);
                 }
             }
         }
 
-        private MailMessage GenerateMessage(Subscription subscription)
+        private MailMessage GenerateMessage(Subscription subscription, int logCount)
         {
             var from = ConfigurationManager.AppSettings["subscriptionFromAddress"];
-            var subject = string.Format("Log Subscription: {0}", subscription.Filter.Description);
+            var subject = subscription.IsDailyOverview ? string.Format("Daily Log Subscription: {0}", subscription.Filter.Description) : 
+                string.Format("Log Subscription: {0}", subscription.Filter.Description);
             var filterLink = string.Format(ConfigurationManager.AppSettings["filterLink"], subscription.Filter.ID);
-            var body = string.Format("<a href=\"{0}\">New matching log</a>", filterLink);
+            var body = subscription.IsDailyOverview ? string.Format("<a href=\"{0}\">Log Count: {1}</a>", filterLink, logCount) : 
+                string.Format("<a href=\"{0}\">New matching log</a>", filterLink);
             var message = _emailTasks.GenerateMessage(from, subscription.EmailList, subject, body);
             return message;
         }
 
-        private bool SubscriptionMatch(IEnumerable<LogEntry> data, Subscription subscription)
+        private int SubscriptionMatchCount(IEnumerable<LogEntry> data, Subscription subscription)
         {
             var checkData = new List<LogEntry>(data).AsQueryable();
-            return _logEntryTasks.AddFilterToQuery(subscription.Filter, checkData).Count() > 0;
+            return _logEntryTasks.AddFilterToQuery(subscription.Filter, checkData).Count();
         }
 
         private void TaskCompletedCallback(IAsyncResult ar)
