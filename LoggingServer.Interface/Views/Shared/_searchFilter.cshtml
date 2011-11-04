@@ -6,36 +6,47 @@
     <fieldset class="related-form-fields">
         <legend>Search Logs</legend>
         <div class="related-form-fields">
-            <label for="filter_ProjectName">Project Name</label>
-            @Html.TextBox("filter.ProjectName")
-
-            <label for="filter_ComponentName">Component Name</label>
-            @Html.TextBox("filter.ComponentName")
+            <div class="left">
+                <label for="filter_ProjectName">Project Name</label><br />
+                @Html.TextBox("filter.ProjectName")
+            </div>
+            <div class="left">
+                <label for="filter_ComponentName">Component Name</label><br />
+                @Html.TextBox("filter.ComponentName")
+            </div>
         </div>
         <div class="related-form-fields">
-            <label for="filter_StartDate">Start Date</label>
-            @Html.TextBox("filter.StartDate", ViewData["filter.StartDate"], new { @class="date-field" })
-
-            <label for="filter_EndDate">End Date</label>
-            @Html.TextBox("filter.EndDate", ViewData["filter.EndDate"], new { @class = "date-field" })
+            <div class="left">
+                <label for="filter_StartDate">Start Date</label><br />
+                @Html.TextBox("filter.StartDate", ViewData["filter.StartDate"], new { @class="date-field" })
+            </div>
+            <div class="left">
+                <label for="filter_EndDate">End Date</label><br />
+                @Html.TextBox("filter.EndDate", ViewData["filter.EndDate"], new { @class = "date-field" })
+            </div>
         </div>
-        <div class="related-form-fields checkboxes">
+        <div class="checkboxes">
             <span class="add-margin-right">Log Levels:</span>
             @(Html.CheckBoxesForFlagsEnum<LogLevel>("filter.LogLevel", ViewData["filter.LogLevel"], null))
         </div>
-        <div class="related-form-fields checkboxes">
-            <label for="filter_MachineNamePartial">Machine Name</label>
-            @Html.TextBox("filter.MachineNamePartial")
+        <div class="related-form-fields">
+            <div class="left">
+                <label for="filter_MachineNamePartial">Machine Name</label><br />
+                @Html.TextBox("filter.MachineNamePartial")
+            </div>
+            <div class="left">
+                <label for="filter_ExceptionPartial">Exception</label><br />
+                @Html.TextBox("filter.ExceptionPartial")
+            </div>
 
-            <label for="filter_ExceptionPartial">Exception</label>
-            @Html.TextBox("filter.ExceptionPartial")
+            <div class="left">
+                <label for="filter_MessagePartial">Log Message</label><br />
+                @Html.TextBox("filter.MessagePartial")
+            </div>
         </div>
-        <div class="related-form-fields checkboxes">
-            <label for="filter_MessagePartial">Log Message</label>
-            @Html.TextBox("filter.MessagePartial")
-        </div>
-        <div>
-            <input type="submit" value="Search" />
+        <div class="related-form-fields"></div>
+        <div class="add-margin-top">
+            <input type="submit" value="Search"/>
             <input type="button" id="clear" value="Clear Search"/>
             <input type="button" id="save" value="Save Search"/>
             <input type="button" id="save-global" value="Save as Global Search"/><span id="save-result"></span>
@@ -65,7 +76,7 @@
         $('#save-global').click(function () {
             $.post('@(Url.Action<FilterController>(c => c.Create(null)))', $('#logSearch').serialize() + "&filter.IsGlobal=true",
                 function (data) {
-                    $('#save-result').html(data).effect("highlight", {}, 3000);;
+                    $('#save-result').html("<span class='ui-icon ui-icon-check'></span>" +data).effect("highlight", {}, 3000);;
             });
         });
     });

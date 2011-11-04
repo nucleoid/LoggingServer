@@ -7,7 +7,7 @@
 
 <h2>Log On</h2>
 <p>
-    Please enter your user name and password. @Html.ActionLink("Register", "Register") if you don't have an account.
+    Please enter your user name and password. @Html.ActionLink("Register", "Register", null, new { @class = "ui-state-default ui-corner-all" }) if you don't have an account.
 </p>
 
 @Html.ValidationSummary(true, "Login was unsuccessful. Please correct the errors and try again.")
@@ -17,31 +17,30 @@
         <fieldset>
             <legend>Account Information</legend>
 
-            <div class="editor-label">
+            <div class="add-margin-left related-form-fields">
                 @Html.LabelFor(m => m.UserName)
             </div>
-            <div class="editor-field">
+            <div class="add-margin-left related-form-fields">
                 @Html.TextBoxFor(m => m.UserName)
                 @Html.ValidationMessageFor(m => m.UserName)
             </div>
 
-            <div class="editor-label">
+            <div class="add-margin-left related-form-fields">
                 @Html.LabelFor(m => m.Password)
             </div>
-            <div class="editor-field">
+            <div class="add-margin-left related-form-fields">
                 @Html.PasswordFor(m => m.Password)
                 @Html.ValidationMessageFor(m => m.Password)
             </div>
 
-            <div class="editor-label">
+            <div class="add-margin-left related-form-fields">
                 @Html.CheckBoxFor(m => m.RememberMe)
                 @Html.LabelFor(m => m.RememberMe)
             </div>
 
-            <p>
+            <div class="add-margin-left related-form-fields">
                 <input type="submit" value="Log On" />
-            </p>
+            </div>
         </fieldset>
     </div>
 }
-

@@ -16,34 +16,44 @@
     <fieldset class="related-form-fields">
         <legend>Search Logs</legend>
         <div class="related-form-fields">
-            @Html.LabelFor(x => x.ProjectName)
-            @Html.TextBoxFor(x => x.ProjectName)
-
-            @Html.LabelFor(x => x.ComponentName)
-            @Html.TextBoxFor(x => x.ComponentName)
+            <div class="left">
+                @Html.LabelFor(x => x.ProjectName)<br/>
+                @Html.TextBoxFor(x => x.ProjectName)
+            </div>
+            <div class="left">
+                @Html.LabelFor(x => x.ComponentName)<br/>
+                @Html.TextBoxFor(x => x.ComponentName)
+            </div>
         </div>
         <div class="related-form-fields">
-            @Html.LabelFor(x => x.StartDate)
-            @Html.TextBoxFor(x => x.StartDate)
-
-            @Html.LabelFor(x => x.EndDate)
-            @Html.TextBoxFor(x => x.EndDate)
+            <div class="left">
+                @Html.LabelFor(x => x.StartDate)<br/>
+                @Html.TextBoxFor(x => x.StartDate)
+            </div>
+            <div class="left">
+                @Html.LabelFor(x => x.EndDate)<br/>
+                @Html.TextBoxFor(x => x.EndDate)
+            </div>
         </div>
-        <div class="related-form-fields checkboxes">
+        <div class="checkboxes">
             <span class="add-margin-right">Log Levels:</span>
             @(Html.CheckBoxesForFlagsEnum<LogLevel>("LogLevel", Model.LogLevel, null))
         </div>
         <div class="related-form-fields">
-            @Html.LabelFor(x => x.MachineNamePartial)
-            @Html.TextBoxFor(x => x.MachineNamePartial)
-
-            @Html.LabelFor(x => x.ExceptionPartial)
-            @Html.TextBoxFor(x => x.ExceptionPartial)
-
-            @Html.LabelFor(x => x.MessagePartial)
-            @Html.TextBoxFor(x => x.MessagePartial)
+            <div class="left">
+                @Html.LabelFor(x => x.MachineNamePartial)<br/>
+                @Html.TextBoxFor(x => x.MachineNamePartial)
+            </div>
+            <div class="left">
+                @Html.LabelFor(x => x.ExceptionPartial)<br/>
+                @Html.TextBoxFor(x => x.ExceptionPartial)
+            </div>
+            <div class="left">
+                @Html.LabelFor(x => x.MessagePartial)<br/>
+                @Html.TextBoxFor(x => x.MessagePartial)
+            </div>
         </div>
-        <div class="related-form-fields">
+        <div class="checkboxes">
             @Html.LabelFor(x => x.IsGlobal)
             @Html.CheckBoxFor(x => x.IsGlobal) (meaning any logged in user can see/edit this search)
         </div>

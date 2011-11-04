@@ -23,6 +23,7 @@ namespace LoggingServer.Interface.Models
         public IList<EmailEntry> EmailEntries { get; set; }
 
         [ScaffoldColumn(false)]
+        [Required]
         public IList<string> Emails
         {
             get { return EmailEntries.Select(x => x.Email).ToList(); }

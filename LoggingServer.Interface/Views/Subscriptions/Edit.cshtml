@@ -20,25 +20,27 @@
                 <div class="related-form-fields">
                     @Html.Label(string.Format("EmailEntries_{0}_Email", i), string.Format("{0}. ", i + 1))
                     @Html.TextBoxFor(m => m.EmailEntries[i].Email, new { @class = "email-entry" })
-                    <a href="#" class="remove-email">remove</a>
+                    <a href="#" class="remove-email ui-state-default ui-corner-all add-padding">remove</a>
                     @Html.ValidationMessageFor(m => m.EmailEntries[i].Email)
                 </div>
             }
-            <a href="#" id="add-new-email">add another email</a>
+            <div class="add-margin">
+                <a href="#" id="add-new-email" class="ui-state-default ui-corner-all add-padding">add another email</a>
+            </div>
         </div>
         <div class="related-form-fields">
             @Html.Label("FilterId", "Saved Search")
             @Html.DropDownList("FilterId", "- Select a saved search -")
             @Html.ValidationMessageFor(m => m.FilterId)
         </div>
-        <div class="related-form-fields">
+        <div class="checkboxes">
             @Html.LabelFor(x => x.IsDailyOverview)
             @Html.CheckBoxFor(x => x.IsDailyOverview)
         </div>
         <div>
             <input type="submit" value="Save" /> 
             @if (Model.ID != Guid.Empty)
-            {@:or @(Html.ActionLink<SubscriptionsController>(c => c.Delete(Model.ID), "delete this subscription"))
+            {@:or @(Html.ActionLink<SubscriptionsController>(c => c.Delete(Model.ID), "delete this subscription", new {@class="ui-button"}))
 }
         </div>
     </fieldset>
@@ -47,7 +49,7 @@
  <script type="text/javascript" charset="utf-8">
      $(document).ready(function () {
          $("#add-new-email").click(function () {
-             $(this).before(newEmailDiv());
+             $(this).parent().before(newEmailDiv());
              $(".remove-email").last().click(function () {
                  $(this).parent(".related-form-fields").remove();
              });
@@ -64,7 +66,7 @@
             + entryCount + '_Email">' + (entryCount + 1) + '. </label><input class="email-entry" '
             +'data-val="true" data-val-email="The Email field is not a valid e-mail address." data-val-required="The Email field is required." '
             +'id="EmailEntries_' + entryCount +'_Email" name="EmailEntries[' + entryCount +'].Email" type="text" value="" />'
-            + '<a href="#" class="remove-email">remove</a></div>';
+            + '<a href="#" class="remove-email ui-state-default ui-corner-all add-padding">remove</a><span></span></div>';
     }
  </script>
 

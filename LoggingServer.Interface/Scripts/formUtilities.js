@@ -25,10 +25,12 @@
     $("tr:not(.no-url)").not(':first').hover(
           function () {
               $(this).css("background", "yellow");
+              $(this).css("color", "black");
               $(this).css("cursor", "pointer");
           },
           function () {
               $(this).css("background", "");
+              $(this).css("color", "");
           }
         );
 });

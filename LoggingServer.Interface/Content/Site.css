@@ -6,8 +6,6 @@ html {
 }
 
 body {
-    background: #fff url(/Content/img/bkg.png) repeat-x top left;
-    color: #696969;
     font-family: Tahoma, Verdana, Helvetica, Sans-Serif;
     font-size: .75em;
     margin: 0;
@@ -32,21 +30,6 @@ a:hover {
 a:active {
     color: #a52f09;
 }
-
-input[type=submit], input[type=button] {
-        background-color: #a52f09;
-        border: 1px solid #712107;
-        color: #fdfcf7;
-        cursor: pointer;
-    
-        /*CSS3 properties*/
-        border-radius: 4px; 
-        -moz-border-radius: 4px;
-        -webkit-border-radius: 4px;
-        box-shadow: 1px 2px 5px #b4b4b4;
-        -webkit-box-shadow: 1px 2px 4px rgba(136,136,136, 0.6);
-        -moz-box-shadow: 1px 2px 5px #b4b4b4;
-    }
 
 /* Basic Layout
 ----------------------------------------------------------*/
@@ -76,6 +59,7 @@ input[type=submit], input[type=button] {
     -webkit-border-radius: 4px 0 0 0;
     -moz-border-radius: 4px 0 0 0;
     clear: both;
+    min-height: 380px;
 }
 
 header,
@@ -87,64 +71,15 @@ section {
 
 /* Menu
 ----------------------------------------------------------*/
-#menu {
-    padding: 0 0 2px;
-    position: relative;
-    margin: 0;
-    text-align: right;
-    font-size: 1.4em;
-    list-style: none;
+
+.ui-state-default a:hover {
+    color: #baec7e !important; 
+    text-decoration: none !important;
 }
 
-#menu li {
-    display: inline;
-    list-style: none;
-}
-
-ul#menu li#greeting {
-    padding: 10px 20px;
-    font-weight: bold;
-    text-decoration: none;
-    line-height: 2.8em;
-    color: #fff;
-}
-
-ul#menu li a {
-    padding: 10px 20px;
-    font-weight: bold;
-    text-decoration: none;
-    line-height: 2.8em;
-    background-color: #bdb76b;
-    color: #3B3420;
-    border-radius: 4px 4px 0 0;
-    -webkit-border-radius: 4px 4px 0 0;
-    -moz-border-radius: 4px 4px 0 0;
-    border-bottom: 1px dotted #5D5A53;
-}
-
-ul#menu li a:hover {
-    background-color: #cd835f;
-    text-decoration: none;
-}
-
-ul#menu li a:active {
-    background-color: #A52F09;
-    text-decoration: none;
-}
-
-ul#menu li.selected a {
-    background-color: #fff;
-    color: #000;
-}
-
-.site-title a {
-    background: transparent url(../Images/brand.png) no-repeat;
-    float: left;
-    height: 50px;
-    margin: 15px;
-    padding: 0;
-    text-indent: -9999px;
-    width: 340px;
+.ui-state-default a:active {
+    color: #e3ddc9 !important; 
+    text-decoration: none !important;
 }
 
 /* Forms   
@@ -174,10 +109,6 @@ fieldset {
              width: 160px;
         }
 
-    fieldset input[type="submit"], fieldset input[type="button"] {
-        padding: 5px;
-    }
-
     fieldset textarea {
         color: #444;
         width: 300px;
@@ -198,12 +129,18 @@ input[type="checkbox"] {
 }
 
 .related-form-fields {
-    margin-bottom: 5px;
+    clear: both;
 }
 
 fieldset.related-form-fields {
     padding: 3px;
     margin-bottom: 10px;
+}
+
+div.checkboxes {
+    clear: both;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 div.checkboxes label {
@@ -277,39 +214,43 @@ table td {
 table th {
     padding: 6px 5px;
     text-align: left;
-    background-color: #e8eef4;
     border: solid 1px #e8eef4;
 }
 
 table tr.loglevel-trace, table tr.loglevel-trace pre
 {
     background-color: #F3F3F3;
+    color: #000;
 }
 
 table tr.loglevel-debug, table tr.loglevel-debug pre
 {
     background-color: #CAE4FF;
+    color: #000;
 }
 
 table tr.loglevel-info, table tr.loglevel-info pre
 {
     background-color: #BBFFBB;
+    color: #000;
 }
 
 table tr.loglevel-warn, table tr.loglevel-warn pre
 {
     background-color: #FFFFA8;
+    color: #000;
 }
 
 table tr.loglevel-error, table tr.loglevel-error pre
 {
     background-color: #FF8080;
+    color: #000;
 }
 
 table tr.loglevel-fatal, table tr.loglevel-fatal pre
 {
-    color: White;
     background-color: #FF0000;
+    color: #fff;
 }
 
 /* css for timepicker
@@ -332,37 +273,25 @@ table tr.loglevel-fatal, table tr.loglevel-fatal pre
 
 nav, 
 #menucontainer {
-    margin-top: 30px;
     float: right;
+    margin-top: 35px;
 }
 
 div#title {
     display: block;
     float: left;
     text-align: left;
+    margin-top: 20px;
 }
 
 #logindisplay {
     font-size: 1.1em;
-    display: block;
+    display: inline;
     text-align: right;
-    margin: 10px;
-    color: black;
-}
-
-#logindisplay a:link {
-    color: black;
-    text-decoration: underline;
-}
-
-#logindisplay a:visited {
-    color: #808000;
-    text-decoration: underline;
-}
-
-#logindisplay a:hover {
-    color: #cd835f;
-    text-decoration: none;
+    float: right;
+    margin: 40px 10px 10px 10px;
+    padding: 5px;
+    width: auto;
 }
 
 .maxheight {
@@ -371,4 +300,29 @@ div#title {
 
 .add-margin-right {
     margin-right: 10px;
+}
+
+.add-margin-left {
+    margin-left: 5px;
+}
+
+.add-margin-top {
+    margin-top: 5px;
+}
+
+.add-margin {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.add-padding {
+    padding: 0 3px 0 3px;
+}
+
+div.left {
+    float: left;
+}
+
+div.right {
+    float: right;
 }

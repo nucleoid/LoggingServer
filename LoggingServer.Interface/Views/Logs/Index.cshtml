@@ -8,11 +8,11 @@
 <ul>
 @foreach (var proj in Model)
 {
-    <li>@Html.ActionLink(proj.Name, "Search", "Logs", new RouteValueDictionary { { "filter.ProjectName", proj.Name } }, null)
+    <li>@Html.ActionLink(proj.Name, "Search", "Logs", new RouteValueDictionary { { "filter.ProjectName", proj.Name } }, new Dictionary<string, object> { { "class", "ui-button" } })
         <ul>
             @foreach (var comp in proj.Components)
             {
-                <li>@Html.ActionLink(comp.Name, "Search", "Logs", new RouteValueDictionary { { "filter.ComponentName", comp.Name } }, null)</li>
+                <li>@Html.ActionLink(comp.Name, "Search", "Logs", new RouteValueDictionary { { "filter.ComponentName", comp.Name } }, new Dictionary<string, object> { { "class", "ui-button" } })</li>
             }
         </ul>
     </li>

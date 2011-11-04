@@ -19,41 +19,41 @@
         <fieldset>
             <legend>Account Information</legend>
 
-            <div class="editor-label">
+            <div class="add-margin-left related-form-fields">
                 @Html.LabelFor(m => m.UserName)
             </div>
-            <div class="editor-field">
+            <div class="add-margin-left related-form-fields">
                 @Html.TextBoxFor(m => m.UserName)
                 @Html.ValidationMessageFor(m => m.UserName)
             </div>
 
-            <div class="editor-label">
+            <div class="add-margin-left related-form-fields">
                 @Html.LabelFor(m => m.Email)
             </div>
-            <div class="editor-field">
+            <div class="add-margin-left related-form-fields">
                 @Html.TextBoxFor(m => m.Email)
                 @Html.ValidationMessageFor(m => m.Email)
             </div>
 
-            <div class="editor-label">
+            <div class="add-margin-left related-form-fields">
                 @Html.LabelFor(m => m.Password)
             </div>
-            <div class="editor-field">
+            <div class="add-margin-left related-form-fields">
                 @Html.PasswordFor(m => m.Password)
                 @Html.ValidationMessageFor(m => m.Password)
             </div>
 
-            <div class="editor-label">
+            <div class="add-margin-left related-form-fields">
                 @Html.LabelFor(m => m.ConfirmPassword)
             </div>
-            <div class="editor-field">
+            <div class="add-margin-left related-form-fields">
                 @Html.PasswordFor(m => m.ConfirmPassword)
                 @Html.ValidationMessageFor(m => m.ConfirmPassword)
             </div>
 
-            <p>
+            <div class="add-margin-left related-form-fields">
                 <input type="submit" value="Register" />
-            </p>
+            </div>
         </fieldset>
     </div>
 }
