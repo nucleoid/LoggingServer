@@ -11,9 +11,9 @@ namespace LoggingServer.Server.Repository.Overrides
         {
             mapping.Id(x => x.ID).GeneratedBy.Assigned();
             mapping.HasMany(x => x.LogEntries).KeyColumn("EntryAssemblyGuid")
-            .Cascade.AllDeleteOrphan()
-            .LazyLoad()
-            .Inverse();
+                .Cascade.AllDeleteOrphan()
+                .LazyLoad()
+                .Inverse();
             mapping.Cache.ReadWrite();
         }
     }

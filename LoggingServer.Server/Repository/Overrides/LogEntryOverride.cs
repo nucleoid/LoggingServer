@@ -19,7 +19,6 @@ namespace LoggingServer.Server.Repository.Overrides
             mapping.Map(x => x.ExceptionType).Length(NVarCharMax);
             mapping.Map(x => x.BaseDirectory).Length(NVarCharMax);
             mapping.Map(x => x.CallSite).Length(NVarCharMax);
-
         }
     }
 }

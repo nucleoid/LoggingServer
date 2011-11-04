@@ -40,6 +40,7 @@
     <Reference Include="Common.Logging">
       <HintPath>..\packages\Common.Logging.1.2.0\lib\1.0\Common.Logging.dll</HintPath>
     </Reference>
+    <Reference Include="FluentNHibernate, Version=1.2.0.712, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL" />
     <Reference Include="Gallio, Version=3.3.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Gallio\Gallio.dll</HintPath>
@@ -97,6 +98,11 @@
     <Compile Include="Server\Domain\SearchFilterTest.cs" />
     <Compile Include="Server\Domain\SubscriptionTest.cs" />
     <Compile Include="Server\LogReceiverServerTest.cs" />
+    <Compile Include="Server\Repository\Conventions\HasManyConventionTest.cs" />
+    <Compile Include="Server\Repository\Conventions\PrimaryKeyConventionTest.cs" />
+    <Compile Include="Server\Repository\Conventions\ReferenceConventionTest.cs" />
+    <Compile Include="Server\Repository\Conventions\TableNameConventionTest.cs" />
+    <Compile Include="Server\Repository\Overrides\ComponentOverrideTest.cs" />
     <Compile Include="Server\Tasks\EmailTasksTest.cs" />
     <Compile Include="Server\Tasks\LogEntryTasksTest.cs" />
     <Compile Include="Server\Tasks\SubscriptionTasksTest.cs" />
@@ -129,6 +135,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
