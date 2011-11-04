@@ -70,13 +70,13 @@
         $('#save').click(function () {
             $.post('@(Url.Action<FilterController>(c => c.Create(null)))', $('#logSearch').serialize(),
                 function (data) {
-                    $('#save-result').html(data).effect("highlight", {}, 3000);;
+                    $('#save-result').html(data).effect("highlight", { color: "#778899" }, 3000); ;
             });
         });
         $('#save-global').click(function () {
             $.post('@(Url.Action<FilterController>(c => c.Create(null)))', $('#logSearch').serialize() + "&filter.IsGlobal=true",
                 function (data) {
-                    $('#save-result').html("<span class='ui-icon ui-icon-check'></span>" +data).effect("highlight", {}, 3000);;
+                    $('#save-result').html(data).effect("highlight", {color: "#778899"}, 3000); ;
             });
         });
     });

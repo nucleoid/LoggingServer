@@ -319,10 +319,10 @@ div#title {
     padding: 0 3px 0 3px;
 }
 
-div.left {
+.left {
     float: left;
 }
 
-div.right {
+.right {
     float: right;
 }
