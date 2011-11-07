@@ -8,19 +8,19 @@ namespace LoggingServer.Server
 {
     public static class BootStrapper
     {
-        public static void Start(bool runMigrations)
+        public static void Start()
         {
             if(DependencyContainer.Container == null)
             {
-                DependencyContainer.Register(new DBModule(runMigrations), new RepositoryModule(), new TaskModule());
+                DependencyContainer.Register(new DBModule(), new RepositoryModule(), new TaskModule());
                 DependencyContainer.Register<LogReceiverServer>();
                 DependencyContainer.BuildContainer();
             }
         }
 
-        public static void Start(Assembly mvcAssembly, bool runMigrations, params Module[] modules)
+        public static void Start(Assembly mvcAssembly, params Module[] modules)
         {
-            DependencyContainer.Register(new DBModule(runMigrations), new RepositoryModule(), new TaskModule(), new MVCModule(mvcAssembly));
+            DependencyContainer.Register(new DBModule(), new RepositoryModule(), new TaskModule(), new MVCModule(mvcAssembly));
             if(modules != null)
                 DependencyContainer.Register(modules);
             DependencyContainer.Register<LogReceiverServer>();

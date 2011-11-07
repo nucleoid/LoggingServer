@@ -103,14 +103,8 @@
     <Compile Include="Repository\Conventions\PrimaryKeyConvention.cs" />
     <Compile Include="Repository\Conventions\ReferenceConvention.cs" />
     <Compile Include="Repository\Conventions\TableNameConvention.cs" />
-    <Compile Include="Repository\FluentMigrations\Migrations\Migration_0002.cs" />
-    <Compile Include="Repository\FluentMigrations\Migrations\Migration_0003.cs" />
     <Compile Include="Repository\IReadableRepository.cs" />
     <Compile Include="Repository\IWritableRepository.cs" />
-    <Compile Include="Repository\FluentMigrations\IExecuteExpressionRootExtensions.cs" />
-    <Compile Include="Repository\FluentMigrations\MigrationSafe.cs" />
-    <Compile Include="Repository\FluentMigrations\Migrations\Migration_0001.cs" />
-    <Compile Include="Repository\FluentMigrations\Runner.cs" />
     <Compile Include="Repository\Overrides\ComponentOverride.cs" />
     <Compile Include="Repository\Overrides\LogEntryOverride.cs" />
     <Compile Include="Repository\Overrides\ProjectOverride.cs" />
@@ -137,11 +131,6 @@
       <Project>{DD46A86C-4461-44D1-8C2E-6EA5F5C7B348}</Project>
       <Name>LoggingServer.Common</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Repository\FluentMigrations\Migrations\Scripts\aspNetAppServices.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -36,7 +36,6 @@ namespace LoggingServer.Server.Domain
         public virtual string EntryAssemblyVersion { get; set; }
         public virtual string EnvironmentKey { get; set; }
         public virtual DateTime DateAdded { get; set; }
-        public virtual bool NotificationsQueued { get; set; }
         public virtual int Version { get; set; }
 
         public virtual Component Component { get; set; }

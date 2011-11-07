@@ -23,7 +23,7 @@ namespace LoggingServer.Tests.Server
         public void Start_Registers_Modules_And_Builds_Container()
         {
             //Act
-            BootStrapper.Start(false);
+            BootStrapper.Start();
 
             //Assert
             Assert.IsNotNull(DependencyContainer.Resolve<ISession>());
@@ -36,7 +36,7 @@ namespace LoggingServer.Tests.Server
         public void Start_Assembly_Registers_All_Modules_And_Builds_Container()
         {
             //Act
-            BootStrapper.Start(typeof(HomeController).Assembly, false);
+            BootStrapper.Start(typeof(HomeController).Assembly);
 
             //Assert
             Assert.IsNotNull(DependencyContainer.Resolve<ISession>());
@@ -50,7 +50,7 @@ namespace LoggingServer.Tests.Server
         public void Start_Assembly_Registers_Extras()
         {
             //Act
-            BootStrapper.Start(typeof(HomeController).Assembly, false, new CustomTasksModule());
+            BootStrapper.Start(typeof(HomeController).Assembly, new CustomTasksModule());
 
             //Assert
             Assert.IsNotNull(DependencyContainer.Resolve<IAuthenticationTasks>());

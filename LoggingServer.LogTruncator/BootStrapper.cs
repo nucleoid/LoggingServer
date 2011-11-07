@@ -15,11 +15,11 @@ namespace LoggingServer.LogTruncator
 {
     public static class BootStrapper
     {
-        public static IScheduler Start(bool runMigrations, string[] args, DateTime now)
+        public static IScheduler Start(string[] args, DateTime now)
         {
             if(DependencyContainer.Container == null)
             {
-                DependencyContainer.Register(new DBModule(runMigrations), new RepositoryModule());
+                DependencyContainer.Register(new DBModule(), new RepositoryModule());
                 DependencyContainer.BuildContainer();
             }
             var environment = ConfigurationManager.AppSettings["environment"];

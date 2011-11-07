@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using LoggingServer.Server.Autofac;
+﻿using LoggingServer.Server.Autofac;
 using LoggingServer.Server.Quartz;
 using LoggingServer.WcfService.Quartz;
 using Quartz;
@@ -10,11 +8,11 @@ namespace LoggingServer.WcfService
 {
     public static class BootStrapper
     {
-        public static IScheduler Start(bool runMigrations)
+        public static IScheduler Start()
         {
             if (DependencyContainer.Container == null)
             {
-                DependencyContainer.Register(new DBModule(runMigrations), new RepositoryModule(), new TaskModule());
+                DependencyContainer.Register(new DBModule(), new RepositoryModule(), new TaskModule());
                 DependencyContainer.BuildContainer();
             }
             return StartScheduler();

@@ -16,7 +16,7 @@ namespace LoggingServer.Tests.Server.Quartz
         public void NewJob_Injects_Properties()
         {
             //Arrange
-            BootStrapper.Start(false, null, DateTime.Parse("10/31/2011"));
+            BootStrapper.Start(null, DateTime.Parse("10/31/2011"));
             var jobDetail = new JobDetail("blag", null, typeof(TruncationJob));
             var trigger = TriggerUtils.MakeImmediateTrigger(0, TimeSpan.FromSeconds(2));
             var bundle = new TriggerFiredBundle(jobDetail, trigger, null, false, null, null, null, null);

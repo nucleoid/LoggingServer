@@ -15,7 +15,7 @@ namespace LoggingServer.LogTruncator
 
         protected override void OnStart(string[] args)
         {
-            Scheduler = BootStrapper.Start(true, args, DateTime.Now);
+            Scheduler = BootStrapper.Start(args, DateTime.Now);
         }
 
         protected override void OnStop()

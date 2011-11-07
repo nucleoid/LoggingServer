@@ -109,7 +109,16 @@
     <Compile Include="Server\Repository\Conventions\PrimaryKeyConventionTest.cs" />
     <Compile Include="Server\Repository\Conventions\ReferenceConventionTest.cs" />
     <Compile Include="Server\Repository\Conventions\TableNameConventionTest.cs" />
+    <Compile Include="Server\Repository\MappingIntegrationTests\BaseMappingTest.cs" />
+    <Compile Include="Server\Repository\MappingIntegrationTests\ComponentTest.cs" />
+    <Compile Include="Server\Repository\MappingIntegrationTests\LogEntryTest.cs" />
+    <Compile Include="Server\Repository\MappingIntegrationTests\ProjectTest.cs" />
+    <Compile Include="Server\Repository\MappingIntegrationTests\SearchFilterTest.cs" />
+    <Compile Include="Server\Repository\MappingIntegrationTests\SubscriptionTest.cs" />
     <Compile Include="Server\Repository\Overrides\ComponentOverrideTest.cs" />
+    <Compile Include="Server\Repository\Overrides\LogEntryOverrideTest.cs" />
+    <Compile Include="Server\Repository\Overrides\ProjectOverrideTest.cs" />
+    <Compile Include="Server\Repository\Overrides\SubscriptionOverrideTest.cs" />
     <Compile Include="Server\Tasks\EmailTasksTest.cs" />
     <Compile Include="Server\Tasks\LogEntryTasksTest.cs" />
     <Compile Include="Server\Tasks\SubscriptionTasksTest.cs" />

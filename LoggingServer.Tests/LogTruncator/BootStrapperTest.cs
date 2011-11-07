@@ -26,7 +26,7 @@ namespace LoggingServer.Tests.LogTruncator
             const string logTruncatorAssemblyGuid = "27875b7d-a0aa-46e3-99d5-22e489954bb7";
 
             //Act
-            BootStrapper.Start(false, new string[0], DateTime.Parse("10/31/2011"));
+            BootStrapper.Start(new string[0], DateTime.Parse("10/31/2011"));
 
             //Assert
             Assert.IsNotNull(DependencyContainer.Resolve<ISession>());
@@ -49,7 +49,7 @@ namespace LoggingServer.Tests.LogTruncator
             var now = DateTime.Now;
 
             //Act
-            var scheduler = BootStrapper.Start(false, new [] {"Error", "5"}, now);
+            var scheduler = BootStrapper.Start(new [] {"Error", "5"}, now);
 
             //Assert
             Assert.AreEqual(now.AddDays(1).Date.ToUniversalTime(), scheduler.GetTrigger("Truncation Job Trigger", null).GetNextFireTimeUtc());
@@ -73,7 +73,7 @@ namespace LoggingServer.Tests.LogTruncator
             var now = DateTime.Parse("10/31/2011");
 
             //Act
-            var scheduler = BootStrapper.Start(false, new [] { "Error", "5", "Debug,Info", "7" }, now);
+            var scheduler = BootStrapper.Start(new [] { "Error", "5", "Debug,Info", "7" }, now);
 
             //Assert
             var detail = scheduler.GetJobDetail("Truncation Job Detail", null);
@@ -98,7 +98,7 @@ namespace LoggingServer.Tests.LogTruncator
             var now = DateTime.Parse("10/31/2011");
 
             //Act
-            BootStrapper.Start(false, new [] { "Error", "5", "Debug | Info" }, now);
+            BootStrapper.Start(new [] { "Error", "5", "Debug | Info" }, now);
         }
 
         [Test, ExpectedArgumentException("A LogLevel argument failed to parse!")]
@@ -111,7 +111,7 @@ namespace LoggingServer.Tests.LogTruncator
             var now = DateTime.Parse("10/31/2011");
 
             //Act
-            BootStrapper.Start(false, new[] { "asdf", "5" }, now);
+            BootStrapper.Start(new[] { "asdf", "5" }, now);
         }
 
         [Test, ExpectedArgumentException("A RollingDays argument failed to parse!, integer required")]
@@ -124,7 +124,7 @@ namespace LoggingServer.Tests.LogTruncator
             var now = DateTime.Parse("10/31/2011");
 
             //Act
-            BootStrapper.Start(false, new[] { "Error", "f" }, now);
+            BootStrapper.Start(new[] { "Error", "f" }, now);
         }
     }
 }

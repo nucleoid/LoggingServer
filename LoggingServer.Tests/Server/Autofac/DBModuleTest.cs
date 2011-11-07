@@ -16,7 +16,7 @@ namespace LoggingServer.Tests.Server.Autofac
             DependencyContainer.Reset();
 
             //Act
-            DependencyContainer.Register(new DBModule(false));
+            DependencyContainer.Register(new DBModule());
             DependencyContainer.BuildContainer();
 
             //Assert

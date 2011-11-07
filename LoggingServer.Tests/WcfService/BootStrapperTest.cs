@@ -24,7 +24,7 @@ namespace LoggingServer.Tests.WcfService
             DependencyContainer.Reset();
 
             //Act
-            var scheduler = BootStrapper.Start(false);
+            var scheduler = BootStrapper.Start();
 
             //Assert
             Assert.IsNotNull(DependencyContainer.Resolve<ISession>());
@@ -45,7 +45,7 @@ namespace LoggingServer.Tests.WcfService
             var now = DateTime.Now;
 
             //Act
-            var scheduler = BootStrapper.Start(false);
+            var scheduler = BootStrapper.Start();
 
             //Assert
             if(now.Hour >= 8)

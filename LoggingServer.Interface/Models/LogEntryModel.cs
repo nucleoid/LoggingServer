@@ -50,7 +50,6 @@ namespace LoggingServer.Interface.Models
         public string EntryAssemblyTitle { get; set; }
         public string EntryAssemblyVersion { get; set; }
         public string EnvironmentKey { get; set; }
-        public bool NotificationsQueued { get; set; }
         public int Version { get; set; }
 
         [Display(Name = "Component ID")]

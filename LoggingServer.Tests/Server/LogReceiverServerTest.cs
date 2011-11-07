@@ -43,7 +43,7 @@ namespace LoggingServer.Tests.Server
                 ExceptionMessage = "These are NOT the droids you are looking for", ExceptionMethod = "BackFlip", ExceptionStackTrace = "from railing",
                 ExceptionString = "excepted", ExceptionType = "UnAuthorizedBackflipping", ID = Guid.NewGuid(), LogID = Guid.NewGuid(), LogIdentity = "Sky",
                 LogLevel = LogLevel.Fatal, LogMessage = "Attraction", Logger = "The second one", LongDate = now.AddDays(1), MachineName = "Mr. Wiggles",
-                NotificationsQueued = true, ProcessID = "The third one", ProcessInfo = "ideapad", ProcessName = "svchost.exe", ProcessTime = TimeSpan.FromHours(4),
+                ProcessID = "The third one", ProcessInfo = "ideapad", ProcessName = "svchost.exe", ProcessTime = TimeSpan.FromHours(4),
                 StackTrace = "Someone getting the best of you", ThreadID = "That other one", ThreadName = "That other 1", Version = 56, 
                 WindowsIdentity = "Emperor", Component = component};
             var logEvent = new NLogEvent { Values = "0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35" };
@@ -51,14 +51,14 @@ namespace LoggingServer.Tests.Server
             events.LayoutNames = new StringCollection { "BaseDirectory", "CallSite", "Counter", "DateAdded", 
                 "EntryAssemblyCompany", "EntryAssemblyDescription", "EntryAssemblyGuid", "EntryAssemblyProduct", "EntryAssemblyTitle", "EntryAssemblyVersion", 
                 "EnvironmentKey", "ExceptionMessage", "ExceptionMethod", "ExceptionStackTrace", "ExceptionString", "ExceptionType", "ID", "LogID", 
-                "LogIdentity", "LogLevel", "LogMessage", "Logger", "LongDate", "MachineName", "NotificationsQueued", "ProcessID", "ProcessInfo", 
+                "LogIdentity", "LogLevel", "LogMessage", "Logger", "LongDate", "MachineName", "ProcessID", "ProcessInfo", 
                 "ProcessName", "ProcessTime", "StackTrace", "ThreadID", "ThreadName", "Version", "WindowsIdentity"};
             events.Strings = new StringCollection {entry.BaseDirectory, entry.CallSite,
                 entry.Counter.ToString(), entry.DateAdded.ToString(), entry.EntryAssemblyCompany, entry.EntryAssemblyDescription, entry.EntryAssemblyGuid.ToString(),
                 entry.EntryAssemblyProduct, entry.EntryAssemblyTitle, entry.EntryAssemblyVersion, entry.EnvironmentKey, entry.ExceptionMessage,
                 entry.ExceptionMethod, entry.ExceptionStackTrace, entry.ExceptionString, entry.ExceptionType, entry.ID.ToString(), entry.LogID.ToString(),
                 entry.LogIdentity, entry.LogLevel.ToString(), entry.LogMessage, entry.Logger, entry.LongDate.ToString(), entry.MachineName, 
-                entry.NotificationsQueued.ToString(), entry.ProcessID, entry.ProcessInfo, entry.ProcessName, entry.ProcessTime.ToString(), entry.StackTrace,
+                entry.ProcessID, entry.ProcessInfo, entry.ProcessName, entry.ProcessTime.ToString(), entry.StackTrace,
                 entry.ThreadID, entry.ThreadName, entry.Version.ToString(), entry.WindowsIdentity};
 
             _componentRepository.Expect(x => x.Get(Arg<Guid>.Is.Equal(component.ID))).Return(component);

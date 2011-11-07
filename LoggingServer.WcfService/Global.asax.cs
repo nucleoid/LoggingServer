@@ -10,7 +10,7 @@ namespace LoggingServer.WcfService
 
         protected void Application_Start(object sender, EventArgs e)
         {
-            _scheduler = BootStrapper.Start(false);
+            _scheduler = BootStrapper.Start();
         }
 
         protected void Application_End(object sender, EventArgs e)

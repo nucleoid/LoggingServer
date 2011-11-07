@@ -28,7 +28,7 @@ namespace LoggingServer.Server
         {
             try
             {
-                BootStrapper.Start(true);
+                BootStrapper.Start();
                 _projectRepository = DependencyContainer.Resolve<IWritableRepository<Project>>();
                 _componentRepository = DependencyContainer.Resolve<IWritableRepository<Component>>();
                 _logEntryRepository = DependencyContainer.Resolve<IWritableRepository<LogEntry>>();
