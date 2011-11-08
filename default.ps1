@@ -81,6 +81,16 @@ task Init -depends Clean {
         -clsCompliant "false" `
         -guid "27875b7d-a0aa-46e3-99d5-22e489954bb7"
         
+    Generate-Assembly-Info `
+	-file "$base_dir\LoggingServer.WcfWindowsService\Properties\AssemblyInfo.cs" `
+	-title "LoggingServer WcfWindowsService" `
+	-description "LoggingServer WCF log server windows service" `
+	-company "Mitchell Statz" `
+	-product "LoggingServer" `
+	-version $version `
+	-clsCompliant "false" `
+        -guid "612f7e44-458b-4dbc-9b1b-befc95ac30ce"
+        
     new-item $release_dir -itemType directory 
     new-item $build_dir -itemType directory 
     new-item $build_dir\Resources -itemType directory
@@ -89,7 +99,7 @@ task Init -depends Clean {
 } 
 
 task Compile -depends Init { 
-  & msbuild "$sln_file" "/p:OutDir=$build_dir\\" /p:Configuration=Release
+  & msbuild "$sln_file" "/p:OutDir=$build_dir\" /p:Configuration=Release
     if ($lastExitCode -ne 0) {
           throw "Error: Failed to execute msbuild"
   }

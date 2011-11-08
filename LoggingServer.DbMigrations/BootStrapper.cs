@@ -12,7 +12,7 @@ namespace LoggingServer.DbMigrations
 
         public static void Start(IAnnouncer announcer)
         {
-            var _runner = new Runner(ConfigurationManager.ConnectionStrings["Default"].ConnectionString, typeof(Runner).Assembly);
+            _runner = new Runner(ConfigurationManager.ConnectionStrings["Default"].ConnectionString, typeof(Runner).Assembly);
             _runner.Announcer = announcer;
             _runner.Run();
         }
@@ -20,7 +20,7 @@ namespace LoggingServer.DbMigrations
         public static MigrationState GetDatabaseMigrationState()
         {
             if (_runner == null)
-                throw new Exception("Start needs to be called before this method");
+                return new MigrationState();
             return _runner.GetMigrationState();
         }
     }

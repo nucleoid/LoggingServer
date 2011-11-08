@@ -23,7 +23,7 @@ namespace LoggingServer.Common
         {
             if(config == null)
                 config = new LoggingConfiguration();
-            var serverTarget = new LoggingServerTarget {EndpointAddress = loggingServerEndPoint, EnvironmentKey = environment};
+            var serverTarget = new LoggingServerTarget {EndpointAddress = loggingServerEndPoint, EnvironmentKey = environment, UseBinaryEncoding = true, };
             serverTarget.AddAssemblyParameters(targetAssembly);
 
             var fileTarget = new FileTarget { FileName = "${basedir}/${shortdate}.log" };
@@ -33,8 +33,10 @@ namespace LoggingServer.Common
             var asyncWrapper = new AsyncTargetWrapper
             {
                 WrappedTarget = fallbackWrapper,
-                QueueLimit = 5000,
-                OverflowAction = AsyncTargetWrapperOverflowAction.Discard
+                QueueLimit = 100000,
+                OverflowAction = AsyncTargetWrapperOverflowAction.Grow,
+                BatchSize = 50,
+                TimeToSleepBetweenBatches = 500
             };
 
             var fileRule = new LoggingRule("*", minLogLevel, asyncWrapper);

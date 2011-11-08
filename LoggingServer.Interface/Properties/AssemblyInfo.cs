@@ -12,6 +12,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyrightAttribute("")]
 [assembly: Guid("96562976-6b23-40f5-a44f-f01c3d157461")]
 [assembly: AssemblyVersionAttribute("1.0.0.0")]
-[assembly: AssemblyInformationalVersionAttribute("1.0.0.0 / 4513eb1")]
+[assembly: AssemblyInformationalVersionAttribute("1.0.0.0 / 19e7224")]
 [assembly: AssemblyDelaySignAttribute(false)]
 
