@@ -5,7 +5,6 @@ using MbUnit.Framework;
 
 namespace LoggingServer.Tests.Server.Repository.MappingIntegrationTests
 {
-    [TestFixture]
     public abstract class BaseMappingTest<T> where T : class
     {
         protected IWritableRepository<T> Repository { get; set; }

@@ -26,7 +26,7 @@ namespace LoggingServer.Common
             if(config == null)
                 config = new LoggingConfiguration();
             var serverTarget = new LoggingServerTarget {EndpointAddress = loggingServerEndPoint, EnvironmentKey = environment, 
-                UseBinaryEncoding = true, AssemblyName = targetAssembly.FullName, FallbackFileExtion = LogFileExtension};
+                UseBinaryEncoding = true, AssemblyName = targetAssembly.FullName, FallbackFileExtension = LogFileExtension};
 
             var fileTarget = new FileTarget { FileName = string.Format("${{basedir}}\\${{shortdate}}.{0}", LogFileExtension), Layout = serverTarget.LayoutForFile() };
 

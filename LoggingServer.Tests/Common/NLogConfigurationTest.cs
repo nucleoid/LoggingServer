@@ -40,7 +40,7 @@ namespace LoggingServer.Tests.Common
             Assert.AreEqual("blah", target.EnvironmentKey);
             Assert.AreEqual("http://blah.com", target.EndpointAddress);
             Assert.AreEqual(Assembly.GetExecutingAssembly().FullName, target.AssemblyName);
-            Assert.AreEqual(NLogConfiguration.LogFileExtension, target.FallbackFileExtion);
+            Assert.AreEqual(NLogConfiguration.LogFileExtension, target.FallbackFileExtension);
         }
 
         [Test]

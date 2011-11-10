@@ -13,6 +13,8 @@ namespace LoggingServer.Common.Targets
     /// Either NLogConfiguration.ConfigureServerLogger can be used for programmatic NLog configuration
     /// or an app config can be configured.  You will need to reference the LoggingServer.Common assembly.
     /// 
+    /// If fallbackFileExtension is set, existing log files will be pushed back to the logging server when it comes back up
+    /// 
     /// Example app config snippet:
     /// 
     ///&lt;configSections&gt;
@@ -23,7 +25,7 @@ namespace LoggingServer.Common.Targets
     ///        &lt;add assembly="LoggingServer.Common"/&gt;
     ///    &lt;/extensions&gt;
     ///    &lt;targets async="true"&gt;
-    ///        &lt;target name="logserver" type="LoggingServer" endpointAddress="http://localhost:60925/LoggingServer.svc" assemblyName="LoggingServer.Interface"/&gt;
+    ///        &lt;target name="logserver" type="LoggingServer" endpointAddress="http://localhost:60925/LoggingServer.svc" assemblyName="LoggingServer.Interface" fallbackFileExtension="log" /&gt;
     ///    &lt;/targets&gt;
     ///    &lt;rules&gt;
     ///        &lt;logger name="*" minLevel="Trace" appendTo="logserver"/&gt;
@@ -41,7 +43,11 @@ namespace LoggingServer.Common.Targets
         public string AssemblyName { get; set; }
         public string EnvironmentKey { get; set; }
         public bool BaseWriteCalled { get; set; }
-        public string FallbackFileExtion { get; set; }
+
+        /// <summary>
+        /// If set, existing log files will be pushed back to the logging server when it comes back up
+        /// </summary>
+        public string FallbackFileExtension { get; set; }
 
         protected override void InitializeTarget()
         {
@@ -95,9 +101,12 @@ namespace LoggingServer.Common.Targets
 
         private void WriteFileLogs()
         {
-            var currentDir = AppDomain.CurrentDomain.BaseDirectory;
-            var logWriter = new ExistingFileLogWriter(currentDir, FallbackFileExtion, LayoutForFile(), this);
-            logWriter.WriteAndRemoveLogs();
+            if(!string.IsNullOrEmpty(FallbackFileExtension))
+            {
+                var currentDir = AppDomain.CurrentDomain.BaseDirectory;
+                var logWriter = new ExistingFileLogWriter(currentDir, FallbackFileExtension, LayoutForFile(), this);
+                logWriter.WriteAndRemoveLogs();
+            }
         }
 
         private static IOrderedEnumerable<KeyValuePair<string, string>> GetTargetParameters(string environmentKey)

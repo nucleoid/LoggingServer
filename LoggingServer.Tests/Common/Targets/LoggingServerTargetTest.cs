@@ -198,7 +198,7 @@ namespace LoggingServer.Tests.Common.Targets
         {
             //Arrange
             _target.AssemblyName = GetType().Assembly.FullName;
-            _target.FallbackFileExtion = "peeps";
+            _target.FallbackFileExtension = "peeps";
             _target.InvokeMethod("InitializeTarget", null);
             var logEvents = new AsyncLogEventInfo[1];
             logEvents[0] = new AsyncLogEventInfo(new LogEventInfo { Exception = new Exception() }, x => x.GetType());
