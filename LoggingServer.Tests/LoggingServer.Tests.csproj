@@ -86,6 +86,7 @@
   <ItemGroup>
     <Compile Include="Common\Extensions\EnumExtensionsTest.cs" />
     <Compile Include="Common\NLogConfigurationTest.cs" />
+    <Compile Include="Common\Targets\ExistingFileLogWriterTest.cs" />
     <Compile Include="Common\Targets\LoggingServerTargetTest.cs" />
     <Compile Include="Interface\Automapper\AutomapperConfigTest.cs" />
     <Compile Include="Interface\Extensions\HtmlHelperExtensionsTest.cs" />

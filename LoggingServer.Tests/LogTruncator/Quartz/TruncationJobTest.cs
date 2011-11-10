@@ -6,15 +6,23 @@ using LoggingServer.LogTruncator.Quartz;
 using LoggingServer.Server.Domain;
 using LoggingServer.Server.Repository;
 using MbUnit.Framework;
+using NLog;
 using Quartz;
 using Quartz.Spi;
 using Rhino.Mocks;
+using LogLevel = LoggingServer.Server.Domain.LogLevel;
 
 namespace LoggingServer.Tests.LogTruncator.Quartz
 {
     [TestFixture]
     public class TruncationJobTest
     {
+        [SetUp]
+        public void Setup()
+        {
+            LogManager.Configuration = null;
+        }
+
         [Test]
         [Row(5, null, 7)]
         [Row(5, LogLevel.Error, 1)]

@@ -9,6 +9,8 @@ namespace LoggingServer.Common
 {
     public static class NLogConfiguration
     {
+        public static string LogFileExtension = "log";
+
         /// <summary>
         /// Configures NLog to use a logging server with an async wrapper.  
         /// If the logging server fails it uses a file logger until the logging server comes back up.
@@ -23,10 +25,10 @@ namespace LoggingServer.Common
         {
             if(config == null)
                 config = new LoggingConfiguration();
-            var serverTarget = new LoggingServerTarget {EndpointAddress = loggingServerEndPoint, EnvironmentKey = environment, UseBinaryEncoding = true, };
-            serverTarget.AddAssemblyParameters(targetAssembly);
+            var serverTarget = new LoggingServerTarget {EndpointAddress = loggingServerEndPoint, EnvironmentKey = environment, 
+                UseBinaryEncoding = true, AssemblyName = targetAssembly.FullName, FallbackFileExtion = LogFileExtension};
 
-            var fileTarget = new FileTarget { FileName = "${basedir}/${shortdate}.log" };
+            var fileTarget = new FileTarget { FileName = string.Format("${{basedir}}\\${{shortdate}}.{0}", LogFileExtension), Layout = serverTarget.LayoutForFile() };
 
             var fallbackWrapper = new FallbackGroupTarget(serverTarget, fileTarget) { ReturnToFirstOnSuccess = true };
 

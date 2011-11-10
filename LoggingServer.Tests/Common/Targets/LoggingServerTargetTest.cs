@@ -1,12 +1,13 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
-using System.Reflection;
+using LoggingServer.Common;
 using LoggingServer.Common.Targets;
 using MbUnit.Framework;
 using NLog;
 using NLog.Common;
+using NLog.Layouts;
 using NLog.Targets;
-using Rhino.Mocks;
 
 namespace LoggingServer.Tests.Common.Targets
 {
@@ -14,11 +15,22 @@ namespace LoggingServer.Tests.Common.Targets
     public class LoggingServerTargetTest
     {
         private LoggingServerTarget _target;
+        private string _filename;
 
         [SetUp]
         public void Setup()
         {
             _target = new LoggingServerTarget();
+        }
+
+        [TearDown]
+        public void Teardown()
+        {
+            if (File.Exists(_filename))
+                File.Delete(_filename);
+            var backupName = string.Format("{0}.{1}", _filename, ExistingFileLogWriter.BackupFileExtension);
+            if (File.Exists(backupName))
+                File.Delete(backupName);
         }
 
         [Test]
@@ -32,10 +44,10 @@ namespace LoggingServer.Tests.Common.Targets
         public void AddAssemblyParameters_Adds_Assembly_Parameters()
         {
             //Arrange
-            var assembly = GetType().Assembly;
+            _target.AssemblyName = GetType().Assembly.FullName;
 
             //Act
-            _target.AddAssemblyParameters(assembly);
+            _target.InvokeMethod("InitializeTarget", null);
 
             //Assert
             Assert.AreEqual("'Mitchell Statz'", _target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyCompany").Layout.ToString());
@@ -147,6 +159,89 @@ namespace LoggingServer.Tests.Common.Targets
             Assert.IsTrue(_target.BaseWriteCalled);
         }
 
-        
+        [Test]
+        public void LayoutForFile_Without_Assembly()
+        {
+            //Arrange
+            _target.EnvironmentKey = "dev";
+
+            //Act
+            var layout = _target.LayoutForFile();
+
+            //Assert
+            Assert.AreEqual("${basedir}|${callsite:fileName=true}|${counter}|dev|${exception:format=Message}|${exception:format=Method}|${exception:format=StackTrace}|"
+                + "${exception:format=ToString}|${exception:format=Type}|${logger}|${guid}|${identity}|${level}|${message}|${longdate}|${machinename}|"
+                +"${processid}|${processinfo}|${processname}|${processtime}|${stacktrace:format=DetailedFlat}|${threadid}|${threadname}|${windows-identity}", 
+                layout);
+        }
+
+        [Test]
+        public void LayoutForFile_With_Assembly()
+        {
+            //Arrange
+            _target.EnvironmentKey = "dev";
+            _target.AssemblyName = GetType().Assembly.FullName;
+
+            //Act
+            var layout = _target.LayoutForFile();
+
+            //Assert
+            Assert.AreEqual("${basedir}|${callsite:fileName=true}|${counter}|dev|${exception:format=Message}|${exception:format=Method}|${exception:format=StackTrace}|"
+                + "${exception:format=ToString}|${exception:format=Type}|${logger}|${guid}|${identity}|${level}|${message}|${longdate}|${machinename}|"
+                + "${processid}|${processinfo}|${processname}|${processtime}|${stacktrace:format=DetailedFlat}|${threadid}|${threadname}|${windows-identity}|"
+                + "'Mitchell Statz'|'Unit tests for LoggingServer'|'bd01c085-3a2c-432b-8ada-d876da6ef4f1'|'LoggingServer'|'LoggingServer Tests'|'1.0.0.0'",
+                layout);
+        }
+
+        [Test]
+        public void Write_Writes_File_Logs()
+        {
+            //Arrange
+            _target.AssemblyName = GetType().Assembly.FullName;
+            _target.FallbackFileExtion = "peeps";
+            _target.InvokeMethod("InitializeTarget", null);
+            var logEvents = new AsyncLogEventInfo[1];
+            logEvents[0] = new AsyncLogEventInfo(new LogEventInfo { Exception = new Exception() }, x => x.GetType());
+            _target.SetProperty<Target>("IsInitialized", true);
+            var layout = _target.LayoutForFile();
+            _filename = CreateLogFile(layout);
+
+            //Act
+            _target.WriteAsyncLogEvents(logEvents);
+
+            //Assert
+            Assert.IsFalse(File.Exists(_filename));
+        }
+
+        [Test]
+        public void WriteLogs_Calls_BaseWrite()
+        {
+            //Arrange
+            var logEvents = new AsyncLogEventInfo[1];
+            logEvents[0] = new AsyncLogEventInfo(LogEventInfo.Create(LogLevel.Fatal, GetType().Name, "not much", new Exception()), x => x.GetType());
+            _target.SetProperty<Target>("IsInitialized", true);
+
+            //Act
+            try
+            {
+                _target.WriteLogs(logEvents);
+            }
+            catch (Exception){}
+
+            //Assert
+            Assert.IsTrue(_target.BaseWriteCalled);
+        }
+
+        private string CreateLogFile(string layout)
+        {
+            var fileName = string.Format("templog.{0}", "peeps");
+            using (var stream = File.CreateText(fileName))
+            {
+                var formatted = Layout.FromString(layout).Render(new LogEventInfo(LogLevel.Fatal, GetType().Name, null, "blah!", null, null))
+                        .Replace(Environment.NewLine, string.Empty);
+                stream.WriteLine(formatted);
+            }
+            return fileName;
+        }
     }
 }

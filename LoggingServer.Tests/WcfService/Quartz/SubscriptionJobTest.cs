@@ -8,6 +8,7 @@ using LoggingServer.Server.Tasks;
 using LoggingServer.Tests.Server;
 using LoggingServer.WcfService.Quartz;
 using MbUnit.Framework;
+using NLog;
 using Quartz;
 using Quartz.Spi;
 using Rhino.Mocks;
@@ -17,6 +18,12 @@ namespace LoggingServer.Tests.WcfService.Quartz
     [TestFixture]
     public class SubscriptionJobTest
     {
+        [SetUp]
+        public void Setup()
+        {
+            LogManager.Configuration = null;
+        }
+
         [Test]
         public void Execute_Finds_Daily_Logs_And_Sends_Daily_Subscription_Notifications()
         {

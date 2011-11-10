@@ -14,12 +14,14 @@ namespace LoggingServer.Tests.Common
     public class NLogConfigurationTest
     {
         private LoggingConfiguration _config;
+        private const string Environment = "blah";
+        private readonly Assembly _assembly = Assembly.GetExecutingAssembly();
 
         [SetUp]
         public void Setup()
         {
             //Act
-            _config = NLogConfiguration.ConfigureServerLogger(null, "blah", "http://blah.com", Assembly.GetExecutingAssembly(), LogLevel.Trace);
+            _config = NLogConfiguration.ConfigureServerLogger(null, Environment, "http://blah.com", _assembly, LogLevel.Trace);
         }
 
         [Test]
@@ -31,25 +33,14 @@ namespace LoggingServer.Tests.Common
         }
 
         [Test]
-        public void ConfigureServerLogger_Uses_Environment_And_EndPoint()
+        public void ConfigureServerLogger_Adds_LoggingServer_Parameters()
         {
             //Assert
             var target = ((_config.LoggingRules[0].Targets[0] as AsyncTargetWrapper).WrappedTarget as FallbackGroupTarget).Targets[0] as LoggingServerTarget;
             Assert.AreEqual("blah", target.EnvironmentKey);
             Assert.AreEqual("http://blah.com", target.EndpointAddress);
-        }
-
-        [Test]
-        public void ConfigureServerLogger_Adds_Assembly_Parameters()
-        {
-            //Assert
-            var target = ((_config.LoggingRules[0].Targets[0] as AsyncTargetWrapper).WrappedTarget as FallbackGroupTarget).Targets[0] as LoggingServerTarget;
-            Assert.IsNotNull(target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyCompany"));
-            Assert.IsNotNull(target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyDescription"));
-            Assert.IsNotNull(target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyGuid"));
-            Assert.IsNotNull(target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyProduct"));
-            Assert.IsNotNull(target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyTitle"));
-            Assert.IsNotNull(target.Parameters.SingleOrDefault(x => x.Name == "EntryAssemblyVersion"));
+            Assert.AreEqual(Assembly.GetExecutingAssembly().FullName, target.AssemblyName);
+            Assert.AreEqual(NLogConfiguration.LogFileExtension, target.FallbackFileExtion);
         }
 
         [Test]
@@ -82,7 +73,18 @@ namespace LoggingServer.Tests.Common
             var fileTarget = ((_config.LoggingRules[0].Targets[0] as AsyncTargetWrapper).WrappedTarget as FallbackGroupTarget).Targets[1] as FileTarget;
 
             //Assert
-            Assert.AreEqual("'${basedir}/${shortdate}.log'", fileTarget.FileName.ToString());
+            Assert.AreEqual("'${basedir}\\${shortdate}.log'", fileTarget.FileName.ToString());
+        }
+
+        [Test]
+        public void ConfigureServerLogger_Uses_LoggingServer_Layout_For_FileTarget()
+        {
+            //Arrange
+            var fileTarget = ((_config.LoggingRules[0].Targets[0] as AsyncTargetWrapper).WrappedTarget as FallbackGroupTarget).Targets[1] as FileTarget;
+            var loggingServerLayout = new LoggingServerTarget { EnvironmentKey = Environment, AssemblyName = _assembly.FullName };
+
+            //Assert
+            Assert.AreEqual(string.Format("'{0}'", loggingServerLayout.LayoutForFile()), fileTarget.Layout.ToString());
         }
     }
 }
